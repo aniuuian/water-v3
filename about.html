@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>About · AquaLease Nigeria</title>
+  <link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='%2300875A' d='M12 3C8 9 6 12 6 15a6 6 0 0 0 12 0c0-3-2-6-6-12z'/></svg>" />
+  <link rel="stylesheet" href="assets/css/design-system.css" />
+  <link rel="stylesheet" href="assets/css/components.css" />
+  <link rel="stylesheet" href="assets/css/pages.css" />
+</head>
+<body data-page="about">
+  <div id="offline-banner" class="offline-banner">Offline mode · showing cached information</div>
+  <div id="app-header"></div>
+
+  <main class="page">
+    <section class="container">
+      <div class="split-hero">
+        <div>
+          <div class="eyebrow" data-i18n="nav.about"></div>
+          <h1>About <em>AquaLease</em>.</h1>
+          <p data-i18n="about.sub">A Nigerian water infrastructure company, on a mission to make safe water affordable for every household.</p>
+          <p>Founded in 2022 in Lagos, AquaLease combines consumer-friendly instalment plans with industrial-grade engineering. Our customers are households, schools, churches, and small businesses — anyone who wants safe water without the upfront cost.</p>
+          <p>Today we serve <b>36 cities</b>, hold a <b>98.6% on-time payment rate</b>, and have placed <b>12,400+ units</b> into service. Every device we ship is matched to local water conditions, and every customer gets a dedicated WhatsApp support line.</p>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:24px">
+            <a class="btn btn-primary btn-lg" href="mall.html" data-i18n="hero.cta"></a>
+            <a class="btn btn-ghost btn-lg" href="https://wa.me/2348000000000" target="_blank" rel="noopener" data-i18n="common.contact_us"></a>
+          </div>
+        </div>
+        <div class="img">
+          <img alt="AquaLease team in Lagos office" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=AquaLease%20Nigerian%20team%20standing%20in%20a%20modern%20Lagos%20office%2C%20diverse%20group%20of%20young%20engineers%20and%20operators%2C%20warm%20editorial%20photography%2C%20nigerian%20green%20and%20cream%20tones%2C%20soft%20natural%20light%2C%20portrait%20composition&image_size=portrait_4_3" />
+        </div>
+      </div>
+    </section>
+
+    <section class="container">
+      <h2 style="font-family:var(--font-display);font-size:var(--t-display-m);font-weight:380;letter-spacing:-.025em;line-height:1.05;text-align:center;max-width:720px;margin:64px auto 48px">Numbers we are <em>proud of</em>.</h2>
+      <div class="kpi-grid" style="grid-template-columns:repeat(4,1fr)">
+        <div class="kpi"><div class="k">Cities</div><div class="v">36</div><div class="delta">Lagos, Abuja, PH, Ibadan…</div></div>
+        <div class="kpi"><div class="k">Active leases</div><div class="v">12,400+</div><div class="delta">+18% YoY</div></div>
+        <div class="kpi"><div class="k">On-time payment rate</div><div class="v">98.6%</div><div class="delta">Best in category</div></div>
+        <div class="kpi"><div class="k">Avg support reply</div><div class="v">2 min</div><div class="delta">WhatsApp-first</div></div>
+      </div>
+    </section>
+
+    <section class="container">
+      <div class="cta-band" style="border-radius:var(--r-xl);margin:32px 0 64px">
+        <div class="container">
+          <div class="inner anim-rise">
+            <h2>Become a <em>household name</em> for safe water.</h2>
+            <a class="btn btn-lg" href="mall.html" data-i18n="hero.cta"></a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="app-footer"></div>
+
+  <script src="assets/i18n/strings.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script>
+    function applyI18n() { document.querySelectorAll('[data-i18n]').forEach(el => el.textContent = window.T.tr(el.dataset.i18n)); }
+    document.addEventListener('DOMContentLoaded', applyI18n);
+  </script>
+</body>
+</html>

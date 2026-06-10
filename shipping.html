@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Awaiting delivery · AquaLease Nigeria</title>
+  <link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='%2300875A' d='M12 3C8 9 6 12 6 15a6 6 0 0 0 12 0c0-3-2-6-6-12z'/></svg>" />
+  <link rel="stylesheet" href="assets/css/design-system.css" />
+  <link rel="stylesheet" href="assets/css/components.css" />
+  <link rel="stylesheet" href="assets/css/pages.css" />
+</head>
+<body data-page="shipping">
+  <div id="offline-banner" class="offline-banner">Offline mode · showing cached information</div>
+  <div id="app-header"></div>
+
+  <main class="page shipping-shell">
+    <div class="container">
+      <div class="crumbs" style="font-family:var(--font-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-500);margin-bottom:18px">
+        <a href="index.html">Home</a> <span>›</span> <a href="account.html" data-i18n="account.title"></a> <span>›</span> <span data-i18n="shipping.title"></span>
+      </div>
+      <h1 style="font-family:var(--font-display);font-size:var(--t-h1);font-weight:500;letter-spacing:-.02em;margin-bottom:8px" id="shippingH1" data-i18n="shipping.shipping_title">Awaiting shipping</h1>
+      <p style="color:var(--ink-500);margin-bottom:32px" data-i18n="shipping.shipping_desc">Your equipment is being prepared for delivery…</p>
+
+      <div class="stepper">
+        <div class="step done"><span class="n">1</span><span data-i18n="checkout.step1"></span></div>
+        <div class="sep"></div>
+        <div class="step done"><span class="n">2</span><span data-i18n="checkout.step2"></span></div>
+        <div class="sep"></div>
+        <div class="step done"><span class="n">3</span><span data-i18n="checkout.step3"></span></div>
+        <div class="sep"></div>
+        <div class="step done"><span class="n">4</span><span data-i18n="checkout.step4"></span></div>
+        <div class="sep"></div>
+        <div class="step done"><span class="n">5</span><span data-i18n="checkout.step5"></span></div>
+        <div class="sep"></div>
+        <div class="step active"><span class="n">6</span><span data-i18n="checkout.step6"></span></div>
+      </div>
+
+      <div class="shipping-grid">
+        <div>
+          <!-- Status alert -->
+          <div class="alert alert-info shipping-alert" role="status">
+            <div class="alert-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
+              </svg>
+            </div>
+            <div>
+              <h3 id="shippingAlertTitle" data-i18n="shipping.shipping_title">Awaiting shipping</h3>
+              <p data-i18n="shipping.shipping_desc" id="shippingAlertDesc">Your equipment is being prepared for delivery.</p>
+            </div>
+          </div>
+
+          <!-- Pickup location card (only for self-pickup) -->
+          <div class="checkout-card" id="pickupCard" style="margin-top:24px;display:none">
+            <h2 data-i18n="shipping.pickup_at">Pickup location</h2>
+            <div class="pickup-list" style="margin-top:8px">
+              <div class="pickup-item is-active" style="cursor:default">
+                <div class="pickup-radio" aria-hidden="true"></div>
+                <div class="pickup-body">
+                  <div class="pickup-head">
+                    <span class="pickup-name" id="pickupName" data-i18n="checkout.pickup_hq_name">Lagos HQ</span>
+                    <span class="pickup-tag" id="pickupTag" style="display:none">HQ</span>
+                  </div>
+                  <div class="pickup-addr" id="pickupAddr" data-i18n="checkout.pickup_hq_addr">12B Admiralty Way, Lekki Phase 1</div>
+                  <div class="pickup-hours"><span data-i18n="shipping.pickup_hours_label">Opening hours</span>: <span id="pickupHours" data-i18n="checkout.pickup_hq_hours">Mon–Sat · 8:00 – 18:00</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Order summary -->
+          <div class="checkout-card" style="margin-top:24px">
+            <h2>Order summary</h2>
+            <div class="sign-side" style="padding:0;position:static">
+              <div class="terms-meta" id="orderMeta"></div>
+            </div>
+          </div>
+        </div>
+
+        <aside class="shipping-side">
+          <div class="checkout-card">
+            <h2 style="font-size:18px;margin-bottom:12px" data-i18n="shipping.help">Need help?</h2>
+            <p style="color:var(--ink-500);font-size:14px;margin-bottom:16px" id="helpDesc">Our support team is here for you.</p>
+            <button class="btn btn-light btn-block" id="contactBtn" data-i18n="shipping.help_action">Contact support</button>
+            <hr style="border:none;border-top:1px solid var(--ink-200);margin:20px 0" />
+            <button class="btn btn-primary btn-block btn-lg" id="accountBtn" data-i18n="shipping.cta_account">Go to my account</button>
+            <a href="index.html" class="btn btn-link btn-block" style="margin-top:8px;text-align:center;display:block" data-i18n="shipping.cta_home">Back to home</a>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <div id="app-footer"></div>
+
+  <script src="assets/i18n/strings.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script>
+    const PICKUP_LOCATIONS = {
+      lagos: { nameKey: 'checkout.pickup_hq_name', addrKey: 'checkout.pickup_hq_addr', hoursKey: 'checkout.pickup_hq_hours', tag: 'HQ' },
+      abuja: { nameKey: 'checkout.pickup_2_name',   addrKey: 'checkout.pickup_2_addr',   hoursKey: 'checkout.pickup_2_hours',   tag: '' },
+      ph:    { nameKey: 'checkout.pickup_3_name',   addrKey: 'checkout.pickup_3_addr',   hoursKey: 'checkout.pickup_3_hours',   tag: '' },
+    };
+
+    function getOrder() {
+      // Prefer the latest order with status === 'awaiting_shipping'; else fall back to last order
+      const list = (window.AL && window.AL.loadOrders && window.AL.loadOrders()) || [];
+      const recent = list.find(o => o.status === 'awaiting_shipping') || list[0] || {};
+      return recent;
+    }
+
+    function applyPickup(o) {
+      const loc = (o && o.pickupLoc) || 'lagos';
+      const meta = PICKUP_LOCATIONS[loc] || PICKUP_LOCATIONS.lagos;
+      const nameEl = document.getElementById('pickupName');
+      const addrEl = document.getElementById('pickupAddr');
+      const hoursEl = document.getElementById('pickupHours');
+      const tagEl = document.getElementById('pickupTag');
+      if (nameEl)   { nameEl.setAttribute('data-i18n', meta.nameKey);   nameEl.textContent   = window.T.tr(meta.nameKey); }
+      if (addrEl)   { addrEl.setAttribute('data-i18n', meta.addrKey);   addrEl.textContent   = window.T.tr(meta.addrKey); }
+      if (hoursEl)  { hoursEl.setAttribute('data-i18n', meta.hoursKey); hoursEl.textContent  = window.T.tr(meta.hoursKey); }
+      if (tagEl)    { tagEl.style.display = meta.tag ? '' : 'none'; }
+    }
+
+    function render(o) {
+      const isPickup = (o && o.delivMethod === 'pickup');
+      // swap i18n keys + text
+      const titleKey  = isPickup ? 'shipping.pickup_title'  : 'shipping.shipping_title';
+      const descKey   = isPickup ? 'shipping.pickup_desc'   : 'shipping.shipping_desc';
+      const etaKey    = isPickup ? 'shipping.eta_pickup'    : 'shipping.eta_shipping';
+      const h1        = document.getElementById('shippingH1');
+      const sub       = document.querySelector('.shipping-shell p');
+      const aTitle    = document.getElementById('shippingAlertTitle');
+      const aDesc     = document.getElementById('shippingAlertDesc');
+      h1.setAttribute('data-i18n', titleKey);       h1.textContent = window.T.tr(titleKey);
+      sub.setAttribute('data-i18n', descKey);       sub.textContent = window.T.tr(descKey);
+      aTitle.setAttribute('data-i18n', titleKey);   aTitle.textContent = window.T.tr(titleKey);
+      aDesc.setAttribute('data-i18n', descKey);     aDesc.textContent = window.T.tr(descKey);
+
+      document.getElementById('pickupCard').style.display = isPickup ? 'block' : 'none';
+      if (isPickup) applyPickup(o);
+
+      // Order meta
+      const meta = document.getElementById('orderMeta');
+      const term = (o && o.term) || 12;
+      const down = (o && o.price) || 0;
+      const monthly = (o && o.monthly) || 0;
+      const signedAt = o && o.signedAt ? window.fmtDate(o.signedAt) : '—';
+      const product = (o && o.product) || '—';
+      const id = (o && o.id) || '—';
+      meta.innerHTML = `
+        <div class="row"><span class="k">${window.T.tr('shipping.order_id')}</span><span class="v" style="font-family:var(--font-mono)">${id}</span></div>
+        <div class="row"><span class="k">${window.T.tr('shipping.order_product')}</span><span class="v">${product}</span></div>
+        <div class="row"><span class="k">${window.T.tr('shipping.order_term')}</span><span class="v">${term} ${window.T.tr('common.months')}</span></div>
+        <div class="row"><span class="k">${window.T.tr('mall.down')}</span><span class="v">${window.Money.format(down)}</span></div>
+        <div class="row"><span class="k">${window.T.tr('mall.month_pay')}</span><span class="v">${window.Money.format(monthly)}/mo</span></div>
+        <div class="row"><span class="k">${window.T.tr('shipping.eta')}</span><span class="v" style="color:var(--brand-700)">${window.T.tr(etaKey)}</span></div>
+        <div class="row"><span class="k">${window.T.tr('shipping.order_signed')}</span><span class="v">${signedAt}</span></div>
+      `;
+    }
+
+    function applyI18nShipping() {
+      document.querySelectorAll('[data-i18n]').forEach(el => el.textContent = window.T.tr(el.dataset.i18n));
+      const o = getOrder();
+      render(o);
+
+      document.getElementById('accountBtn').addEventListener('click', () => {
+        location.href = 'account.html';
+      });
+      document.getElementById('contactBtn').addEventListener('click', () => {
+        window.toast('Support will contact you within 1 business day.', 'info');
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', applyI18nShipping);
+  </script>
+</body>
+</html>

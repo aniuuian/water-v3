@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Payment Plan · AquaLease Nigeria</title>
+  <link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='%2300875A' d='M12 3C8 9 6 12 6 15a6 6 0 0 0 12 0c0-3-2-6-6-12z'/></svg>" />
+  <link rel="stylesheet" href="assets/css/design-system.css" />
+  <link rel="stylesheet" href="assets/css/components.css" />
+  <link rel="stylesheet" href="assets/css/pages.css" />
+</head>
+<body data-page="account">
+  <div id="offline-banner" class="offline-banner">Offline mode · showing cached information</div>
+  <div id="app-header"></div>
+
+  <main class="page dash-shell">
+    <div class="container">
+
+      <!-- Dunning banner: collection (overdue 9d) -->
+      <div class="alert alert-danger dunning-banner" role="alert">
+        <span class="alert-icon">!</span>
+        <div>
+          <h3 data-i18n="dunning.collection_t">Final collection notice</h3>
+          <p data-i18n-dyn="dunning.collection_d" data-params='{"days":"9","amount":"₦37,333"}'></p>
+        </div>
+        <div class="alert-actions">
+          <button class="btn btn-primary" id="payAll" data-loading><span data-label data-i18n="plan.pay_all"></span></button>
+        </div>
+      </div>
+
+      <div class="dash-head">
+        <div class="avatar-lg">A</div>
+        <div>
+          <h1 data-i18n="plan.title">Payment plan</h1>
+          <div class="muted">Bio Pure N200 · Lease #AQL-193472 · 12-month term</div>
+        </div>
+        <div style="margin-left:auto"><a class="btn btn-light" href="account.html">← Back to account</a></div>
+      </div>
+
+      <nav class="tabs">
+        <a href="account.html" data-i18n="account.overview"></a>
+        <a href="account.html#orders" data-i18n="account.orders"></a>
+        <a class="active" data-i18n="account.plan"></a>
+        <a href="account.html#profile" data-i18n="account.profile"></a>
+      </nav>
+
+      <!-- Demo controls to switch dunning state -->
+      <div class="card" style="padding:24px;margin-bottom:24px;background:var(--ink-050)">
+        <div class="eyebrow" style="margin-bottom:8px">Demo · switch dunning state</div>
+        <p style="font-size:13px;color:var(--ink-500);margin-bottom:12px">Filter the plan list below by category.</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn btn-light btn-sm" data-state="overdue" data-i18n="plan.overdue"></button>
+          <button class="btn btn-light btn-sm" data-state="upcoming" data-i18n="plan.upcoming"></button>
+          <button class="btn btn-light btn-sm" data-state="all" data-i18n="plan.all"></button>
+        </div>
+      </div>
+
+      <div class="plan-card" style="margin-bottom:24px">
+        <div class="head">
+          <div>
+            <h2 data-i18n="plan.title">Payment plan</h2>
+            <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:.15em;color:var(--ink-500);text-transform:uppercase;margin-top:4px">Cycle 1 of 12 · 1 paid · 1 overdue · 10 upcoming</div>
+          </div>
+          <div class="plan-summary">
+            <div class="item"><div class="k">Total</div><div class="v">₦560,000</div></div>
+            <div class="item"><div class="k">Paid</div><div class="v" style="color:var(--brand-700)">₦149,333</div></div>
+            <div class="item"><div class="k">Overdue</div><div class="v" style="color:var(--status-dunning)">₦37,333</div></div>
+            <div class="item"><div class="k">Upcoming</div><div class="v">₦373,334</div></div>
+            <div class="item"><div class="k">BV earned</div><div class="v" style="color:var(--gold-700)">149 BV</div></div>
+          </div>
+        </div>
+        <table class="plan-table" id="planTable">
+          <thead>
+            <tr>
+              <th data-i18n="plan.inst"></th>
+              <th data-i18n="plan.due"></th>
+              <th data-i18n="plan.status"></th>
+              <th data-i18n="plan.amount"></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="planBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <div id="app-footer"></div>
+
+  <script src="assets/i18n/strings.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script>
+    const STORAGE_PLAN_STATE = 'al.dunning.state';
+    const STORAGE_PAY_CACHE = 'al.payment.cache';
+
+    const today = new Date();
+    function addDays(d, n) { const x = new Date(d); x.setDate(x.getDate() + n); return x; }
+
+    const rows = [
+      { n: 1, due: addDays(today, -55), amount: 37333, status: 'paid' },
+      { n: 2, due: addDays(today, -9),  amount: 37333, status: 'overdue' },
+      { n: 3, due: addDays(today, 21),  amount: 37333, status: 'upcoming' },
+      { n: 4, due: addDays(today, 51),  amount: 37333, status: 'upcoming' },
+      { n: 5, due: addDays(today, 81),  amount: 37333, status: 'upcoming' },
+      { n: 6, due: addDays(today, 111), amount: 37333, status: 'upcoming' },
+      { n: 7, due: addDays(today, 141), amount: 37333, status: 'upcoming' },
+      { n: 8, due: addDays(today, 171), amount: 37333, status: 'upcoming' },
+      { n: 9, due: addDays(today, 201), amount: 37333, status: 'upcoming' },
+      { n: 10, due: addDays(today, 231), amount: 37333, status: 'upcoming' },
+      { n: 11, due: addDays(today, 261), amount: 37333, status: 'upcoming' },
+      { n: 12, due: addDays(today, 291), amount: 37334, status: 'upcoming' },
+    ];
+
+    function statusBadge(s, daysFromDue) {
+      if (s === 'paid') return `<span class="badge badge-ok badge-dot">${window.T.tr('plan.paid')}</span>`;
+      if (s === 'overdue') return `<span class="badge badge-dunning badge-dot">${window.T.tr('plan.overdue')} · ${Math.abs(daysFromDue)}d</span>`;
+      if (daysFromDue >= 0 && daysFromDue <= 3) return `<span class="badge badge-warn badge-dot pulse">${window.T.tr('plan.due_soon')} · ${daysFromDue}d</span>`;
+      return `<span class="badge badge-neutral">${window.T.tr('plan.upcoming')}</span>`;
+    }
+
+    /**
+     * Filter the plan rows by demo state.
+     *  - overdue:  only overdue rows
+     *  - upcoming: only paid + non-overdue rows
+     *  - all:      show everything
+     */
+    function filterRowsByState(state) {
+      if (state === 'all') return rows.slice();
+      return rows.filter(r => {
+        const daysFromDue = Math.round((r.due - today) / 86400e3);
+        if (state === 'overdue')  return daysFromDue < 0;
+        if (state === 'upcoming') return r.status === 'paid' || daysFromDue >= 0;
+        return true;
+      });
+    }
+
+    function renderPlan() {
+      const state = localStorage.getItem(STORAGE_PLAN_STATE) || 'all';
+      const visible = filterRowsByState(state);
+      const tbody = document.getElementById('planBody');
+      if (!visible.length) {
+        tbody.innerHTML = `<tr><td colspan="5" class="muted" style="padding:24px;text-align:center;font-size:13px">—</td></tr>`;
+        return;
+      }
+      tbody.innerHTML = visible.map(r => {
+        const daysFromDue = Math.round((r.due - today) / 86400e3);
+        const cls = r.status === 'paid' ? 'paid' : (r.status === 'overdue' ? 'overdue' : '');
+        return `<tr class="${cls}">
+          <td><b>#${String(r.n).padStart(2, '0')}</b></td>
+          <td class="num">${window.fmtDate(r.due)}</td>
+          <td>${statusBadge(r.status, daysFromDue)}</td>
+          <td class="num">${window.Money.format(r.amount)}</td>
+          <td class="action">${r.status === 'paid' ? '<span class="muted" style="font-size:13px">—</span>' : `<button class="btn btn-primary btn-sm" data-pay="${r.n}" data-loading><span data-label>${window.T.tr('plan.pay_this')}</span></button>`}</td>
+        </tr>`;
+      }).join('');
+      // re-bind the pay buttons (re-rendered DOM)
+      tbody.querySelectorAll('[data-pay]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const n = parseInt(btn.dataset.pay, 10);
+          setTimeout(() => {
+            window.toast('Instalment #' + n + ' paid.', 'success');
+            const row = rows.find(r => r.n === n);
+            if (row) row.status = 'paid';
+            renderPlan();
+          }, 1500);
+        });
+      });
+    }
+
+    function setActiveFilter(state) {
+      document.querySelectorAll('[data-state]').forEach(b => {
+        b.classList.toggle('is-active', b.dataset.state === state);
+      });
+    }
+
+    function renderBanner() {
+      const state = localStorage.getItem(STORAGE_PLAN_STATE) || 'all';
+      const host = document.querySelector('.dunning-banner');
+      if (state === 'all') {
+        host.style.display = 'none';
+        return;
+      }
+      host.style.display = '';
+      const cls = { upcoming: 'alert-info', due_soon: 'alert-warn', dunning: 'alert-dunning', overdue: 'alert-danger', collection: 'alert-danger' }[state] || 'alert-info';
+      const title = { upcoming: 'dunning.reminder_t', due_soon: 'dunning.reminder_t', dunning: 'dunning.dunning_t', overdue: 'dunning.collection_t', collection: 'dunning.collection_t' }[state] || 'dunning.reminder_t';
+      const desc = { upcoming: 'dunning.reminder_d', due_soon: 'dunning.reminder_d', dunning: 'dunning.dunning_d', overdue: 'dunning.collection_d', collection: 'dunning.collection_d' }[state] || 'dunning.reminder_d';
+      const params = state === 'due_soon' ? { days: 1, amount: '₦37,333' } :
+                     state === 'dunning' ? { days: 3, amount: '₦37,333' } :
+                     state === 'overdue' || state === 'collection' ? { days: 9, amount: '₦37,333' } :
+                     { days: 3, amount: '₦37,333' };
+      host.className = `alert ${cls} dunning-banner`;
+      host.querySelector('h3').setAttribute('data-i18n', title);
+      host.querySelector('h3').textContent = window.T.tr(title);
+      const p = host.querySelector('p[data-i18n-dyn]');
+      p.textContent = window.T.tr(desc, params);
+    }
+
+    function applyI18n() {
+      document.querySelectorAll('[data-i18n]').forEach(el => el.textContent = window.T.tr(el.dataset.i18n));
+      renderPlan();
+      renderBanner();
+
+      // cache current due so offline can read it
+      window.AL.cachePay({ nextAmount: 37333, dueDate: new Date().toISOString(), overdueDays: 9 });
+
+      document.getElementById('payAll').addEventListener('click', () => {
+        setTimeout(() => {
+          window.toast('Overdue instalment settled. +149 BV credited. Equipment lock lifted.', 'success');
+          // simulate payment
+          rows[1].status = 'paid';
+          renderPlan();
+        }, 1600);
+      });
+
+      // Filter buttons: switch dunning state, re-render banner + plan list, no page reload
+      setActiveFilter(localStorage.getItem(STORAGE_PLAN_STATE) || 'all');
+      document.querySelectorAll('[data-state]').forEach(b => b.addEventListener('click', () => {
+        const state = b.dataset.state;
+        localStorage.setItem(STORAGE_PLAN_STATE, state);
+        setActiveFilter(state);
+        renderBanner();
+        renderPlan();
+      }));
+    }
+
+    document.addEventListener('DOMContentLoaded', applyI18n);
+  </script>
+</body>
+</html>

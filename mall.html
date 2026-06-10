@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Leasing Mall · AquaLease Nigeria</title>
+  <link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='%2300875A' d='M12 3C8 9 6 12 6 15a6 6 0 0 0 12 0c0-3-2-6-6-12z'/></svg>" />
+  <link rel="stylesheet" href="assets/css/design-system.css" />
+  <link rel="stylesheet" href="assets/css/components.css" />
+  <link rel="stylesheet" href="assets/css/pages.css" />
+</head>
+<body data-page="mall">
+  <div id="offline-banner" class="offline-banner">Offline mode · showing cached information</div>
+  <div id="app-header"></div>
+
+  <main class="page">
+    <section class="page-head" style="background:var(--ink-950);color:var(--paper-2)">
+      <div class="container">
+        <div class="crumbs" style="color:var(--ink-400)"><a href="index.html" style="color:var(--ink-300)">Home</a> <span>›</span> <span data-i18n="nav.mall"></span></div>
+        <div class="row">
+          <div>
+            <div class="eyebrow eyebrow-light" data-i18n="mall.eyebrow"></div>
+            <h1 style="color:var(--paper-2)"><em style="color:var(--brand-400)" data-i18n="mall.title"></em></h1>
+            <p class="sub" style="color:var(--ink-300)" data-i18n="mall.sub"></p>
+          </div>
+          <div style="display:flex;gap:24px;flex-wrap:wrap">
+            <div>
+              <div class="eyebrow eyebrow-light">Down from</div>
+              <div style="font-family:var(--font-display);font-size:36px;font-weight:500">₦56,000</div>
+            </div>
+            <div>
+              <div class="eyebrow eyebrow-light">Max BV</div>
+              <div style="font-family:var(--font-display);font-size:36px;font-weight:500;color:var(--gold-500)">4,800</div>
+            </div>
+            <div>
+              <div class="eyebrow eyebrow-light">Avg approval</div>
+              <div style="font-family:var(--font-display);font-size:36px;font-weight:500">2 min</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="toolbar">
+          <div class="filter-pills" id="filterPills">
+            <button class="filter-pill active" data-cat="all" data-i18n="products.filters.all"></button>
+            <button class="filter-pill" data-cat="residential" data-i18n="products.filters.residential"></button>
+            <button class="filter-pill" data-cat="commercial" data-i18n="products.filters.commercial"></button>
+            <button class="filter-pill" data-cat="industrial" data-i18n="products.filters.industrial"></button>
+          </div>
+          <select class="sort-select" id="sortSelect">
+            <option value="bv" data-i18n="mall.bv">Highest BV</option>
+            <option value="low" data-i18n="products.sort_low">Price · low to high</option>
+            <option value="high" data-i18n="products.sort_high">Price · high to low</option>
+          </select>
+        </div>
+        <div class="product-grid" id="grid"></div>
+      </div>
+    </section>
+  </main>
+
+  <div id="app-footer"></div>
+
+  <script src="assets/i18n/strings.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script>
+    let state = { cat: 'all', sort: 'bv' };
+
+    function productImg(id) {
+      return `assets/img/products/${encodeURIComponent(id)}`;
+    }
+
+    function renderMall() {
+      const cards = window.T.trArray('products.cards');
+      if (!Array.isArray(cards)) return;
+      let list = cards.slice();
+      if (state.cat !== 'all') list = list.filter(c => c.cat === state.cat);
+      const recommendedTerm = 12;
+      if (state.sort === 'low') list.sort((a, b) => a.price - b.price);
+      if (state.sort === 'high') list.sort((a, b) => b.price - a.price);
+      if (state.sort === 'bv') list.sort((a, b) => Math.round(b.price / 1000) - Math.round(a.price / 1000));
+      const terms = [6, 12, 18, 24];
+      const grid = document.getElementById('grid');
+      grid.innerHTML = list.map(c => {
+        const calc = window.AL.calcLease(c.price, recommendedTerm);
+        return `
+        <article class="product-card mall-card" data-cat="${c.cat}">
+          <div class="pic">
+            <span class="tag gold">${c.tag}</span>
+            <img src="${productImg(c.img)}" alt="${c.name}" loading="lazy" />
+          </div>
+          <div class="price-callout">
+            <div>
+              <div class="k">${window.T.tr('mall.down')}</div>
+              <div class="v">${window.Money.format(calc.down)}</div>
+            </div>
+            <div>
+              <div class="k" style="text-align:right">${window.T.tr('mall.bv')}</div>
+              <div class="bv">${calc.bv} BV</div>
+            </div>
+          </div>
+          <div class="terms-row">
+            ${terms.map(t => {
+              const l = window.AL.calcLease(c.price, t);
+              const rec = t === recommendedTerm;
+              return `<span class="term-chip ${rec ? 'recommended' : ''}">${t} ${window.T.tr('common.months')}<span class="price">· ${window.Money.formatShort(l.monthly)}/${window.T.tr('common.month')}</span></span>`;
+            }).join('')}
+          </div>
+          <div class="body">
+            <div class="cat" style="padding:0">${c.cat.toUpperCase()} · ${c.spec}</div>
+            <h3 style="padding:0">${c.name}</h3>
+            <div class="spec" style="padding:0;margin-bottom:12px">${recommendedTerm}-month plan · ${window.Money.format(calc.monthly)}/${window.T.tr('common.month')} after ${window.Money.format(calc.down)} down</div>
+          </div>
+          <div class="body-cta">
+            <a class="btn btn-light" href="mall-detail.html?id=${c.id}">${window.T.tr('common.learn_more')}</a>
+            <a class="btn btn-primary" href="checkout.html?id=${c.id}&t=${recommendedTerm}">${window.T.tr('common.order_now')}</a>
+          </div>
+        </article>`;
+      }).join('');
+    }
+
+    function bindMallUI() {
+      document.getElementById('filterPills').addEventListener('click', e => {
+        const b = e.target.closest('[data-cat]'); if (!b) return;
+        document.querySelectorAll('.filter-pill').forEach(x => x.classList.remove('active'));
+        b.classList.add('active');
+        state.cat = b.dataset.cat;
+        renderMall();
+      });
+      document.getElementById('sortSelect').addEventListener('change', e => { state.sort = e.target.value; renderMall(); });
+    }
+
+    function applyI18nMall() {
+      document.querySelectorAll('[data-i18n]').forEach(el => el.textContent = window.T.tr(el.dataset.i18n));
+    }
+
+    document.addEventListener('DOMContentLoaded', () => { applyI18nMall(); renderMall(); bindMallUI(); });
+  </script>
+</body>
+</html>

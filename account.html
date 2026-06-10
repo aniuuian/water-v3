@@ -1,0 +1,763 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>My Account · AquaLease Nigeria</title>
+  <link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='%2300875A' d='M12 3C8 9 6 12 6 15a6 6 0 0 0 12 0c0-3-2-6-6-12z'/></svg>" />
+  <link rel="stylesheet" href="assets/css/design-system.css" />
+  <link rel="stylesheet" href="assets/css/components.css" />
+  <link rel="stylesheet" href="assets/css/pages.css" />
+</head>
+<body data-page="account">
+  <div id="offline-banner" class="offline-banner">Offline mode · showing cached information</div>
+  <div id="app-header"></div>
+
+  <main class="page dash-shell">
+    <div class="container">
+
+      <!-- dunning banner: collection -->
+      <div class="alert alert-danger dunning-banner" role="alert">
+        <span class="alert-icon">!</span>
+        <div>
+          <h3 data-i18n="dunning.collection_t">Final collection notice</h3>
+          <p data-i18n="dunning.collection_d" data-params='{"days":"9","amount":"₦37,333"}'>Your account is 9 days overdue. Continued non-payment may result in remote equipment lock and field recovery.</p>
+        </div>
+        <div class="alert-actions">
+          <a class="btn btn-primary" href="billing.html" data-i18n="dunning.pay_now">Pay now</a>
+          <a class="btn btn-ghost" href="https://wa.me/2348000000000" target="_blank" rel="noopener">WhatsApp</a>
+        </div>
+      </div>
+
+      <div class="dash-head">
+        <div class="avatar-lg" id="dashAvatar">A</div>
+        <div>
+          <h1 data-i18n="account.title">My account</h1>
+          <div class="muted" id="dashSubtitle">Adaeze Okonkwo · Member since Mar 2024 · Verified ✓</div>
+        </div>
+        <div style="margin-left:auto;display:flex;gap:8px">
+          <a class="btn btn-light" href="mall.html">+ Add device</a>
+          <button type="button" class="btn btn-ghost" id="accountLogout" data-i18n="common.logout">Sign out</button>
+        </div>
+      </div>
+
+      <nav class="tabs" id="dashTabs">
+        <a href="#overview" data-tab="overview" data-i18n="account.overview"></a>
+        <a href="#orders" data-tab="orders" data-i18n="account.orders"></a>
+        <a href="billing.html" data-i18n="account.plan"></a>
+        <a href="#profile" data-tab="profile" data-i18n="account.profile"></a>
+      </nav>
+
+      <!-- ============ OVERVIEW (default) ============ -->
+      <section class="dash-view" data-view="overview">
+        <div class="kpi-grid">
+          <div class="kpi">
+            <div class="k" data-i18n="account.device">Active device</div>
+            <div class="v" id="kpiDevices">1<small>/1</small></div>
+            <div class="delta" id="kpiDeviceName">Bio Pure N200 · 200 GPD</div>
+          </div>
+          <div class="kpi">
+            <div class="k" data-i18n="account.next_due">Next payment</div>
+            <div class="v">₦37,333<small> overdue 9d</small></div>
+            <div class="delta" style="color:var(--status-dunning)">Instalment 02 of 12</div>
+          </div>
+          <div class="kpi">
+            <div class="k" data-i18n="account.lifetime_bv">Lifetime BV</div>
+            <div class="v">560<small> BV</small></div>
+            <div class="delta">Gold tier · 4,440 to Platinum</div>
+          </div>
+          <div class="kpi dark">
+            <div class="k" style="color:var(--ink-300)" data-i18n="account.title">Health score</div>
+            <div class="v">62<small>/100</small></div>
+            <div class="delta" style="color:var(--status-warn)">Resolve overdue to restore 25 pts</div>
+          </div>
+        </div>
+
+        <div class="overview-grid">
+          <section>
+            <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:16px">
+              <h2 style="font-family:var(--font-display);font-size:24px;font-weight:500;margin:0" data-i18n="account.orders">Orders</h2>
+              <a href="#orders" class="btn-link" data-tab-link="orders" data-i18n="account.orders_view">View details</a>
+            </div>
+            <div id="overviewLatest"></div>
+          </section>
+
+          <section>
+            <h2 style="font-family:var(--font-display);font-size:24px;font-weight:500;margin:0 0 16px">Quick actions</h2>
+            <div class="card" style="padding:24px;display:flex;flex-direction:column;gap:14px">
+              <a class="btn btn-light" href="billing.html" style="justify-content:space-between">
+                <span><span style="color:var(--status-dunning);font-weight:600">Pay overdue instalment</span><br><small style="color:var(--ink-500)">₦37,333 · 9 days late</small></span>
+                <span>→</span>
+              </a>
+              <a class="btn btn-light" href="mall.html" style="justify-content:space-between">
+                <span><b>Add a second device</b><br><small style="color:var(--ink-500)">Earn more BV per month</small></span>
+                <span>→</span>
+              </a>
+              <a class="btn btn-light" href="https://wa.me/2348000000000" target="_blank" rel="noopener" style="justify-content:space-between">
+                <span><b>Talk to support</b><br><small style="color:var(--ink-500)">Avg reply 2 min · WhatsApp</small></span>
+                <span>→</span>
+              </a>
+              <a class="btn btn-light" href="agreement.html" target="_blank" style="justify-content:space-between">
+                <span><b>View agreement</b><br><small style="color:var(--ink-500)">Download signed PDF</small></span>
+                <span>→</span>
+              </a>
+            </div>
+
+            <h2 style="font-family:var(--font-display);font-size:24px;font-weight:500;margin:32px 0 16px">Device health</h2>
+            <div class="card" style="padding:24px">
+              <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px">
+                <div class="eyebrow">Filter life</div>
+                <div style="font-family:var(--font-mono);font-size:12px;color:var(--ink-500)">Replaced 14 May 2026</div>
+              </div>
+              <div style="height:8px;background:var(--ink-100);border-radius:4px;overflow:hidden">
+                <div style="height:100%;width:62%;background:linear-gradient(90deg,var(--brand-500),var(--brand-400));border-radius:4px"></div>
+              </div>
+              <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--ink-500);margin-top:8px">
+                <span>62% used</span><span>Next change in 49 days</span>
+              </div>
+              <hr style="margin:20px 0" />
+              <div style="display:flex;justify-content:space-between;align-items:baseline">
+                <div class="eyebrow">TDS today</div>
+                <div style="font-family:var(--font-display);font-size:24px;font-weight:500">42 <small style="font-size:14px;color:var(--ink-500)">ppm</small></div>
+              </div>
+              <div style="font-size:12px;color:var(--brand-700);margin-top:4px">↑ 4 from yesterday · safe range</div>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <!-- ============ ORDERS ============ -->
+      <section class="dash-view" data-view="orders" hidden>
+        <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:16px">
+          <h2 style="font-family:var(--font-display);font-size:24px;font-weight:500;margin:0" data-i18n="account.orders">Orders</h2>
+          <span class="muted" id="ordersCount" style="font-size:13px"></span>
+        </div>
+        <div id="ordersList"></div>
+      </section>
+
+      <!-- ============ PROFILE ============ -->
+      <section class="dash-view" data-view="profile" hidden>
+        <div class="profile-grid">
+          <!-- Personal info -->
+          <div class="card profile-card">
+            <div class="profile-card-head">
+              <h2 data-i18n="account.profile_info">Personal information</h2>
+              <button class="btn-link" id="profileEditBtn" data-i18n="account.profile_edit">Edit</button>
+            </div>
+            <form id="profileForm" class="profile-form" data-mode="view">
+              <div class="row">
+                <div class="field">
+                  <label data-i18n="login.name_label">Full name</label>
+                  <input class="input" name="name" id="pfName" disabled />
+                </div>
+                <div class="field">
+                  <label>Email</label>
+                  <input class="input" name="email" id="pfEmail" type="email" disabled />
+                </div>
+              </div>
+              <div class="row">
+                <div class="field">
+                  <label data-i18n="addr_phone">Phone</label>
+                  <input class="input" name="phone" id="pfPhone" type="tel" disabled />
+                </div>
+                <div class="field">
+                  <label data-i18n="login.account_type">Account type</label>
+                  <select class="select" name="type" id="pfType" disabled>
+                    <option value="member" data-i18n="account.profile_type_member">Member user</option>
+                  </select>
+                </div>
+              </div>
+              <div class="profile-actions" hidden>
+                <button type="button" class="btn btn-light" id="profileCancelBtn" data-i18n="account.profile_cancel">Cancel</button>
+                <button type="submit" class="btn btn-primary" id="profileSaveBtn" data-i18n="account.profile_save">Save changes</button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Security -->
+          <div class="card profile-card">
+            <div class="profile-card-head">
+              <h2 data-i18n="account.profile_security">Account security</h2>
+            </div>
+            <form id="pwdForm" class="profile-form">
+              <div class="field">
+                <label data-i18n="account.profile_current_pwd">Current password</label>
+                <input class="input" type="password" name="current" required minlength="6" autocomplete="current-password" />
+              </div>
+              <div class="row">
+                <div class="field">
+                  <label data-i18n="account.profile_new_pwd">New password</label>
+                  <input class="input" type="password" name="new" required minlength="6" autocomplete="new-password" />
+                </div>
+                <div class="field">
+                  <label data-i18n="account.profile_confirm_pwd">Confirm new password</label>
+                  <input class="input" type="password" name="confirm" required minlength="6" autocomplete="new-password" />
+                </div>
+              </div>
+              <div class="profile-actions">
+                <button type="submit" class="btn btn-primary" data-i18n="account.profile_change_pwd">Change password</button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Addresses -->
+          <div class="card profile-card profile-card-wide">
+            <div class="profile-card-head">
+              <h2 data-i18n="account.profile_addresses">Delivery addresses</h2>
+              <button class="btn-link" id="addrAddBtn" data-i18n="account.profile_add_address">+ Add new address</button>
+            </div>
+            <!-- Inline editor (replaces the old modal) -->
+            <div class="inline-addr-editor" id="addrEditor" hidden>
+              <div class="inline-addr-head">
+                <h3 id="addrEditorTitle" data-i18n="account.profile_add_address">Add new address</h3>
+                <button class="icon-btn" id="addrEditorClose" aria-label="Close">×</button>
+              </div>
+              <form id="addrForm" class="auth-form">
+                <input type="hidden" name="id" />
+                <div class="row">
+                  <div class="field">
+                    <label data-i18n="account.addr_label">Label</label>
+                    <input class="input" name="label" required placeholder="Home" />
+                  </div>
+                  <div class="field">
+                    <label data-i18n="account.addr_recipient">Recipient</label>
+                    <input class="input" name="recipient" required />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="field">
+                    <label data-i18n="account.addr_phone">Phone</label>
+                    <input class="input" name="phone" type="tel" required />
+                  </div>
+                  <div class="field">
+                    <label data-i18n="account.addr_state">State</label>
+                    <input class="input" name="state" required />
+                  </div>
+                </div>
+                <div class="field">
+                  <label data-i18n="account.addr_street">Street address</label>
+                  <input class="input" name="street" required />
+                </div>
+                <div class="field">
+                  <label data-i18n="account.addr_city">City</label>
+                  <input class="input" name="city" required />
+                </div>
+                <label class="check"><input type="checkbox" name="isDefault" /><span data-i18n="account.profile_set_default">Set as default</span></label>
+                <div class="inline-addr-foot">
+                  <button type="button" class="btn btn-light" id="addrEditorCancel" data-i18n="account.profile_cancel">Cancel</button>
+                  <button type="submit" class="btn btn-primary" data-i18n="account.profile_save">Save</button>
+                </div>
+              </form>
+            </div>
+            <div id="addressList" class="address-list"></div>
+          </div>
+
+          <!-- Preferences -->
+          <div class="card profile-card profile-card-wide">
+            <div class="profile-card-head">
+              <h2 data-i18n="account.profile_prefs">Notification preferences</h2>
+              <button class="btn-link" id="prefsSaveBtn" data-i18n="account.profile_save">Save</button>
+            </div>
+            <form id="prefsForm" class="prefs-form">
+              <label class="check"><input type="checkbox" name="email" /><span data-i18n="account.profile_pref_email">Email notifications</span></label>
+              <label class="check"><input type="checkbox" name="sms" /><span data-i18n="account.profile_pref_sms">SMS notifications</span></label>
+              <label class="check"><input type="checkbox" name="wa" /><span data-i18n="account.profile_pref_wa">WhatsApp notifications</span></label>
+              <label class="check"><input type="checkbox" name="billing" /><span data-i18n="account.profile_pref_billing">Billing & dunning reminders</span></label>
+              <label class="check"><input type="checkbox" name="marketing" /><span data-i18n="account.profile_pref_marketing">BV rewards & water tips</span></label>
+            </form>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <div id="app-footer"></div>
+
+  <script src="assets/i18n/strings.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script>
+    /* ---------- i18n apply ---------- */
+    function applyI18n() {
+      document.querySelectorAll('[data-i18n]').forEach(el => el.textContent = window.T.tr(el.dataset.i18n));
+      document.querySelectorAll('[data-params]').forEach(el => {
+        try {
+          const params = JSON.parse(el.dataset.params);
+          el.textContent = window.T.tr(el.dataset.i18n, params);
+        } catch { el.textContent = window.T.tr(el.dataset.i18n); }
+      });
+    }
+
+    /* ---------- Status → label / badge / timeline ---------- */
+    const STATUS_KEYS = {
+      awaiting_payment: 'account.status_awaiting_payment',
+      awaiting_agreement: 'account.status_awaiting_agreement',
+      awaiting_shipping: 'account.status_awaiting_shipping',
+      in_lease: 'account.status_in_lease',
+      completed: 'account.status_completed',
+      cancelled: 'account.status_cancelled',
+    };
+    const STATUS_TONE = {
+      awaiting_payment: 'warn',
+      awaiting_agreement: 'info',
+      awaiting_shipping: 'info',
+      in_lease: 'success',
+      completed: 'success',
+      cancelled: 'danger',
+    };
+    function statusLabel(s) { return window.T.tr(STATUS_KEYS[s] || s); }
+    function statusTone(s) { return STATUS_TONE[s] || 'info'; }
+
+    const TIMELINE_STEPS = [
+      { key: 'ordered', label: 'Ordered' },
+      { key: 'paid', label: 'Paid' },
+      { key: 'signed', label: 'Signed' },
+      { key: 'shipping', label: 'Shipping' },
+      { key: 'in_lease', label: 'In lease' },
+    ];
+    function timelineIndex(status) {
+      if (status === 'awaiting_payment' || status === 'cancelled') return -1;
+      if (status === 'awaiting_agreement') return 1;   // paid, not signed
+      if (status === 'awaiting_shipping') return 3;    // past signed, before shipping done
+      if (status === 'in_lease') return 4;
+      if (status === 'completed') return 4;
+      return 0;
+    }
+
+    /* ---------- Render order card ---------- */
+    const PICKUP_LOCATIONS = {
+      lagos: { nameKey: 'checkout.pickup_hq_name', addrKey: 'checkout.pickup_hq_addr', hoursKey: 'checkout.pickup_hq_hours', tag: 'HQ' },
+      abuja: { nameKey: 'checkout.pickup_2_name',   addrKey: 'checkout.pickup_2_addr',   hoursKey: 'checkout.pickup_2_hours',   tag: '' },
+      ph:    { nameKey: 'checkout.pickup_3_name',   addrKey: 'checkout.pickup_3_addr',   hoursKey: 'checkout.pickup_3_hours',   tag: '' },
+    };
+    function renderShippingBlock(o) {
+      if (o.status !== 'awaiting_shipping') return '';
+      const isPickup = o.delivMethod === 'pickup';
+      const methodKey = isPickup ? 'account.orders_method_pickup' : 'account.orders_method_delivery';
+      const methodLabel = window.T.tr(methodKey);
+
+      let stateBadge = '';
+      let body = '';
+      if (isPickup) {
+        const loc = PICKUP_LOCATIONS[o.pickupLoc] || PICKUP_LOCATIONS.lagos;
+        if (o.shipped) {
+          stateBadge = `<span class="badge badge-ok badge-dot">${window.T.tr('account.orders_picked_up')}</span>`;
+          body = `
+            <div class="ship-detail">
+              <div class="ship-row"><span class="k">${window.T.tr('account.orders_method_pickup')}</span><span class="v">${window.T.tr(loc.nameKey)}</span></div>
+              <div class="ship-row"><span class="k">${window.T.tr('checkout.pickup_hours')}</span><span class="v">${window.T.tr(loc.hoursKey)}</span></div>
+              <div class="ship-addr">${window.T.tr(loc.addrKey)}</div>
+            </div>
+          `;
+        } else {
+          stateBadge = `<span class="badge badge-warn badge-dot">${window.T.tr('account.orders_not_picked_up')}</span>`;
+          body = `
+            <div class="ship-detail">
+              <div class="ship-row"><span class="k">${window.T.tr('account.orders_method_pickup')}</span><span class="v">${window.T.tr(loc.nameKey)}</span></div>
+              <div class="ship-addr">${window.T.tr(loc.addrKey)}</div>
+            </div>
+          `;
+        }
+      } else {
+        if (o.shipped) {
+          stateBadge = `<span class="badge badge-ok badge-dot">${window.T.tr('account.orders_shipped')}</span>`;
+          const tracking = o.trackingNo || '—';
+          const carrier = o.carrier || '—';
+          body = `
+            <div class="ship-detail">
+              <div class="ship-row"><span class="k">${window.T.tr('account.orders_carrier')}</span><span class="v">${carrier}</span></div>
+              <div class="ship-row"><span class="k">${window.T.tr('account.orders_tracking_no')}</span><span class="v" style="font-family:var(--font-mono)">${tracking}</span></div>
+            </div>
+          `;
+        } else {
+          stateBadge = `<span class="badge badge-warn badge-dot">${window.T.tr('account.orders_not_shipped')}</span>`;
+          body = `
+            <div class="ship-detail">
+              <div class="ship-row"><span class="k">${window.T.tr('account.orders_eta')}</span><span class="v">${window.T.tr('shipping.eta_shipping')}</span></div>
+            </div>
+          `;
+        }
+      }
+
+      return `
+        <div class="ship-block">
+          <div class="ship-head">
+            <div class="eyebrow">${methodLabel}</div>
+            ${stateBadge}
+          </div>
+          ${body}
+        </div>
+      `;
+    }
+
+    function renderOrderCard(o) {
+      const tIdx = timelineIndex(o.status);
+      const timelineHtml = TIMELINE_STEPS.map((s, i) => {
+        const cls = i < tIdx ? 'done' : (i === tIdx ? 'current' : '');
+        const lineCls = i < tIdx ? 'done' : '';
+        return `
+          <div class="node ${cls}"><div class="dot"></div><div class="l">${s.label}</div></div>
+          ${i < TIMELINE_STEPS.length - 1 ? `<div class="line ${lineCls}"></div>` : ''}
+        `;
+      }).join('');
+
+      const tone = statusTone(o.status);
+      const placed = window.fmtDate(o.ts || Date.now());
+      const monthly = o.monthly || (o.term ? Math.round(((o.productPrice || 0) * 0.8) / o.term) : 0);
+      const down = o.price || Math.round((o.productPrice || 0) * 0.2);
+      const productImg = (() => {
+        const cards = (window.T && window.T.trArray && window.T.trArray('products.cards')) || [];
+        const p = cards.find(c => c.id === o.productId);
+        return p ? `assets/img/products/${encodeURIComponent(p.img)}?v=20260609` : 'assets/img/products/' + encodeURIComponent('Bio Pure N200.png') + '?v=20260609';
+      })();
+      const shippingHtml = renderShippingBlock(o);
+
+      return `
+        <article class="order-card">
+          <div class="top">
+            <div>
+              <div class="meta">Order #${o.id} · Placed ${placed}</div>
+              <h3>${o.product || '—'}</h3>
+            </div>
+            <span class="badge badge-${tone} badge-dot">${statusLabel(o.status)}</span>
+          </div>
+          <div class="body">
+            <div class="pic"><img src="${productImg}" alt="" /></div>
+            <div>
+              <div style="font-size:14px;color:var(--ink-700)">${o.term || 12}-month lease</div>
+              <div style="font-family:var(--font-mono);font-size:12px;color:var(--ink-500);margin-top:4px">Down ${window.Money.format(down)} · Monthly ${window.Money.format(monthly)}</div>
+              <div style="font-size:13px;color:var(--ink-500);margin-top:6px">Method: <b style="color:var(--ink-700)">${(o.method || 'card').toUpperCase()}</b></div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:8px;align-items:stretch;min-width:120px">
+              ${o.status === 'awaiting_payment' ? `<a class="btn btn-primary btn-sm" href="checkout.html?id=${o.productId || ''}&t=${o.term || 12}">${window.T.tr('account.orders_pay')}</a>` : ''}
+              ${o.status === 'awaiting_agreement' ? `<a class="btn btn-primary btn-sm" href="agreement.html">${window.T.tr('account.orders_sign')}</a>` : ''}
+            </div>
+          </div>
+          ${shippingHtml}
+          <div class="timeline">${timelineHtml}</div>
+        </article>
+      `;
+    }
+
+    /* ---------- Render views ---------- */
+    function renderOrders() {
+      const list = window.AL.loadOrders();
+      const host = document.getElementById('ordersList');
+      const count = document.getElementById('ordersCount');
+      if (!list.length) {
+        count.textContent = '';
+        host.innerHTML = `
+          <div class="card empty-state">
+            <div class="empty-state-icon">📦</div>
+            <p data-i18n="account.orders_empty">${window.T.tr('account.orders_empty')}</p>
+            <a class="btn btn-primary" href="mall.html">+ Browse the mall</a>
+          </div>
+        `;
+        return;
+      }
+      count.textContent = window.T.tr('account.orders_count', { n: list.length });
+      host.innerHTML = list.map(renderOrderCard).join('');
+    }
+
+    function renderOverviewLatest() {
+      const list = window.AL.loadOrders();
+      const host = document.getElementById('overviewLatest');
+      if (!list.length) {
+        host.innerHTML = `
+          <div class="card empty-state" style="padding:32px;text-align:center">
+            <p data-i18n="account.orders_empty" style="color:var(--ink-500);margin-bottom:12px">${window.T.tr('account.orders_empty')}</p>
+            <a class="btn btn-primary btn-sm" href="mall.html">+ Browse the mall</a>
+          </div>
+        `;
+        return;
+      }
+      host.innerHTML = renderOrderCard(list[0]);
+    }
+
+    /* ---------- Demo seed (only when logged in and no orders) ---------- */
+    const SEED_VERSION = '5-states-v1';
+    function seedDemoOrders() {
+      if (localStorage.getItem('al.demo.seeded') === SEED_VERSION) return;
+      if (!window.Auth.isLoggedIn()) return;
+      // If older seed exists, replace it
+      if (window.AL.loadOrders().length) {
+        localStorage.setItem('al.orders', '[]');
+      }
+      const now = Date.now();
+      const samples = [
+        // 1) 支付中 (Awaiting payment)
+        { id: 'AQL-200101', product: 'Bio Pure N100', productId: 'm1', productSpec: '100 GPD · 5-stage', productPrice: 380000, term: 12, status: 'awaiting_payment', price: 76000, monthly: 25333, method: 'card', delivMethod: 'delivery', pickupLoc: 'lagos', ts: now - 1 * 86400e3 },
+        // 2) 待签署 (Awaiting agreement)
+        { id: 'AQL-200102', product: 'Bio Pure N200', productId: 'm2', productSpec: '200 GPD · UV+Alkaline', productPrice: 560000, term: 12, status: 'awaiting_agreement', price: 112000, monthly: 37333, method: 'card', delivMethod: 'delivery', pickupLoc: 'lagos', ts: now - 2 * 86400e3, paidAt: new Date(now - 1.5 * 86400e3).toISOString() },
+        // 3) 等待发货 + 送货 + 未发货
+        { id: 'AQL-200103', product: 'Bio Pure N300', productId: 'm3', productSpec: '300 GPD · UV+RO', productPrice: 980000, term: 18, status: 'awaiting_shipping', price: 196000, monthly: 43555, method: 'card', delivMethod: 'delivery', pickupLoc: 'lagos', shipped: false, ts: now - 4 * 86400e3, signedAt: new Date(now - 2 * 86400e3).toISOString() },
+        // 4) 等待发货 + 送货 + 已发货 (with tracking)
+        { id: 'AQL-200104', product: 'Bio Pure N300', productId: 'm3', productSpec: '300 GPD · UV+RO', productPrice: 980000, term: 18, status: 'awaiting_shipping', price: 196000, monthly: 43555, method: 'bank', delivMethod: 'delivery', pickupLoc: 'lagos', shipped: true, trackingNo: 'GIG-7842-NG', carrier: 'GIG Logistics', ts: now - 7 * 86400e3, signedAt: new Date(now - 5 * 86400e3).toISOString(), shippedAt: new Date(now - 1 * 86400e3).toISOString() },
+        // 5) 等待自提 + 自提 + 已取货
+        { id: 'AQL-200105', product: 'Bio Pure N200', productId: 'm2', productSpec: '200 GPD · UV+Alkaline', productPrice: 560000, term: 12, status: 'awaiting_shipping', price: 112000, monthly: 37333, method: 'ussd', delivMethod: 'pickup', pickupLoc: 'lagos', shipped: true, pickedUpAt: new Date(now - 0.5 * 86400e3).toISOString(), ts: now - 6 * 86400e3, signedAt: new Date(now - 4 * 86400e3).toISOString(), shippedAt: new Date(now - 2 * 86400e3).toISOString() },
+      ];
+      samples.forEach(o => window.AL.pushOrder(o));
+      localStorage.setItem('al.demo.seeded', '1');
+    }
+
+    /* ---------- Profile ---------- */
+    function loadProfileForm() {
+      const p = window.AL.loadProfile() || {};
+      document.getElementById('pfName').value = p.name || '';
+      document.getElementById('pfEmail').value = p.email || '';
+      document.getElementById('pfPhone').value = p.phone || '';
+      document.getElementById('pfType').value = p.type || 'home';
+    }
+    function setProfileMode(mode) {
+      const form = document.getElementById('profileForm');
+      form.dataset.mode = mode;
+      const disabled = mode === 'view';
+      form.querySelectorAll('input, select').forEach(el => el.disabled = disabled);
+      document.querySelector('#profileForm .profile-actions').hidden = (mode === 'view');
+      document.getElementById('profileEditBtn').hidden = (mode === 'edit');
+    }
+
+    /* ---------- Addresses ---------- */
+    function renderAddresses() {
+      const list = window.AL.getAddresses();
+      const host = document.getElementById('addressList');
+      if (!list.length) {
+        host.innerHTML = `<p class="muted" style="padding:8px 0">${window.T.tr('account.profile_add_address')}</p>`;
+        return;
+      }
+      host.innerHTML = list.map(a => `
+        <div class="address-card ${a.isDefault ? 'is-default' : ''}">
+          <div class="address-card-body">
+            <div class="address-card-head">
+              <span class="address-label">${a.label || 'Home'}</span>
+              ${a.isDefault ? `<span class="address-default-badge" data-i18n="account.profile_default">${window.T.tr('account.profile_default')}</span>` : ''}
+            </div>
+            <div class="address-recipient">${a.recipient || ''} · ${a.phone || ''}</div>
+            <div class="address-line">${a.street || ''}</div>
+            <div class="address-line">${a.city || ''}, ${a.state || ''}</div>
+          </div>
+          <div class="address-actions">
+            <button class="btn-link" data-addr-edit="${a.id}" data-i18n="account.profile_edit">${window.T.tr('account.profile_edit')}</button>
+            ${a.isDefault ? '' : `<button class="btn-link" data-addr-default="${a.id}" data-i18n="account.profile_set_default">${window.T.tr('account.profile_set_default')}</button>`}
+            <button class="btn-link danger" data-addr-delete="${a.id}" data-i18n="account.profile_delete">${window.T.tr('account.profile_delete')}</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function openAddressEditor(addr) {
+      const editor = document.getElementById('addrEditor');
+      const form = document.getElementById('addrForm');
+      const title = document.getElementById('addrEditorTitle');
+      form.reset();
+      if (addr) {
+        title.textContent = window.T.tr('account.profile_edit');
+        form.id.value = addr.id;
+        form.label.value = addr.label || '';
+        form.recipient.value = addr.recipient || '';
+        form.phone.value = addr.phone || '';
+        form.street.value = addr.street || '';
+        form.city.value = addr.city || '';
+        form.state.value = addr.state || '';
+        form.isDefault.checked = !!addr.isDefault;
+      } else {
+        title.textContent = window.T.tr('account.profile_add_address');
+        form.id.value = '';
+        const p = window.AL.loadProfile() || {};
+        const existingDefault = (window.AL.getAddresses() || []).find(a => a.isDefault) || {};
+        form.label.value = 'Home';
+        form.recipient.value = p.name || existingDefault.recipient || '';
+        form.phone.value = p.phone || existingDefault.phone || '';
+        form.street.value = existingDefault.street || '';
+        form.city.value = p.city || existingDefault.city || 'Lagos';
+        form.state.value = p.state || existingDefault.state || 'Lagos State';
+        const hasDefault = (window.AL.getAddresses() || []).some(a => a.isDefault);
+        form.isDefault.checked = !hasDefault;
+      }
+      editor.hidden = false;
+      // Scroll the editor into view for clarity
+      editor.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      const firstInput = editor.querySelector('input:not([type=hidden])');
+      if (firstInput) setTimeout(() => firstInput.focus(), 250);
+    }
+    function closeAddressEditor() {
+      const editor = document.getElementById('addrEditor');
+      if (editor) editor.hidden = true;
+    }
+
+    /* ---------- Preferences ---------- */
+    function loadPrefs() {
+      const p = window.AL.loadPrefs();
+      const form = document.getElementById('prefsForm');
+      Object.keys(p).forEach(k => { if (form[k]) form[k].checked = !!p[k]; });
+    }
+
+    /* ---------- Tab switching ---------- */
+    function showView(name) {
+      document.querySelectorAll('.dash-view').forEach(v => v.hidden = (v.dataset.view !== name));
+      document.querySelectorAll('#dashTabs a[data-tab]').forEach(a => {
+        a.classList.toggle('active', a.dataset.tab === name);
+      });
+      if (name === 'orders') renderOrders();
+      if (name === 'profile') {
+        loadProfileForm();
+        setProfileMode('view');
+        renderAddresses();
+        loadPrefs();
+      }
+      if (name === 'overview') renderOverviewLatest();
+    }
+
+    function currentView() {
+      const hash = (location.hash || '#overview').replace('#', '');
+      return ['overview', 'orders', 'profile'].includes(hash) ? hash : 'overview';
+    }
+
+    /* ---------- Header sync ---------- */
+    function syncHeader() {
+      const u = window.Auth.user;
+      if (!u) return;
+      const initials = (u.name || u.firstName || '?').split(/\s+/).map(s => s[0]).slice(0, 2).join('').toUpperCase();
+      const av = document.getElementById('dashAvatar');
+      if (av) av.textContent = initials || 'A';
+      const sub = document.getElementById('dashSubtitle');
+      if (sub) {
+        const since = window.fmtDate(u.signedInAt || Date.now());
+        const verified = u.verified !== false ? ` · ${window.T.tr('account.profile_verified')} ✓` : '';
+        sub.textContent = `${u.name || '—'} · ${window.T.tr('account.profile_member_since', { date: since })}${verified}`;
+      }
+    }
+
+    /* ---------- Wire up ---------- */
+    document.addEventListener('DOMContentLoaded', () => {
+      applyI18n();
+      if (!window.Auth.isLoggedIn()) {
+        const next = encodeURIComponent('account.html');
+        window.location.replace('login.html?next=' + next);
+        return;
+      }
+
+      syncHeader();
+      seedDemoOrders();
+      // Safety: ensure address editor is closed on arrival (e.g. from agreement.html)
+      closeAddressEditor();
+      showView(currentView());
+
+      // Tab clicks
+      document.getElementById('dashTabs').addEventListener('click', e => {
+        const a = e.target.closest('a[data-tab]');
+        if (!a) return;
+        e.preventDefault();
+        const v = a.dataset.tab;
+        if (v !== currentView()) {
+          history.replaceState(null, '', '#' + v);
+          showView(v);
+        }
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+      // In-page [data-tab-link] jumps (e.g. "View all" from overview)
+      document.querySelectorAll('[data-tab-link]').forEach(a => {
+        a.addEventListener('click', e => {
+          e.preventDefault();
+          const v = a.dataset.tabLink;
+          history.replaceState(null, '', '#' + v);
+          showView(v);
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      });
+      window.addEventListener('hashchange', () => showView(currentView()));
+
+      // Logout
+      document.getElementById('accountLogout')?.addEventListener('click', () => {
+        window.Auth.logout();
+        window.toast('Signed out. See you soon.', 'success');
+        setTimeout(() => { window.location.href = 'index.html'; }, 400);
+      });
+
+      // Profile edit
+      document.getElementById('profileEditBtn').addEventListener('click', () => setProfileMode('edit'));
+      document.getElementById('profileCancelBtn').addEventListener('click', () => { loadProfileForm(); setProfileMode('view'); });
+      document.getElementById('profileForm').addEventListener('submit', e => {
+        e.preventDefault();
+        const form = e.currentTarget;
+        const p = {
+          ...(window.AL.loadProfile() || {}),
+          name: form.name.value.trim(),
+          email: form.email.value.trim(),
+          phone: form.phone.value.trim(),
+          type: form.type.value,
+        };
+        window.AL.saveProfile(p);
+        // mirror to Auth.user so the header updates too
+        const u = window.Auth.user; if (u) {
+          u.name = p.name; u.email = p.email; u.phone = p.phone; u.type = p.type; u.firstName = p.name.split(/\s+/)[0] || u.firstName;
+          window.Auth.user = u;
+        }
+        syncHeader();
+        setProfileMode('view');
+        window.toast(window.T.tr('account.profile_save_ok'), 'success');
+      });
+
+      // Password change
+      document.getElementById('pwdForm').addEventListener('submit', e => {
+        e.preventDefault();
+        const form = e.currentTarget;
+        if (form.new.value !== form.confirm.value) { window.toast('Passwords do not match', 'danger'); return; }
+        if (form.new.value.length < 6) { window.toast('Password too short', 'danger'); return; }
+        window.toast(window.T.tr('account.profile_pwd_changed'), 'success');
+        form.reset();
+      });
+
+      // Addresses
+      document.getElementById('addrAddBtn').addEventListener('click', () => openAddressEditor(null));
+      document.getElementById('addrEditorClose').addEventListener('click', closeAddressEditor);
+      document.getElementById('addrEditorCancel').addEventListener('click', closeAddressEditor);
+      document.getElementById('addressList').addEventListener('click', e => {
+        const edit = e.target.closest('[data-addr-edit]');
+        const del = e.target.closest('[data-addr-delete]');
+        const def = e.target.closest('[data-addr-default]');
+        const list = window.AL.getAddresses();
+        if (edit) {
+          const a = list.find(x => x.id === edit.dataset.addrEdit);
+          if (a) openAddressEditor(a);
+        } else if (del) {
+          if (confirm('Delete this address?')) {
+            window.AL.removeAddress(del.dataset.addrDelete);
+            renderAddresses();
+            window.toast(window.T.tr('account.profile_addr_deleted'), 'success');
+          }
+        } else if (def) {
+          const a = list.find(x => x.id === def.dataset.addrDefault);
+          if (a) { window.AL.upsertAddress({ ...a, isDefault: true }); renderAddresses(); }
+        }
+      });
+      document.getElementById('addrForm').addEventListener('submit', e => {
+        e.preventDefault();
+        const f = e.currentTarget;
+        const data = {
+          id: f.id.value || undefined,
+          label: f.label.value.trim() || 'Home',
+          recipient: f.recipient.value.trim(),
+          phone: f.phone.value.trim(),
+          street: f.street.value.trim(),
+          city: f.city.value.trim(),
+          state: f.state.value.trim(),
+          isDefault: f.isDefault.checked,
+        };
+        window.AL.upsertAddress(data);
+        closeAddressEditor();
+        renderAddresses();
+        window.toast(window.T.tr('account.profile_addr_saved'), 'success');
+      });
+
+      // Preferences
+      document.getElementById('prefsSaveBtn').addEventListener('click', () => {
+        const form = document.getElementById('prefsForm');
+        const p = {};
+        ['email','sms','wa','billing','marketing'].forEach(k => p[k] = !!form[k].checked);
+        window.AL.savePrefs(p);
+        window.toast(window.T.tr('account.profile_save_ok'), 'success');
+      });
+    });
+  </script>
+</body>
+</html>

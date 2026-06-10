@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Create account · AquaLease Nigeria</title>
+  <link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='%2300875A' d='M12 3C8 9 6 12 6 15a6 6 0 0 0 12 0c0-3-2-6-6-12z'/></svg>" />
+  <link rel="stylesheet" href="assets/css/design-system.css" />
+  <link rel="stylesheet" href="assets/css/components.css" />
+  <link rel="stylesheet" href="assets/css/pages.css" />
+</head>
+<body data-page="signup">
+  <div id="offline-banner" class="offline-banner">Offline mode · showing cached information</div>
+  <div id="app-header"></div>
+
+  <main class="auth-shell" data-mode="signup">
+    <div class="auth-card card" data-mode="signup">
+      <!-- Logo / brand mark (mobile only) -->
+      <a href="index.html" class="auth-mark" aria-label="AquaLease">
+        <span class="mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3 C 8 9 6 12 6 15 a6 6 0 0 0 12 0 c0-3-2-6-6-12z"></path>
+          </svg>
+        </span>
+        <span class="word">AquaLease<small>Water · on terms</small></span>
+      </a>
+
+      <!-- Headline + sub -->
+      <div class="auth-head">
+        <h1 data-i18n="login.signup_title">Create your AquaLease account</h1>
+        <p data-i18n="login.signup_sub" class="muted">Tell us a bit about you so we can recommend the right system and serve you faster.</p>
+      </div>
+
+      <!-- ============ SIGN UP form — minimal: name + account + password ============ -->
+      <form id="signupForm" class="auth-form" novalidate>
+        <label class="field">
+          <span data-i18n="login.name_label">Full name</span>
+          <input type="text" name="name" autocomplete="name" required data-i18n-ph="login.name_ph" placeholder="Adaeze Okonkwo" />
+        </label>
+        <label class="field">
+          <span data-i18n="login.email_label">Email or phone</span>
+          <input type="text" name="email" autocomplete="username" required data-i18n-ph="login.email_ph" placeholder="you@example.com" />
+        </label>
+        <div class="grid-2">
+          <label class="field">
+            <span data-i18n="login.password_label">Password</span>
+            <div class="pwd">
+              <input type="password" name="password" autocomplete="new-password" required data-i18n-ph="login.password_ph" placeholder="••••••••" minlength="6" />
+              <button type="button" class="pwd-toggle" data-toggle-pwd aria-label="Show password">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
+          </label>
+          <label class="field">
+            <span data-i18n="login.confirm_pwd">Confirm password</span>
+            <input type="password" name="confirm" autocomplete="new-password" required data-i18n-ph="login.password_ph" placeholder="••••••••" minlength="6" />
+          </label>
+        </div>
+
+        <!-- Consent -->
+        <label class="check tos">
+          <input type="checkbox" name="tos" required />
+          <span>
+            <span data-i18n="login.agree_tos">I agree to the</span>
+            <a href="#" data-i18n="login.link_tos">Terms of Service</a>
+            ·
+            <a href="#" data-i18n="login.link_privacy">Privacy Policy</a>
+          </span>
+        </label>
+        <button type="submit" class="btn btn-primary btn-block btn-loading" id="signupSubmit" data-i18n="login.submit_signup">Create account</button>
+      </form>
+
+      <!-- Switch link to login page -->
+      <p class="auth-switch">
+        <span data-i18n="login.have_account">Already have an account?</span>
+        <a href="login.html" data-i18n="common.sign_in">Sign in</a>
+      </p>
+    </div>
+
+    <!-- Left side: brand value panel (signup) — uses orange gradient -->
+    <aside class="auth-aside auth-aside-signup">
+      <div class="aside-grain"></div>
+      <div class="aside-inner">
+        <div class="eyebrow" data-i18n="login.aside_signup_eyebrow">Get started in 30 seconds</div>
+        <h2>
+          <em>Your first</em>
+          <span>drop, on us.</span>
+        </h2>
+        <p>Three quick fields and you're in. We'll match you with the right system once you place your first order.</p>
+        <ul class="aside-bullets">
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <span data-i18n="login.aside_signup_b1">No credit card needed to sign up</span>
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <span data-i18n="login.aside_signup_b2">Get a free water-quality consultation</span>
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <span data-i18n="login.aside_signup_b3">Earn BV on your first payment</span>
+          </li>
+        </ul>
+        <div class="aside-foot">
+          <div class="aside-stat"><b>5 min</b><span>sign-up time</span></div>
+          <div class="aside-stat"><b>30 s</b><span>first drop</span></div>
+          <div class="aside-stat"><b>0 ₦</b><span>setup fee</span></div>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <div id="app-footer"></div>
+
+  <script src="assets/i18n/strings.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script>
+    /* ---------- i18n apply ---------- */
+    function applyI18n() {
+      document.querySelectorAll('[data-i18n]').forEach(el => el.textContent = window.T.tr(el.dataset.i18n));
+      document.querySelectorAll('[data-i18n-ph]').forEach(el => el.setAttribute('placeholder', window.T.tr(el.dataset.i18nPh)));
+      document.querySelectorAll('[data-i18n-aria]').forEach(el => el.setAttribute('aria-label', window.T.tr(el.dataset.i18nAria)));
+    }
+
+    /* ---------- Validation helpers ---------- */
+    function setError(input, msg) {
+      const field = input.closest('.field, .check');
+      let err = field?.querySelector('.field-err');
+      if (!err && field) {
+        err = document.createElement('small');
+        err.className = 'field-err';
+        field.appendChild(err);
+      }
+      if (err) err.textContent = msg || '';
+      if (msg) input.setAttribute('aria-invalid', 'true'); else input.removeAttribute('aria-invalid');
+    }
+    function isEmailOrPhone(v) { return /@|\+?\d{7,}/.test(v.trim()); }
+
+    /* ---------- Loading button ---------- */
+    function startLoading(btn, loadingLabel) {
+      btn.setAttribute('aria-busy', 'true');
+      btn.disabled = true;
+      btn.dataset._old = btn.innerHTML;
+      btn.innerHTML = `<span class="spinner"></span> ${loadingLabel || ''}`;
+    }
+    function stopLoading(btn) {
+      btn.removeAttribute('aria-busy');
+      btn.disabled = false;
+      if (btn.dataset._old) btn.innerHTML = btn.dataset._old;
+    }
+
+    function redirectAfterAuth() {
+      const next = new URLSearchParams(location.search).get('next') || 'index.html';
+      location.href = next;
+    }
+
+    /* ---------- SIGN UP: minimal validation (name + email + password) ---------- */
+    function doSignUp(form, btn) {
+      const name = form.name.value.trim();
+      const email = form.email.value.trim();
+      const pwd = form.password.value;
+      const confirm = form.confirm.value;
+      const tos = form.tos.checked;
+      let ok = true;
+      if (!name) { setError(form.name, window.T.tr('login.err_required')); ok = false; } else setError(form.name, '');
+      if (!email) { setError(form.email, window.T.tr('login.err_required')); ok = false; }
+      else if (!isEmailOrPhone(email)) { setError(form.email, window.T.tr('login.err_email')); ok = false; }
+      else setError(form.email, '');
+      if (!pwd) { setError(form.password, window.T.tr('login.err_required')); ok = false; }
+      else if (pwd.length < 6) { setError(form.password, window.T.tr('login.err_pwd')); ok = false; }
+      else setError(form.password, '');
+      if (!confirm) { setError(form.confirm, window.T.tr('login.err_required')); ok = false; }
+      else if (confirm !== pwd) { setError(form.confirm, window.T.tr('login.err_match')); ok = false; }
+      else setError(form.confirm, '');
+      if (!tos) { setError(form.tos, window.T.tr('login.err_required')); ok = false; } else setError(form.tos, '');
+      if (!ok) {
+        const first = form.querySelector('[aria-invalid="true"]');
+        if (first) first.focus();
+        return;
+      }
+
+      startLoading(btn, window.T.tr('login.submit_signup_loading'));
+      setTimeout(() => {
+        const firstName = name.split(/\s+/)[0] || 'there';
+        const user = {
+          firstName, name, email,
+          type: 'member',
+          signedInAt: Date.now(),
+        };
+        window.Auth.login(user);
+        window.toast(window.T.tr('login.success_signup'), 'success');
+        redirectAfterAuth();
+      }, 400);
+    }
+
+    /* ---------- Password show/hide ---------- */
+    function wirePasswordToggles() {
+      document.querySelectorAll('[data-toggle-pwd]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const input = btn.parentElement.querySelector('input');
+          if (!input) return;
+          input.type = input.type === 'password' ? 'text' : 'password';
+          btn.setAttribute('aria-pressed', input.type === 'text' ? 'true' : 'false');
+        });
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      applyI18n();
+
+      const signupForm = document.getElementById('signupForm');
+      const signupBtn = document.getElementById('signupSubmit');
+
+      signupForm.addEventListener('submit', e => { e.preventDefault(); doSignUp(signupForm, signupBtn); });
+
+      // clear error on input
+      document.querySelectorAll('.auth-form input, .auth-form select').forEach(input => {
+        const clear = () => setError(input, '');
+        input.addEventListener('input', clear);
+        input.addEventListener('change', clear);
+      });
+
+      wirePasswordToggles();
+    });
+  </script>
+</body>
+</html>

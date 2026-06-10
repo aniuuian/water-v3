@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Sign in · AquaLease Nigeria</title>
+  <link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='%2300875A' d='M12 3C8 9 6 12 6 15a6 6 0 0 0 12 0c0-3-2-6-6-12z'/></svg>" />
+  <link rel="stylesheet" href="assets/css/design-system.css" />
+  <link rel="stylesheet" href="assets/css/components.css" />
+  <link rel="stylesheet" href="assets/css/pages.css" />
+</head>
+<body data-page="login">
+  <div id="offline-banner" class="offline-banner">Offline mode · showing cached information</div>
+  <div id="app-header"></div>
+
+  <main class="auth-shell" data-mode="signin">
+    <div class="auth-card card" data-mode="signin">
+      <!-- Logo / brand mark (mobile only) -->
+      <a href="index.html" class="auth-mark" aria-label="AquaLease">
+        <span class="mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3 C 8 9 6 12 6 15 a6 6 0 0 0 12 0 c0-3-2-6-6-12z"></path>
+          </svg>
+        </span>
+        <span class="word">AquaLease<small>Water · on terms</small></span>
+      </a>
+
+      <!-- Headline + sub -->
+      <div class="auth-head">
+        <h1 data-i18n="login.title">Sign in to AquaLease</h1>
+        <p data-i18n="login.sub" class="muted">Manage your leases, payments and water quality in one place.</p>
+      </div>
+
+      <!-- ============ SIGN IN form — minimal: account + password ============ -->
+      <form id="signinForm" class="auth-form" novalidate>
+        <label class="field">
+          <span data-i18n="login.email_label">Email or phone</span>
+          <input type="text" name="email" autocomplete="username" required data-i18n-ph="login.email_ph" placeholder="you@example.com" value="adaeze@aqualease.ng" />
+        </label>
+        <label class="field">
+          <span data-i18n="login.password_label">Password</span>
+          <div class="pwd">
+            <input type="password" name="password" autocomplete="current-password" required data-i18n-ph="login.password_ph" placeholder="••••••••" minlength="6" value="aqua2026" />
+            <button type="button" class="pwd-toggle" data-toggle-pwd aria-label="Show password">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+        </label>
+        <div class="auth-row">
+          <label class="check">
+            <input type="checkbox" name="remember" />
+            <span data-i18n="login.remember">Keep me signed in</span>
+          </label>
+          <a href="#" class="link" data-i18n="login.forgot">Forgot password?</a>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block btn-loading" id="signinSubmit" data-i18n="login.submit">Sign in</button>
+      </form>
+
+      <!-- Divider + social auth -->
+      <div class="auth-divider"><span data-i18n="login.or">or continue with</span></div>
+      <div class="auth-social">
+        <button type="button" class="btn btn-light btn-block social" data-social="whatsapp">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.8.9-1 1.1-.2.2-.4.2-.7.1-.3-.1-1.2-.4-2.3-1.4-.8-.7-1.4-1.6-1.6-1.9-.2-.3 0-.4.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5 0-.1-.6-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5 4.4.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.7-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.2-.3-.3-.6-.4zM12 2.5C6.8 2.5 2.6 6.7 2.6 12c0 1.7.5 3.4 1.5 4.8L2.5 21.5l4.8-1.6c1.4.8 3 1.2 4.7 1.2 5.2 0 9.4-4.2 9.4-9.4 0-2.5-1-4.9-2.8-6.6-1.7-1.8-4.1-2.8-6.6-2.8z"/></svg>
+          <span data-i18n="login.wa_btn">Continue with WhatsApp</span>
+        </button>
+        <button type="button" class="btn btn-light btn-block social" data-social="google">
+          <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+            <path fill="#4285F4" d="M22 12.2c0-.7-.1-1.4-.2-2H12v3.8h5.6c-.2 1.3-.9 2.4-2 3.1v2.6h3.3c2-1.8 3.1-4.5 3.1-7.5z"/>
+            <path fill="#34A853" d="M12 22c2.7 0 5-.9 6.7-2.4l-3.3-2.6c-.9.6-2 1-3.4 1-2.6 0-4.8-1.7-5.6-4.1H3v2.7C4.7 19.7 8.1 22 12 22z"/>
+            <path fill="#FBBC05" d="M6.4 13.9c-.2-.6-.3-1.2-.3-1.9s.1-1.3.3-1.9V7.4H3C2.4 8.6 2 10 2 12s.4 3.4 1 4.6l3.4-2.7z"/>
+            <path fill="#EA4335" d="M12 5.9c1.5 0 2.8.5 3.8 1.5l2.9-2.9C17 2.9 14.7 2 12 2 8.1 2 4.7 4.3 3 7.4l3.4 2.7c.8-2.4 3-4.2 5.6-4.2z"/>
+          </svg>
+          <span data-i18n="login.google_btn">Continue with Google</span>
+        </button>
+      </div>
+
+      <!-- Switch link to signup page -->
+      <p class="auth-switch">
+        <span data-i18n="login.no_account">Don't have an account?</span>
+        <a href="signup.html" data-i18n="login.create">Create one</a>
+      </p>
+    </div>
+
+    <!-- Right side: brand value panel (signin) -->
+    <aside class="auth-aside auth-aside-signin">
+      <div class="aside-grain"></div>
+      <div class="aside-inner">
+        <div class="eyebrow" data-i18n="common.welcome">Welcome back</div>
+        <h2>
+          <em>Clean water,</em>
+          <span>one tap away.</span>
+        </h2>
+        <p>Manage your lease, track water quality, and pay your instalments in seconds — wherever you are in Nigeria.</p>
+        <ul class="aside-bullets">
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Free installation & filter changes
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Smart dunning — never lose water
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            BV rewards on every payment
+          </li>
+        </ul>
+        <div class="aside-foot">
+          <div class="aside-stat"><b>12,400+</b><span>active leases</span></div>
+          <div class="aside-stat"><b>36</b><span>cities</span></div>
+          <div class="aside-stat"><b>98.6%</b><span>on-time</span></div>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <div id="app-footer"></div>
+
+  <script src="assets/i18n/strings.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script>
+    /* ---------- i18n apply ---------- */
+    function applyI18n() {
+      document.querySelectorAll('[data-i18n]').forEach(el => el.textContent = window.T.tr(el.dataset.i18n));
+      document.querySelectorAll('[data-i18n-ph]').forEach(el => el.setAttribute('placeholder', window.T.tr(el.dataset.i18nPh)));
+      document.querySelectorAll('[data-i18n-aria]').forEach(el => el.setAttribute('aria-label', window.T.tr(el.dataset.i18nAria)));
+    }
+
+    /* ---------- Validation helpers ---------- */
+    function setError(input, msg) {
+      const field = input.closest('.field, .check');
+      let err = field?.querySelector('.field-err');
+      if (!err && field) {
+        err = document.createElement('small');
+        err.className = 'field-err';
+        field.appendChild(err);
+      }
+      if (err) err.textContent = msg || '';
+      if (msg) input.setAttribute('aria-invalid', 'true'); else input.removeAttribute('aria-invalid');
+    }
+    function isEmailOrPhone(v) { return /@|\+?\d{7,}/.test(v.trim()); }
+
+    /* ---------- Loading button ---------- */
+    function startLoading(btn, loadingLabel) {
+      btn.setAttribute('aria-busy', 'true');
+      btn.disabled = true;
+      btn.dataset._old = btn.innerHTML;
+      btn.innerHTML = `<span class="spinner"></span> ${loadingLabel || ''}`;
+    }
+    function stopLoading(btn) {
+      btn.removeAttribute('aria-busy');
+      btn.disabled = false;
+      if (btn.dataset._old) btn.innerHTML = btn.dataset._old;
+    }
+
+    function deriveNameFromEmail(email) {
+      const local = (email.split('@')[0] || '').replace(/[._-]+/g, ' ').trim();
+      if (!local) return 'Friend';
+      return local.split(/\s+/).map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+    }
+
+    function redirectAfterAuth() {
+      const next = new URLSearchParams(location.search).get('next') || 'index.html';
+      location.href = next;
+    }
+
+    /* ---------- SIGN IN: instant ---------- */
+    function doSignIn(form, btn) {
+      const email = form.email.value.trim();
+      const pwd = form.password.value;
+      let ok = true;
+      if (!email) { setError(form.email, window.T.tr('login.err_required')); ok = false; }
+      else if (!isEmailOrPhone(email)) { setError(form.email, window.T.tr('login.err_email')); ok = false; }
+      else setError(form.email, '');
+      if (!pwd) { setError(form.password, window.T.tr('login.err_required')); ok = false; }
+      else if (pwd.length < 6) { setError(form.password, window.T.tr('login.err_pwd')); ok = false; }
+      else setError(form.password, '');
+      if (!ok) { btn.focus(); return; }
+
+      startLoading(btn, window.T.tr('login.submit_loading'));
+      setTimeout(() => {
+        const firstName = deriveNameFromEmail(email).split(' ')[0];
+        window.Auth.login({
+          firstName, name: deriveNameFromEmail(email), email,
+          signedInAt: Date.now(),
+        });
+        window.toast(window.T.tr('login.success_signin'), 'success');
+        redirectAfterAuth();
+      }, 250);
+    }
+
+    /* ---------- Password show/hide ---------- */
+    function wirePasswordToggles() {
+      document.querySelectorAll('[data-toggle-pwd]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const input = btn.parentElement.querySelector('input');
+          if (!input) return;
+          input.type = input.type === 'password' ? 'text' : 'password';
+          btn.setAttribute('aria-pressed', input.type === 'text' ? 'true' : 'false');
+        });
+      });
+    }
+
+    /* ---------- Social buttons (stub) ---------- */
+    function wireSocial() {
+      document.querySelectorAll('[data-social]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const provider = btn.dataset.social;
+          const user = {
+            firstName: provider === 'whatsapp' ? 'Adaeze' : 'Friend',
+            name: provider === 'whatsapp' ? 'Adaeze Okonkwo' : 'Guest',
+            email: provider + '@aqualease.ng',
+            signedInAt: Date.now(),
+          };
+          window.Auth.login(user);
+          window.toast(window.T.tr('login.success_signin'), 'success');
+          redirectAfterAuth();
+        });
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      applyI18n();
+
+      const signinForm = document.getElementById('signinForm');
+      const signinBtn = document.getElementById('signinSubmit');
+
+      signinForm.addEventListener('submit', e => { e.preventDefault(); doSignIn(signinForm, signinBtn); });
+
+      // clear error on input
+      document.querySelectorAll('.auth-form input, .auth-form select').forEach(input => {
+        const clear = () => setError(input, '');
+        input.addEventListener('input', clear);
+        input.addEventListener('change', clear);
+      });
+
+      wirePasswordToggles();
+      wireSocial();
+    });
+  </script>
+</body>
+</html>

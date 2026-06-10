@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Sign Agreement · AquaLease Nigeria</title>
+  <link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='%2300875A' d='M12 3C8 9 6 12 6 15a6 6 0 0 0 12 0c0-3-2-6-6-12z'/></svg>" />
+  <link rel="stylesheet" href="assets/css/design-system.css" />
+  <link rel="stylesheet" href="assets/css/components.css" />
+  <link rel="stylesheet" href="assets/css/pages.css" />
+</head>
+<body data-page="agreement">
+  <div id="offline-banner" class="offline-banner">Offline mode · showing cached information</div>
+  <div id="app-header"></div>
+
+  <main class="page agreement-shell">
+    <div class="container">
+      <div class="crumbs" style="font-family:var(--font-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-500);margin-bottom:18px">
+        <a href="index.html">Home</a> <span>›</span> <a href="checkout.html" data-i18n="checkout.title"></a> <span>›</span> <span data-i18n="agreement.title"></span>
+      </div>
+      <h1 style="font-family:var(--font-display);font-size:var(--t-h1);font-weight:500;letter-spacing:-.02em;margin-bottom:8px" data-i18n="agreement.title"></h1>
+      <p style="color:var(--ink-500);margin-bottom:32px" data-i18n="agreement.scroll_hint"></p>
+
+      <div class="stepper">
+        <div class="step done"><span class="n">1</span><span data-i18n="checkout.step1"></span></div>
+        <div class="sep"></div>
+        <div class="step done"><span class="n">2</span><span data-i18n="checkout.step2"></span></div>
+        <div class="sep"></div>
+        <div class="step done"><span class="n">3</span><span data-i18n="checkout.step3"></span></div>
+        <div class="sep"></div>
+        <div class="step done"><span class="n">4</span><span data-i18n="checkout.step4"></span></div>
+        <div class="sep"></div>
+        <div class="step active"><span class="n">5</span><span data-i18n="checkout.step5"></span></div>
+        <div class="sep"></div>
+        <div class="step"><span class="n">6</span><span data-i18n="checkout.step6"></span></div>
+      </div>
+
+      <div class="agreement-grid">
+        <article class="agreement-paper" id="agreementPaper">
+          <header class="head">
+            <div>
+              <div class="eyebrow" style="margin-bottom:4px">Agreement #AQL-DRAFT</div>
+              <h2 data-i18n="agreement.title"></h2>
+            </div>
+            <div class="badge badge-ok badge-dot" data-i18n="agreement.sign_btn">DRAFT</div>
+          </header>
+          <div class="scroll" id="clauses"></div>
+          <div class="fade"></div>
+        </article>
+
+        <aside class="sign-side">
+          <div class="terms-meta" id="termsMeta"></div>
+
+          <label class="checkbox" style="margin:16px 0">
+            <input type="checkbox" id="readAll" disabled />
+            <span>I have scrolled to the end of the agreement.</span>
+          </label>
+
+          <div class="signature-pad" id="signPad">Adaeze Okonkwo</div>
+
+          <label class="checkbox" style="margin-bottom:24px">
+            <input type="checkbox" id="agreeSign" disabled />
+            <span data-i18n="agreement.sign"></span>
+          </label>
+
+          <button class="btn btn-primary btn-block btn-lg" id="signBtn" disabled data-loading>
+            <span data-label>
+              <span data-i18n="agreement.sign_btn"></span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </span>
+          </button>
+          <p style="font-size:12px;color:var(--ink-500);margin-top:12px;text-align:center">After signing, a PDF will be generated and emailed to you.</p>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <div id="app-footer"></div>
+
+  <script src="assets/i18n/strings.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script>
+    const draft = JSON.parse(localStorage.getItem('al.checkout.draft') || '{}');
+    const cards = window.T.trArray('products.cards');
+    const product = (cards || []).find(c => c.id === draft.productId) || (cards || [])[1];
+    const term = draft.term || 12;
+    const calc = window.AL.calcLease(product.price, term);
+
+    function renderClauses() {
+      const list = window.T.trArray('agreement.clauses');
+      const items = Array.isArray(list) ? list : [];
+      document.getElementById('clauses').innerHTML = `<ol>${items.map(c => `<li>${c}</li>`).join('')}</ol>`;
+    }
+
+    function renderTermsMeta() {
+      document.getElementById('termsMeta').innerHTML = `
+        <div class="row"><span class="k">${window.T.tr('checkout.summary')}</span><span class="v">${product.name}</span></div>
+        <div class="row"><span class="k">${window.T.tr('mall.terms')}</span><span class="v">${term} ${window.T.tr('common.months')}</span></div>
+        <div class="row"><span class="k">${window.T.tr('mall.down')}</span><span class="v">${window.Money.format(calc.down)}</span></div>
+        <div class="row"><span class="k">${window.T.tr('mall.month_pay')}</span><span class="v">${window.Money.format(calc.monthly)}/mo</span></div>
+        <div class="row"><span class="k">${window.T.tr('mall.bv')}</span><span class="v" style="color:var(--brand-700)">${calc.bv} BV</span></div>
+      `;
+    }
+
+    function applyI18nAgree() {
+      document.querySelectorAll('[data-i18n]').forEach(el => el.textContent = window.T.tr(el.dataset.i18n));
+      renderClauses();
+      renderTermsMeta();
+
+      const paper = document.getElementById('agreementPaper');
+      const scrollEl = paper.querySelector('.scroll');
+      const readAll = document.getElementById('readAll');
+      const agreeSign = document.getElementById('agreeSign');
+      const signBtn = document.getElementById('signBtn');
+
+      // Enable checkboxes either when user scrolls to the end OR
+      // when the content fits inside the container (no scroll needed).
+      function unlockForSigning() {
+        paper.classList.add('scrolled');
+        readAll.disabled = false;
+        readAll.checked = true;
+        agreeSign.disabled = false;
+        signBtn.disabled = false;
+      }
+
+      function needsScroll() {
+        // 4px tolerance for sub-pixel rounding
+        return scrollEl.scrollHeight - scrollEl.clientHeight > 4;
+      }
+
+      function checkScrollEnd() {
+        const atEnd = scrollEl.scrollTop + scrollEl.clientHeight >= scrollEl.scrollHeight - 4;
+        if (atEnd) unlockForSigning();
+      }
+
+      // If the content fits, there is nothing to scroll — unlock immediately.
+      // If it does not, listen to scroll + watch for resize.
+      if (!needsScroll()) {
+        requestAnimationFrame(() => {
+          if (!needsScroll()) unlockForSigning();
+        });
+      }
+      scrollEl.addEventListener('scroll', checkScrollEnd, { passive: true });
+      window.addEventListener('resize', () => { if (!needsScroll()) unlockForSigning(); });
+
+      const signPad = document.getElementById('signPad');
+      signPad.addEventListener('click', () => {
+        if (readAll.disabled) { window.toast('Please scroll to the end first.'); return; }
+        signPad.style.color = 'var(--ink-900)';
+        signPad.style.background = 'var(--brand-050)';
+        signPad.style.borderColor = 'var(--brand-500)';
+      });
+
+      signBtn.addEventListener('click', () => {
+        if (signBtn.disabled) { window.toast('Please confirm the agreement first.'); return; }
+        signBtn.setAttribute('aria-busy', 'true');
+        signBtn.querySelector('[data-label]').innerHTML = `<span class="spinner"></span> ${window.T.tr('notif.signed')}`;
+        setTimeout(() => {
+          const order = window.AL.loadOrder() || {};
+          order.status = 'awaiting_shipping';
+          order.signedAt = new Date().toISOString();
+          window.AL.pushOrder(order);
+          window.AL.cachePay({ nextAmount: calc.monthly, dueDate: new Date(Date.now() + 30 * 86400e3).toISOString() });
+          location.href = 'shipping.html';
+        }, 1500);
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', applyI18nAgree);
+  </script>
+</body>
+</html>
