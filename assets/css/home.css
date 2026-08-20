@@ -5,8 +5,8 @@
 /* ---------- Hero ---------- */
 .hero {
   position: relative;
-  min-height: calc(100vh - var(--header-h));
-  padding: var(--s-20) 0 var(--s-16);
+  min-height: auto;
+  padding: var(--s-16) 0 var(--s-12);
   display: flex;
   align-items: stretch;
   overflow: hidden;
@@ -27,12 +27,20 @@
 .hero h1 {
   font-family: var(--font-display);
   font-size: var(--t-display-l);          /* tightened from --t-display-xl: 48–96 vs 64–132 */
-  line-height: .98;
-  letter-spacing: -.03em;
-  font-weight: 380;
-  font-variation-settings: 'opsz' 144, 'SOFT' 30, 'WONK' 0;
+  line-height: 1.04;
+  letter-spacing: -.025em;
+  font-weight: 500;
   color: var(--ink-950);
-  margin: 14px 0 20px;
+  margin: 14px 0 24px;
+}
+.hero h1 .line-a,
+.hero h1 .line-c { display: inline; }
+.hero h1 .line-b {
+  display: inline;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--brand-700);
 }
 .hero h1 em {
   font-family: var(--font-serif);
@@ -55,16 +63,16 @@
 .hero .sub {
   max-width: 520px;
   font-size: 17px;
-  line-height: 1.55;
+  line-height: 1.6;
   color: var(--ink-700);
-  margin-bottom: 36px;
+  margin-bottom: 32px;
 }
-.hero .ctas { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+.hero .ctas { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-bottom: 48px; }
 .hero .meta-line {
-  margin-top: 56px;
-  padding-top: 24px;
+  margin-top: 0;
+  padding-top: 20px;
   border-top: 1px solid var(--ink-200);
-  display: flex; gap: 32px; flex-wrap: wrap;
+  display: flex; gap: 24px; flex-wrap: wrap;
   font-family: var(--font-mono);
   font-size: 11px;
   letter-spacing: .22em;
@@ -155,11 +163,10 @@
 .stat-strip .v {
   font-family: var(--font-display);
   font-size: 44px;
-  font-weight: 380;
-  letter-spacing: -.03em;
+  font-weight: 500;
+  letter-spacing: -.02em;
   line-height: 1;
   color: var(--ink-950);
-  font-variation-settings: 'opsz' 144;
 }
 .stat-strip .v em { font-family: var(--font-serif); font-style: italic; color: var(--brand-700); }
 .stat-strip .l {
@@ -188,9 +195,9 @@
 .promise .head h2 {
   font-family: var(--font-display);
   font-size: var(--t-display-l);
-  font-weight: 380;
-  letter-spacing: -.03em;
-  line-height: 1;
+  font-weight: 500;
+  letter-spacing: -.025em;
+  line-height: 1.02;
   color: var(--paper-2);
   margin-top: 12px;
 }
@@ -232,7 +239,7 @@
 /* ---------- Showcase / Featured product ---------- */
 .showcase {
   position: relative;
-  padding: var(--s-32) 0;
+  padding: var(--s-24) 0;
   background: var(--paper-2);
   border-top: 1px solid var(--ink-200);
   border-bottom: 1px solid var(--ink-200);
@@ -242,8 +249,8 @@
 .showcase .head h2 {
   font-family: var(--font-display);
   font-size: var(--t-display-m);
-  font-weight: 380;
-  letter-spacing: -.025em;
+  font-weight: 500;
+  letter-spacing: -.02em;
   line-height: 1.05;
   color: var(--ink-950);
   max-width: 700px;
@@ -296,14 +303,14 @@
 /* ---------- How it works ---------- */
 .steps {
   background: var(--paper);
-  padding: var(--s-32) 0;
+  padding: var(--s-24) 0;
 }
-.steps .head { text-align: center; margin-bottom: 64px; }
+.steps .head { text-align: center; margin-bottom: 56px; }
 .steps .head h2 {
   font-family: var(--font-display);
   font-size: var(--t-display-m);
-  letter-spacing: -.025em;
-  font-weight: 380;
+  letter-spacing: -.02em;
+  font-weight: 500;
   line-height: 1.05;
   color: var(--ink-950);
   margin-top: 12px;
@@ -322,7 +329,7 @@
   font-size: 64px;
   font-weight: 300;
   color: var(--brand-500);
-  letter-spacing: -.04em;
+  letter-spacing: -.03em;
   line-height: 1;
   margin-bottom: 16px;
 }
@@ -347,8 +354,8 @@
 .voices .head h2 {
   font-family: var(--font-display);
   font-size: var(--t-display-m);
-  letter-spacing: -.025em;
-  font-weight: 380;
+  letter-spacing: -.02em;
+  font-weight: 500;
   color: var(--paper-2);
   max-width: 600px;
   line-height: 1.05;
@@ -367,7 +374,7 @@
   font-size: 22px;
   line-height: 1.35;
   color: var(--paper-2);
-  font-weight: 380;
+  font-weight: 500;
   margin: 0 0 24px;
 }
 .voices .voice blockquote em { font-family: var(--font-serif); font-style: italic; }
@@ -398,7 +405,7 @@
 .cta-band h2 {
   font-family: var(--font-display);
   font-size: var(--t-display-m);
-  font-weight: 380;
+  font-weight: 500;
   letter-spacing: -.025em;
   line-height: 1;
   max-width: 720px;
@@ -432,8 +439,8 @@
 
 /* ---------- Tablet portrait (768px) ---------- */
 @media (max-width: 768px) {
-  .hero-copy h1 { font-size: 48px; line-height: 1.05; }
-  .hero-copy p { font-size: 17px; }
+  .hero-copy h1 { font-size: 44px; line-height: 1.04; }
+  .hero-copy p { font-size: 16px; }
   .feature-card .img-side { min-height: 280px; }
   .cta-band h2 { font-size: 32px; }
   .cta-band .inner { padding: 32px 24px; }
@@ -441,11 +448,10 @@
 
 /* ---------- Mobile (480px) ---------- */
 @media (max-width: 480px) {
-  .hero-copy h1 { font-size: 38px; }
+  .hero-copy h1 { font-size: 36px; line-height: 1.05; }
   .hero-copy .eyebrow { font-size: 10px; }
-  .hero-copy p { font-size: 16px; }
-  .hero-copy .actions { flex-direction: column; align-items: stretch; }
-  .hero-copy .actions .btn { width: 100%; }
+  .hero-copy p { font-size: 15px; }
+  .hero .ctas .btn { flex: 1; min-width: 0; }
   .feature-card .info-side { padding: 20px; }
   .feature-card .price-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
   .feature-card .info-side h2 { font-size: 26px; }
@@ -458,7 +464,8 @@
 
 /* ---------- Very small phones (375px) ---------- */
 @media (max-width: 375px) {
-  .hero-copy h1 { font-size: 32px; }
+  .hero-copy h1 { font-size: 30px; }
+  .hero-copy h1 .line-b { margin-top: 0; }
   .feature-card .info-side h2 { font-size: 22px; }
   .cta-band h2 { font-size: 22px; }
 }

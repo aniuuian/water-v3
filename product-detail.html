@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Product Detail · AquaLife</title>
+  <meta name="description" content="AquaLife product detail page with wellness product benefits, ingredients and quality notes." />
+  <link rel="stylesheet" href="assets/css/design-system.css?v=20260819-2" />
+  <link rel="stylesheet" href="assets/css/components.css?v=20260819-2" />
+  <link rel="stylesheet" href="assets/css/pages.css?v=20260819-2" />
+  <link rel="stylesheet" href="assets/css/website.css?v=20260819-2" />
+</head>
+<body data-page="products">
+  <div id="offline-banner" class="offline-banner">Offline mode · showing cached information</div>
+  <div id="app-header"></div>
+
+  <main class="site-main product-detail-page">
+    <section class="product-detail-hero">
+      <div class="container product-detail-hero-grid">
+        <div class="product-detail-copy">
+          <div class="crumbs"><a href="index.html" data-detail-i18n="home">Home</a> <span>/</span> <a href="products.html" data-detail-i18n="products">Products</a> <span>/</span> <span id="detailCrumb">Product</span></div>
+          <p class="eyebrow eyebrow-ink" id="detailCategory">Product Center</p>
+          <h1 id="detailTitle">Product Detail</h1>
+          <p id="detailIntro">AquaLife product information for the selected category.</p>
+          <div class="detail-chip-row" id="detailTags"></div>
+          <div class="detail-bv-row" id="detailBV" hidden></div>
+          <div class="detail-actions">
+            <a class="btn btn-primary btn-lg" id="addToCartBtn" href="javascript:void(0)" data-product-id="">Order Now<span class="phase-badge">二期</span></a>
+          </div>
+        </div>
+        <div class="product-detail-visual">
+          <img id="detailImage" src="assets/img/products/health-wellness/elken-spirulina.webp" alt="Product image" loading="eager" />
+        </div>
+      </div>
+    </section>
+
+    <section class="site-section product-detail-section">
+      <div class="container product-detail-layout">
+        <div class="detail-main">
+          <section class="detail-panel">
+            <div class="detail-section-head">
+              <p class="eyebrow eyebrow-ink" data-detail-i18n="overview">Overview</p>
+              <h2 data-detail-i18n="highlights">Product Highlights</h2>
+            </div>
+            <div class="detail-benefit-grid" id="detailBenefits"></div>
+          </section>
+
+          <section class="detail-panel">
+            <div class="detail-section-head">
+              <p class="eyebrow eyebrow-ink" data-detail-i18n="formula">Formula</p>
+              <h2 id="formulaTitle" data-detail-i18n="formulaTitle">Ingredients & Product Story</h2>
+            </div>
+            <p class="detail-lead" id="formulaIntro"></p>
+            <div class="detail-list-grid" id="formulaList"></div>
+          </section>
+
+          <section class="detail-panel">
+            <div class="detail-section-head">
+              <p class="eyebrow eyebrow-ink" data-detail-i18n="useCase">Use Case</p>
+              <h2 data-detail-i18n="routineTitle">Designed For Everyday Routines</h2>
+            </div>
+            <div class="detail-scenario-list" id="scenarioList"></div>
+          </section>
+        </div>
+
+        <aside class="detail-aside">
+          <div class="detail-note">
+            <p class="eyebrow eyebrow-ink" data-detail-i18n="quality">Quality Note</p>
+            <h3 data-detail-i18n="medicalTitle">Product education, not medical advice.</h3>
+            <p id="qualityNote" data-detail-i18n="medicalText">Use supplements as part of a balanced lifestyle. If you have a health condition, speak with a qualified professional before use.</p>
+          </div>
+          <div class="detail-note">
+            <p class="eyebrow eyebrow-ink" data-detail-i18n="related">Related Products</p>
+            <div class="related-list" id="relatedList"></div>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <div id="app-footer"></div>
+  <script src="assets/i18n/strings.js?v=20260819-2"></script>
+  <script src="assets/js/app.js?v=20260819-2"></script>
+  <script src="assets/js/website.js?v=20260819-2"></script>
+  <script>
+    const productDetails = {
+      'spirulina': {
+        name: 'Spirulina',
+        category: 'Health & Wellness',
+        image: 'assets/img/products/health-wellness/elken-spirulina.webp',
+        intro: 'Plant-based daily nutrition created to support everyday wellness routines.',
+        tags: ['Plant-based', 'Daily nutrition', 'Halal positioning'],
+        benefits: [
+          ['Nutrient dense', 'A practical everyday supplement with protein, vitamins, minerals and phytonutrients.'],
+          ['Daily vitality', 'Designed for customers who want simple nutritional support in a busy routine.'],
+          ['Easy routine fit', 'Works as a consistent wellness habit alongside balanced food and hydration.'],
+        ],
+        formulaIntro: 'Inspired by Elken Spirulina product storytelling, this page positions Spirulina as a nutrient-rich plant supplement rather than a medical treatment.',
+        formula: ['Plant protein and amino acid support', 'Minerals and vitamins for daily nutrition', 'Naturally sourced green nutrition profile', 'Quality-oriented supplement positioning'],
+        scenarios: ['Busy professionals building a simple nutrition routine', 'Families looking for everyday wellness support', 'Active lifestyles needing convenient plant-based nutrition'],
+      },
+      'calmag': {
+        name: 'Calmag',
+        category: 'Health & Wellness',
+        image: 'assets/img/products/health-wellness/calmag.webp',
+        intro: 'Calcium and magnesium support designed for balanced daily care.',
+        tags: ['Calcium', 'Magnesium', 'Bone support'],
+        benefits: [
+          ['Bone health support', 'Formulated around daily mineral care for adults and families.'],
+          ['Balanced mineral routine', 'Pairs calcium support with magnesium and complementary nutrients.'],
+          ['Everyday care', 'Simple supplement positioning for long-term wellness habits.'],
+        ],
+        formulaIntro: 'The detail page can present Calmag around mineral support, bone structure care and daily nutritional balance.',
+        formula: ['Calcium support', 'Magnesium support', 'Zinc and collagen-oriented positioning', 'Daily supplement format'],
+        scenarios: ['Adults maintaining a mineral support routine', 'Customers seeking bone and joint lifestyle care', 'Families comparing daily wellness supplements'],
+      },
+      'velox-cplus': {
+        name: 'Velox C+',
+        category: 'Health & Wellness',
+        image: 'assets/img/products/health-wellness/velox-c-plus.webp',
+        intro: 'Vitamin C wellness support positioned for antioxidant care and everyday vitality.',
+        tags: ['Vitamin C', 'Antioxidant care', 'Daily support'],
+        benefits: [
+          ['Antioxidant support', 'Elken positions Velox C+ around vitamin C and antioxidant-focused daily wellness.'],
+          ['Immune routine', 'A simple supplement story for customers building daily protection habits.'],
+          ['Convenient format', 'Easy to explain and compare as part of a broader health supplement range.'],
+        ],
+        formulaIntro: 'Velox C+ can be presented around vitamin C nutrition, antioxidant support and everyday wellbeing routines, using careful non-medical language.',
+        formula: ['Vitamin C support', 'Antioxidant wellness positioning', 'Daily vitality routine', 'Supplement product format'],
+        scenarios: ['Customers building an everyday vitamin routine', 'Busy lifestyles needing simple supplement options', 'Health shoppers comparing antioxidant products'],
+      },
+      'ormega': {
+        name: 'Ormega',
+        category: 'Health & Wellness',
+        image: 'assets/img/products/health-wellness/ormega.webp',
+        intro: 'Omega nutrition for customers who want balanced support in a modern diet.',
+        tags: ['Omega nutrition', 'Heart-friendly positioning', 'Daily diet'],
+        benefits: [
+          ['Omega support', 'Elken presents Ormega in the health and wellness range as omega nutrition for daily routines.'],
+          ['Balanced diet story', 'Useful for explaining how essential fats fit into modern eating habits.'],
+          ['Everyday wellness', 'A simple product education path for customers comparing daily supplements.'],
+        ],
+        formulaIntro: 'Ormega should be framed around omega nutrition and balanced lifestyle support, without making treatment claims.',
+        formula: ['Omega nutrition positioning', 'Essential-fat lifestyle story', 'Daily supplement routine', 'Balanced modern diet support'],
+        scenarios: ['Customers comparing omega products', 'Adults building a daily supplement routine', 'Families focused on balanced nutrition choices'],
+      },
+      'kington-isotonic': {
+        name: 'Kington Isotonic',
+        category: 'Health & Wellness',
+        image: 'assets/img/products/health-wellness/kington-isotonic.webp',
+        intro: 'A refreshing isotonic drink option designed for hydration moments and active days.',
+        tags: ['Hydration', 'Isotonic drink', 'Active lifestyle'],
+        benefits: [
+          ['Hydration moments', 'Positioned as a refreshing option for daily hydration and active routines.'],
+          ['Active-day support', 'Easy to present for customers who want convenient drink choices.'],
+          ['Everyday refreshment', 'Fits into the product range as a lifestyle beverage rather than a medical product.'],
+        ],
+        formulaIntro: 'Kington Isotonic can be explained as an isotonic refreshment for busy and active lifestyle moments.',
+        formula: ['Isotonic beverage positioning', 'Refreshing drink format', 'Hydration lifestyle story', 'Convenient everyday use'],
+        scenarios: ['Active workdays', 'Post-activity refreshment moments', 'Customers browsing healthy beverage options'],
+      },
+      'kington-minerale': {
+        name: 'Kington Minérale',
+        category: 'Health & Wellness',
+        image: 'assets/img/products/health-wellness/kington-minerale.webp',
+        intro: 'Mineral-rich refreshment for simple daily drinking moments.',
+        tags: ['Minerals', 'Refreshment', 'Daily drink'],
+        benefits: [
+          ['Mineral refreshment', 'Presented as a light, everyday beverage in the wellness catalogue.'],
+          ['Simple routine', 'A low-friction drink choice for family and workday refreshment.'],
+          ['Lifestyle fit', 'Useful for customers comparing healthier everyday beverage options.'],
+        ],
+        formulaIntro: 'Kington Minérale can be positioned around mineral refreshment and daily beverage habits.',
+        formula: ['Mineral beverage positioning', 'Light daily refreshment', 'Convenient drink format', 'Everyday wellness lifestyle'],
+        scenarios: ['Daily hydration at home', 'Office refreshment moments', 'Customers comparing mineral drink options'],
+      },
+      'xeniji': {
+        name: 'Xeniji',
+        category: 'Health & Wellness',
+        image: 'assets/img/products/health-wellness/xeniji.webp',
+        intro: 'A fermented wellness drink concept for balanced daily routines.',
+        tags: ['Fermentation', 'Fruit & vegetable blend', 'Digestive routine'],
+        benefits: [
+          ['Broad botanical profile', 'Positioned around fruits, vegetables and fermentation-based wellness storytelling.'],
+          ['Routine friendly', 'A convenient daily drink format for customers building better habits.'],
+          ['Digestive lifestyle support', 'Presented as part of balanced food, hydration and wellness routines.'],
+        ],
+        formulaIntro: 'Xeniji can be presented through fermentation, fruit and vegetable diversity, and digestive lifestyle support.',
+        formula: ['Fruit and vegetable blend positioning', 'Long fermentation product story', 'Prebiotic and probiotic wellness narrative', 'Daily drink format'],
+        scenarios: ['Customers who prefer wellness drinks over tablets', 'Daily digestive wellness routines', 'Lifestyle-focused family health shopping'],
+      },
+      'c-joie-flex': {
+        name: 'C-Joie Flex',
+        category: 'Health & Wellness',
+        image: 'assets/img/products/health-wellness/c-joie-flex.webp',
+        intro: 'Joint and mobility support for customers who want to keep moving comfortably.',
+        tags: ['Mobility', 'Joint care', 'Active living'],
+        benefits: [
+          ['Movement support', 'Designed around comfort, mobility and active daily routines.'],
+          ['Joint care positioning', 'A wellness supplement story for customers comparing movement support options.'],
+          ['Active lifestyle', 'Useful in product education for busy adults, fitness routines and family care.'],
+        ],
+        formulaIntro: 'C-Joie Flex should be explained around mobility and joint lifestyle care with careful, non-medical wording.',
+        formula: ['Joint support positioning', 'Movement and flexibility product story', 'Daily supplement routine', 'Active lifestyle wellness framing'],
+        scenarios: ['Adults with active workdays', 'Customers maintaining mobility routines', 'Family wellness shoppers comparing joint-care products'],
+      },
+    };
+
+    const productIndex = [
+      ['Calmag', 'Health & Wellness', 'A simple mineral supplement for balanced daily care.', ['Calcium', 'Magnesium', 'Daily support'], 'assets/img/products/health-wellness/calmag.webp', 38000],
+      ['Elken Spirulina', 'Health & Wellness', 'Plant-based daily nutrition for active routines.', ['Daily nutrition', 'Plant sourced', 'Everyday wellness'], 'assets/img/products/health-wellness/elken-spirulina.webp', 52000],
+      ['C-Joie Flex', 'Health & Wellness', 'Joint and mobility support for everyday movement.', ['Mobility', 'Joint care', 'Active living'], 'assets/img/products/health-wellness/c-joie-flex.webp', 45000],
+      ['Advanced Age Recovery', 'Beauty & Skincare', 'A refined skincare formula for mature skin routines.', ['Age care', 'Firming support', 'Daily ritual'], 'assets/img/products/beauty-skincare/advanced-age-recovery.webp', 68000],
+      ['Naru Hydra', 'Beauty & Skincare', 'Hydration-focused care for fresh-looking skin.', ['Hydration', 'Daily skincare', 'Light feel'], 'assets/img/products/beauty-skincare/naru-hydra.webp', 48000],
+      ['Bio Pure N200', 'Home Appliances', 'A balanced purifier for families who want dependable daily water.', ['200 GPD', 'UV + Alkaline', 'Family use'], 'assets/img/products/home-appliances/bio-pure-n200.webp', 560000],
+      ['Bio Pure N300', 'Home Appliances', 'Higher-capacity water care for larger households and teams.', ['300 GPD', 'Hot & Cold', 'Office ready'], 'assets/img/products/home-appliances/bio-pure-n300.webp', 1240000],
+      ['Hydromi NH101', 'Home Appliances', 'A practical purifier for offices, shops and shared spaces.', ['101 GPD', 'POS option', 'Commercial use'], 'assets/img/products/home-appliances/hydromi-nh101.webp', 720000],
+      ['ELCAFE', 'Food & Beverage', 'A convenient coffee choice for workdays and home routines.', ['Coffee', 'Convenient', 'Daily energy'], 'assets/img/products/food-beverage/elcafe.webp', 25000],
+      ['Body Basics', 'Personal & Home Care', 'Simple body care essentials for daily freshness.', ['Body care', 'Freshness', 'Gentle use'], 'assets/img/products/personal-home-care/body-basics.webp', 15000],
+      ['Tricho Pro', 'Personal & Home Care', 'Hair care support for everyday confidence.', ['Hair care', 'Daily routine', 'Clean feel'], 'assets/img/products/personal-home-care/tricho-pro.webp', 16000],
+      ['BES Massage Device', 'Wellness Devices', 'Massage support for relaxation and recovery at home.', ['Massage', 'Relaxation', 'Home wellness'], 'assets/img/products/wellness-devices/bes-massage-device.webp', 95000],
+    ];
+
+    function slugify(name) {
+      return String(name || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/\+/g, 'plus').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+    }
+
+    function findProductImage(name) {
+      const hit = productIndex.find(([product]) => slugify(product) === slugify(name));
+      return hit ? hit[4] : 'assets/img/categories/health-wellness.webp';
+    }
+
+    function findProductMeta(name) {
+      return productIndex.find(([product]) => slugify(product) === slugify(name));
+    }
+
+    function fallbackDetail(name, category) {
+      const meta = findProductMeta(name);
+      const metaName = meta ? meta[0] : name;
+      const metaCategory = meta ? meta[1] : (category ? category.replace(/-/g, ' ') : 'Product Center');
+      const metaIntro = meta ? meta[2] : 'AquaLife product information for everyday wellness and lifestyle routines.';
+      const metaTags = meta ? meta[3] : ['Product education', 'Everyday use', 'Quality focused'];
+      return {
+        name: metaName,
+        category: metaCategory,
+        image: findProductImage(metaName),
+        intro: metaIntro,
+        tags: metaTags,
+        benefits: [
+          [metaTags[0] || 'Product focus', `Built around ${metaIntro.charAt(0).toLowerCase()}${metaIntro.slice(1)}`],
+          [metaTags[1] || 'Daily routine', 'Organized for simple customer education and quick product comparison.'],
+          [metaTags[2] || 'Quality focused', 'Presented with benefit notes, product story and everyday use cases.'],
+        ],
+        formulaIntro: `This detail page summarizes ${metaName} using the AquaLife product catalogue structure and category-level product positioning.`,
+        formula: metaTags.map(tag => `${tag} positioning`).concat(['Daily routine guidance']).slice(0, 4),
+        scenarios: [`Customers exploring ${metaCategory}`, 'Lifestyle shopping journeys', 'Support conversations and product education'],
+      };
+    }
+
+
+
+    const detailText = {
+      en: {
+        home: 'Home',
+        products: 'Products',
+        back: 'Back to Category',
+        overview: 'Overview',
+        highlights: 'Product Highlights',
+        formula: 'Formula',
+        formulaTitle: 'Ingredients & Product Story',
+        useCase: 'Use Case',
+        routineTitle: 'Designed For Everyday Routines',
+        quality: 'Quality Note',
+        medicalTitle: 'Product education, not medical advice.',
+        medicalText: 'Use supplements as part of a balanced lifestyle. If you have a health condition, speak with a qualified professional before use.',
+        related: 'Related Products',
+      },
+
+    };
+
+
+
+
+
+function localizedDetail(detail) { return detail; }
+
+
+    function applyDetailText() {
+      const dict = detailText[window.T && window.T.current === 'zh' ? 'zh' : 'en'];
+      document.querySelectorAll('[data-detail-i18n]').forEach(el => {
+        const key = el.getAttribute('data-detail-i18n');
+        if (dict[key]) el.textContent = dict[key];
+      });
+    }
+
+    function renderList(host, items, className) {
+      host.innerHTML = items.map(item => `<div class="${className}">${item}</div>`).join('');
+    }
+
+    function renderDetailPage() {
+      const params = new URLSearchParams(location.search);
+      const name = params.get('name') || 'Product Detail';
+      const category = params.get('category') || '';
+      const slug = slugify(name);
+      const baseDetail = productDetails[slug] || fallbackDetail(name, category);
+      const detail = localizedDetail(baseDetail, slug);
+      const meta = findProductMeta(name);
+      applyDetailText();
+      document.title = detail.name + ' · AquaLife';
+      document.getElementById('detailTitle').textContent = detail.name;
+      document.getElementById('detailCrumb').textContent = detail.name;
+      document.getElementById('detailCategory').textContent = detail.category;
+      document.getElementById('detailIntro').textContent = detail.intro;
+      document.getElementById('detailImage').src = detail.image;
+      document.getElementById('detailImage').alt = detail.name;
+      document.getElementById('detailTags').innerHTML = detail.tags.map(tag => `<span>${tag}</span>`).join('');
+      document.getElementById('detailBenefits').innerHTML = detail.benefits.map(([title, body]) => `<article><h3>${title}</h3><p>${body}</p></article>`).join('');
+      document.getElementById('formulaIntro').textContent = detail.formulaIntro;
+      renderList(document.getElementById('formulaList'), detail.formula, 'detail-list-item');
+      renderList(document.getElementById('scenarioList'), detail.scenarios, 'detail-scenario-item');
+      const relatedProducts = productIndex
+        .filter(([product, productCategory]) => product !== baseDetail.name && productCategory === baseDetail.category)
+        .slice(0, 4);
+      const categoryKeys = {
+        'Health & Wellness': 'health-wellness',
+        'Beauty & Skincare': 'beauty-skincare',
+        'Home Appliances': 'home-appliances',
+        'Food & Beverage': 'food-beverage',
+        'Personal & Home Care': 'personal-home-care',
+        'Wellness Devices': 'wellness-devices',
+      };
+      document.getElementById('relatedList').innerHTML = relatedProducts
+        .map(([product, productCategory, , , image]) => {
+          const productCategoryKey = categoryKeys[productCategory] || 'health-wellness';
+          return `<a href="product-detail.html?name=${encodeURIComponent(product)}&category=${encodeURIComponent(productCategoryKey)}"><img src="${image}" alt="${product}" loading="lazy" /><span>${product}</span></a>`;
+        })
+        .join('');
+
+      // Wire "Order Now" to the checkout page
+      const orderBtn = document.getElementById('addToCartBtn');
+      if (orderBtn && window.ProductCatalog) {
+        // meta = [name, categoryLabel, intro, tags, image, price]
+        const price = meta ? meta[5] : 0;
+        orderBtn.innerHTML = `Order Now · ₦${(price || 0).toLocaleString()}<span class="phase-badge">二期</span>`;
+        orderBtn.onclick = () => {
+          const catalog = window.ProductCatalog.allProducts || [];
+          const found = catalog.find(p => p.name === baseDetail.name);
+          if (found && window.goCheckout) {
+            window.goCheckout(found);
+          } else {
+            location.href = 'checkout.html?name=' + encodeURIComponent(baseDetail.name) + '&category=' + encodeURIComponent(category);
+          }
+        };
+      }
+
+      // Show BV rewards (always visible; ordering requires sign-in anyway)
+      const bvRow = document.getElementById('detailBV');
+      if (bvRow) {
+        const price = meta ? meta[5] : 0;
+        const bv = window.ProductCatalog.getBV ? window.ProductCatalog.getBV({ price: price || 0 }) : Math.round((price || 0) / 1000);
+        if (bv > 0) {
+          bvRow.hidden = false;
+          bvRow.innerHTML = `<span class="bv-badge">Earn <b>${bv} BV</b> with this purchase</span>`;
+        } else {
+          bvRow.hidden = true;
+        }
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', renderDetailPage);
+    window.addEventListener('al:langchange', renderDetailPage);
+  </script>
+</body>
+</html>

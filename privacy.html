@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Privacy Policy · AquaLife Nigeria</title>
+  <meta name="description" content="How AquaLife Nigeria collects, uses and protects your personal data — fully aligned with the Nigeria Data Protection Regulation (NDPR)." />
+  <link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='%2300875A' d='M12 3C8 9 6 12 6 15a6 6 0 0 0 12 0c0-3-2-6-6-12z'/></svg>" />
+  <link rel="stylesheet" href="assets/css/design-system.css?v=20260819-2" />
+  <link rel="stylesheet" href="assets/css/components.css?v=20260819-2" />
+  <link rel="stylesheet" href="assets/css/pages.css?v=20260819-2" />
+  <link rel="stylesheet" href="assets/css/website.css?v=20260819-2" />
+</head>
+<body data-page="privacy">
+  <div id="offline-banner" class="offline-banner">Offline mode · showing cached information</div>
+  <div id="app-header"></div>
+
+  <main class="legal-shell">
+    <div class="container">
+      <div class="crumbs" style="font-family:var(--font-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-500);margin-bottom:18px">
+        <a href="index.html">Home</a> <span>›</span> <span data-i18n="legal.privacy.title"></span>
+      </div>
+
+      <div class="legal-grid">
+        <aside>
+          <nav class="legal-toc" id="legalToc" aria-label="On this page">
+            <h6>On this page</h6>
+            <ol id="tocList"></ol>
+          </nav>
+          <div class="legal-toc legal-related">
+            <h6>Related</h6>
+            <a href="terms.html" data-i18n="legal.terms.title"></a>
+            <a href="refund.html" data-i18n="legal.refund.title"></a>
+            <a href="#" data-cookie-reopen data-i18n="cookie.title"></a>
+          </div>
+        </aside>
+
+        <article class="legal-paper">
+          <div class="eyebrow"><span class="dot"></span><span>NDPR Compliant · Effective 9 June 2026</span></div>
+          <h1 data-i18n="legal.privacy.title"></h1>
+          <p class="sub" data-i18n="legal.privacy.sub"></p>
+          <span class="updated" data-i18n="legal.privacy.updated"></span>
+
+          <div id="legalSections"></div>
+
+          <div class="legal-actions">
+            <span class="meta">AquaLife Nigeria Limited · RC-1938472</span>
+            <a class="btn btn-ghost" href="mailto:privacy@aqualease.ng">privacy@aqualease.ng</a>
+            <a class="btn btn-primary" href="terms.html" data-i18n="legal.terms.title"></a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </main>
+
+  <div id="app-footer"></div>
+
+  <script src="assets/i18n/strings.js?v=20260819-2"></script>
+  <script src="assets/js/app.js?v=20260819-2"></script>
+  <script src="assets/js/website.js?v=20260819-2"></script>
+  <script>
+    function legalData(path) {
+      let cur = window.T.trArray(path);
+      if (cur && cur.length) return { title: window.T.tr(path + '.title'), sub: window.T.tr(path + '.sub'), updated: window.T.tr(path + '.updated'), sections: cur };
+      // Fallback to English when this locale has no translation
+      const en = (window.I18N.en.legal || {})[path.split('.').pop()] || {};
+      return { title: en.title || window.T.tr(path + '.title'), sub: en.sub || '', updated: en.updated || '', sections: en.sections || [] };
+    }
+
+    function applyI18nPrivacy() {
+      document.querySelectorAll('[data-i18n]').forEach(el => el.textContent = window.T.tr(el.dataset.i18n));
+
+      const data = legalData('legal.privacy');
+      const host = document.getElementById('legalSections');
+      const toc = document.getElementById('tocList');
+      host.innerHTML = data.sections.map((s, i) => {
+        const id = 'sec-' + (i + 1);
+        return `
+          <section id="${id}">
+            <h2>${s.h2}</h2>
+            ${(s.body || []).map(p => `<p>${p}</p>`).join('')}
+          </section>
+        `;
+      }).join('');
+      toc.innerHTML = data.sections.map((s, i) => {
+        const id = 'sec-' + (i + 1);
+        const label = s.h2.replace(/^\d+\.\s*/, '');
+        return `<li><a href="#${id}">${label}</a></li>`;
+      }).join('');
+    }
+    document.addEventListener('DOMContentLoaded', applyI18nPrivacy);
+  </script>
+</body>
+</html>

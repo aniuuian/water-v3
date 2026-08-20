@@ -3,7 +3,7 @@
    Editorial-meets-luxury aesthetic anchored in Nigerian identity
    ============================================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,300..900,0..100,0..1&family=Instrument+Serif:ital@0;1&family=Manrope:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 :root {
   /* ---------- Brand & Neutrals ---------- */
@@ -42,10 +42,10 @@
   --gold-500: #C9A961;
   --gold-300: #E5D4A1;
 
-  /* ---------- Type scale ---------- */
-  --font-display: 'Fraunces', 'Instrument Serif', Georgia, serif;
-  --font-serif:   'Instrument Serif', 'Fraunces', Georgia, serif;
-  --font-sans:    'Manrope', 'Helvetica Neue', Arial, sans-serif;
+  /* ---------- Type scale (all SIL OFL — free for commercial use) ---------- */
+  --font-display: 'Space Grotesk', 'Inter', system-ui, sans-serif;
+  --font-serif:   'Instrument Serif', Georgia, serif;
+  --font-sans:    'Inter', 'Helvetica Neue', Arial, sans-serif;
   --font-mono:    'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
 
   /* fluid type (clamp) */
@@ -148,6 +148,10 @@ img, svg, video {
   max-width: 100%;
   display: block;
 }
+/* 全局图片圆角（已有圆角的图片优先级更高，不受影响；全屏 banner 图另行覆盖为 0） */
+img {
+  border-radius: var(--r-lg);
+}
 button {
   font-family: inherit;
   font-size: inherit;
@@ -194,7 +198,7 @@ hr { border: 0; border-top: 1px solid var(--ink-200); margin: 0; }
 .eyebrow-light { color: var(--brand-100); }
 .eyebrow-ink   { color: var(--ink-500); }
 
-.display { font-family: var(--font-display); font-weight: 380; letter-spacing: -.02em; font-variation-settings: 'opsz' 144, 'SOFT' 30; }
+.display { font-family: var(--font-display); font-weight: 500; letter-spacing: -.02em; }
 .display em, .display i { font-family: var(--font-serif); font-style: italic; font-weight: 400; }
 .serif { font-family: var(--font-serif); font-style: italic; font-weight: 400; }
 .num   { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }

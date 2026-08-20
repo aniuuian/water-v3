@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 920" role="img" aria-label="Water solution illustration">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f8fcf9"/>
+      <stop offset="100%" stop-color="#d9efe2"/>
+    </linearGradient>
+    <linearGradient id="panel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#eff7f2"/>
+    </linearGradient>
+    <linearGradient id="water" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#8edfc0" stop-opacity="0"/>
+      <stop offset="16%" stop-color="#8edfc0" stop-opacity=".88"/>
+      <stop offset="84%" stop-color="#1c9a63" stop-opacity=".95"/>
+      <stop offset="100%" stop-color="#1c9a63" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="shadow" x="-25%" y="-25%" width="150%" height="150%">
+      <feDropShadow dx="0" dy="20" stdDeviation="24" flood-color="#0d5b3d" flood-opacity=".14"/>
+    </filter>
+  </defs>
+
+  <rect width="1440" height="920" fill="url(#bg)"/>
+  <circle cx="1120" cy="150" r="170" fill="#fff" opacity=".38"/>
+  <circle cx="290" cy="742" r="190" fill="#fff" opacity=".32"/>
+  <path d="M0 684 C 180 608, 350 758, 520 688 S 880 602, 1060 698 S 1260 744, 1440 690 L 1440 920 L 0 920 Z" fill="#cce9db" opacity=".72"/>
+  <path d="M0 724 C 220 650, 390 792, 600 724 S 910 650, 1140 734 S 1320 774, 1440 726" fill="none" stroke="#75d6ae" stroke-width="4" opacity=".42"/>
+
+  <g filter="url(#shadow)">
+    <rect x="82" y="112" width="772" height="690" rx="38" fill="url(#panel)"/>
+    <rect x="118" y="154" width="228" height="72" rx="20" fill="#128a5b"/>
+    <text x="152" y="201" font-family="Arial, sans-serif" font-size="34" font-weight="700" fill="#fff">Water Solutions</text>
+    <text x="118" y="266" font-family="Arial, sans-serif" font-size="24" fill="#557168">Flexible leasing for clean water at home or work</text>
+
+    <rect x="118" y="318" width="468" height="326" rx="28" fill="#fbfdfc" stroke="#d9ebe1"/>
+    <path d="M155 520 C 240 460, 330 462, 418 504 S 586 578, 660 488" fill="none" stroke="url(#water)" stroke-width="14" stroke-linecap="round"/>
+    <path d="M155 556 C 244 514, 328 512, 420 548 S 586 612, 660 536" fill="none" stroke="url(#water)" stroke-width="8" stroke-linecap="round" opacity=".78"/>
+    <circle cx="226" cy="452" r="16" fill="#7bdbb0"/>
+    <circle cx="364" cy="430" r="22" fill="#30a36f"/>
+    <circle cx="520" cy="478" r="14" fill="#8fe1c2"/>
+    <circle cx="603" cy="544" r="10" fill="#30a36f" opacity=".8"/>
+    <text x="156" y="384" font-family="Arial, sans-serif" font-size="22" fill="#627770">Stable filtration</text>
+    <text x="156" y="416" font-family="Arial, sans-serif" font-size="22" fill="#627770">Installation included</text>
+    <text x="156" y="448" font-family="Arial, sans-serif" font-size="22" fill="#627770">Maintenance support</text>
+
+    <rect x="458" y="206" width="262" height="420" rx="32" fill="#fff"/>
+    <rect x="486" y="238" width="206" height="138" rx="22" fill="#ecf7f1"/>
+    <text x="516" y="286" font-family="Arial, sans-serif" font-size="22" font-weight="700" fill="#117c53">Low upfront cost</text>
+    <text x="516" y="318" font-family="Arial, sans-serif" font-size="18" fill="#668177">Simple plan, flexible access.</text>
+    <rect x="486" y="394" width="206" height="138" rx="22" fill="#f3faf6"/>
+    <text x="516" y="442" font-family="Arial, sans-serif" font-size="22" font-weight="700" fill="#117c53">Monthly payment</text>
+    <text x="516" y="474" font-family="Arial, sans-serif" font-size="18" fill="#668177">Easy to manage over time.</text>
+    <rect x="486" y="550" width="206" height="58" rx="18" fill="#e8f6ee"/>
+    <text x="516" y="588" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#117c53">Supported service</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="762" y="258" width="618" height="444" rx="34" fill="#ffffff"/>
+    <rect x="796" y="292" width="176" height="176" rx="24" fill="#f4faf6"/>
+    <image href="../products/Bio Pure N100.png" x="816" y="312" width="136" height="136" preserveAspectRatio="xMidYMid meet"/>
+    <rect x="972" y="292" width="176" height="176" rx="24" fill="#f4faf6"/>
+    <image href="../products/Bio Pure N200.png" x="992" y="306" width="136" height="136" preserveAspectRatio="xMidYMid meet"/>
+    <rect x="1148" y="292" width="176" height="176" rx="24" fill="#f4faf6"/>
+    <image href="../products/Bio Pure N300.png" x="1168" y="304" width="136" height="136" preserveAspectRatio="xMidYMid meet"/>
+    <rect x="854" y="482" width="176" height="176" rx="24" fill="#f4faf6"/>
+    <image href="../products/Bio Pure N400.png" x="874" y="494" width="136" height="136" preserveAspectRatio="xMidYMid meet"/>
+    <rect x="1050" y="482" width="176" height="176" rx="24" fill="#f4faf6"/>
+    <image href="../products/Hydromi NH101.png" x="1070" y="494" width="136" height="136" preserveAspectRatio="xMidYMid meet"/>
+    <rect x="1246" y="482" width="100" height="176" rx="24" fill="#f4faf6"/>
+    <image href="../products/Hydromi NH500.png" x="1254" y="502" width="84" height="84" preserveAspectRatio="xMidYMid meet"/>
+
+    <path d="M790 724 C 916 674, 1040 672, 1168 716 S 1334 764, 1380 720" fill="none" stroke="#dcefe6" stroke-width="3"/>
+    <text x="796" y="742" font-family="Arial, sans-serif" font-size="24" font-weight="700" fill="#0f7f53">Original product range, presented as a leasing solution</text>
+  </g>
+</svg>

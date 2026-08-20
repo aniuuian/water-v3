@@ -1,13 +1,18 @@
 <!doctype html>
 <html lang="en">
 <head>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Checkout · AquaLease Nigeria</title>
+  <title>Checkout · AquaLife</title>
+  <meta name="description" content="Review your order and complete checkout at AquaLife." />
   <link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='%2300875A' d='M12 3C8 9 6 12 6 15a6 6 0 0 0 12 0c0-3-2-6-6-12z'/></svg>" />
-  <link rel="stylesheet" href="assets/css/design-system.css" />
-  <link rel="stylesheet" href="assets/css/components.css" />
-  <link rel="stylesheet" href="assets/css/pages.css" />
+  <link rel="stylesheet" href="assets/css/design-system.css?v=20260819-2" />
+  <link rel="stylesheet" href="assets/css/components.css?v=20260819-2" />
+  <link rel="stylesheet" href="assets/css/pages.css?v=20260819-2" />
+  <link rel="stylesheet" href="assets/css/website.css?v=20260819-2" />
 </head>
 <body data-page="checkout">
   <div id="offline-banner" class="offline-banner">Offline mode · showing cached information</div>
@@ -16,30 +21,24 @@
   <main class="page checkout-shell">
     <div class="container">
       <div class="crumbs" style="font-family:var(--font-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-500);margin-bottom:18px">
-        <a href="index.html">Home</a> <span>›</span> <a href="mall.html" data-i18n="nav.mall"></a> <span>›</span> <span data-i18n="checkout.title"></span>
+        <a href="index.html">Home</a> <span>›</span> <a href="products.html">Products</a> <span>›</span> <span data-i18n="checkout.title">Confirm your order</span>
       </div>
-      <h1 style="font-family:var(--font-display);font-size:var(--t-h1);font-weight:500;letter-spacing:-.02em;margin-bottom:24px" data-i18n="checkout.title"></h1>
+      <h1 style="font-family:var(--font-display);font-size:var(--t-h1);font-weight:500;letter-spacing:-.02em;margin-bottom:24px" data-i18n="checkout.title">Confirm your order</h1>
 
       <div class="stepper">
-        <div class="step active"><span class="n">1</span><span data-i18n="checkout.step1"></span></div>
+        <div class="step active"><span class="n">1</span><span data-i18n="checkout.title">Confirm your order</span></div>
         <div class="sep"></div>
-        <div class="step"><span class="n">2</span><span data-i18n="checkout.step2"></span></div>
+        <div class="step"><span class="n">2</span><span data-i18n="checkout.step2">Payment method</span></div>
         <div class="sep"></div>
-        <div class="step"><span class="n">3</span><span data-i18n="checkout.step3"></span></div>
-        <div class="sep"></div>
-        <div class="step"><span class="n">4</span><span data-i18n="checkout.step4"></span></div>
-        <div class="sep"></div>
-        <div class="step"><span class="n">5</span><span data-i18n="checkout.step5"></span></div>
-        <div class="sep"></div>
-        <div class="step"><span class="n">6</span><span data-i18n="checkout.step6"></span></div>
+        <div class="step"><span class="n">3</span><span data-i18n="checkout.step6">Shipping / pickup</span></div>
       </div>
 
       <div class="checkout-grid">
         <div>
+          <!-- Step 1: Delivery address -->
           <div class="checkout-card">
-            <h2 data-i18n="checkout.addr"></h2>
+            <h2 data-i18n="checkout.addr">Delivery address</h2>
 
-            <!-- Delivery method toggle -->
             <div class="deliv-method-grid" id="delivMethodGrid">
               <label class="deliv-method">
                 <input type="radio" name="delivMethod" value="delivery" checked />
@@ -49,8 +48,8 @@
                   </svg>
                 </div>
                 <div class="deliv-method-body">
-                  <div class="deliv-method-name" data-i18n="checkout.addr_delivery"></div>
-                  <div class="deliv-method-sub" data-i18n="checkout.addr_delivery_sub"></div>
+                  <div class="deliv-method-name" data-i18n="checkout.addr_delivery">Door delivery</div>
+                  <div class="deliv-method-sub" data-i18n="checkout.addr_delivery_sub">We deliver to your address</div>
                 </div>
                 <div class="deliv-method-check" aria-hidden="true">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg>
@@ -64,8 +63,8 @@
                   </svg>
                 </div>
                 <div class="deliv-method-body">
-                  <div class="deliv-method-name" data-i18n="checkout.addr_pickup"></div>
-                  <div class="deliv-method-sub" data-i18n="checkout.addr_pickup_sub"></div>
+                  <div class="deliv-method-name" data-i18n="checkout.addr_pickup">Self-pickup</div>
+                  <div class="deliv-method-sub" data-i18n="checkout.addr_pickup_sub">Pick up at our office</div>
                 </div>
                 <div class="deliv-method-check" aria-hidden="true">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg>
@@ -73,35 +72,49 @@
               </label>
             </div>
 
-            <!-- Delivery form (shown when delivery is chosen) -->
+            <!-- Delivery form -->
             <div id="deliveryForm">
+              <!-- Saved address picker (synced with My Account addresses) -->
+              <div class="saved-addr-picker">
+                <label for="savedAddrSelect" style="font-size:12.5px;font-weight:500;color:var(--ink-700)">Use a saved address</label>
+                <select class="select" id="savedAddrSelect">
+                  <option value="">+ Use a new address</option>
+                </select>
+                <label class="check" style="margin-top:10px">
+                  <input type="checkbox" id="saveAddrNew" checked />
+                  <span>Save this address to my account</span>
+                </label>
+              </div>
+
               <div class="row">
                 <div class="field">
-                  <label data-i18n="checkout.addr_full_name"></label>
-                  <input class="input" id="fullName" value="Adaeze Okonkwo" />
+                  <label data-i18n="checkout.addr_full_name">Full name</label>
+                  <input class="input" id="fullName" required />
                 </div>
                 <div class="field">
-                  <label data-i18n="checkout.addr_phone"></label>
-                  <input class="input" id="phone" value="+234 803 123 4567" />
+                  <label data-i18n="checkout.addr_phone">Phone</label>
+                  <div class="phone-field" id="phoneField"></div>
                 </div>
               </div>
               <div class="field">
-                <label data-i18n="checkout.addr_street"></label>
-                <input class="input" id="addr" value="24 Admiralty Way, Lekki Phase 1, Lagos" />
+                <label data-i18n="checkout.addr_street">Street address</label>
+                <input class="input" id="addr" required />
               </div>
               <div class="row">
                 <div class="field">
-                  <label data-i18n="checkout.addr_city"></label>
-                  <input class="input" id="city" value="Lagos" />
+                  <label data-i18n="checkout.addr_city">City</label>
+                  <input class="input" id="city" required />
                 </div>
                 <div class="field">
-                  <label data-i18n="checkout.addr_state"></label>
-                  <select class="select"><option>Lagos</option><option>FCT Abuja</option><option>Rivers</option><option>Oyo</option><option>Kano</option></select>
+                  <label data-i18n="checkout.addr_state">State</label>
+                  <select class="select" id="state">
+                    <option>Lagos</option><option>FCT Abuja</option><option>Rivers</option><option>Oyo</option><option>Kano</option><option>Other</option>
+                  </select>
                 </div>
               </div>
             </div>
 
-            <!-- Pickup panel (shown when self-pickup is chosen) -->
+            <!-- Pickup panel -->
             <div id="pickupPanel" style="display:none">
               <div class="pickup-list" id="pickupList">
                 <label class="pickup-item">
@@ -109,69 +122,73 @@
                   <div class="pickup-radio" aria-hidden="true"></div>
                   <div class="pickup-body">
                     <div class="pickup-head">
-                      <span class="pickup-name" data-i18n="checkout.pickup_hq_name"></span>
+                      <span class="pickup-name" data-i18n="checkout.pickup_hq_name">Lagos HQ</span>
                       <span class="pickup-tag">HQ</span>
                     </div>
-                    <div class="pickup-addr" data-i18n="checkout.pickup_hq_addr"></div>
-                    <div class="pickup-hours"><span data-i18n="checkout.pickup_hours"></span>: <span data-i18n="checkout.pickup_hq_hours"></span></div>
+                    <div class="pickup-addr" data-i18n="checkout.pickup_hq_addr">12B Admiralty Way, Lekki Phase 1</div>
+                    <div class="pickup-hours"><span data-i18n="checkout.pickup_hours">Opening hours</span>: <span data-i18n="checkout.pickup_hq_hours">Mon–Sat · 8:00 – 18:00</span></div>
                   </div>
-                  <div class="pickup-check"><span data-i18n="checkout.pickup_select"></span></div>
+                  <div class="pickup-check"><span data-i18n="checkout.pickup_select">Selected</span></div>
                 </label>
                 <label class="pickup-item">
                   <input type="radio" name="pickupLoc" value="abuja" />
                   <div class="pickup-radio" aria-hidden="true"></div>
                   <div class="pickup-body">
                     <div class="pickup-head">
-                      <span class="pickup-name" data-i18n="checkout.pickup_2_name"></span>
+                      <span class="pickup-name" data-i18n="checkout.pickup_2_name">Abuja branch</span>
                     </div>
-                    <div class="pickup-addr" data-i18n="checkout.pickup_2_addr"></div>
-                    <div class="pickup-hours"><span data-i18n="checkout.pickup_hours"></span>: <span data-i18n="checkout.pickup_2_hours"></span></div>
+                    <div class="pickup-addr" data-i18n="checkout.pickup_2_addr">Plot 24, Wuse Zone 5</div>
+                    <div class="pickup-hours"><span data-i18n="checkout.pickup_hours">Opening hours</span>: <span data-i18n="checkout.pickup_2_hours">Mon–Fri · 9:00 – 17:00</span></div>
                   </div>
-                  <div class="pickup-check"><span data-i18n="checkout.pickup_select"></span></div>
+                  <div class="pickup-check"><span data-i18n="checkout.pickup_select">Selected</span></div>
                 </label>
                 <label class="pickup-item">
                   <input type="radio" name="pickupLoc" value="ph" />
                   <div class="pickup-radio" aria-hidden="true"></div>
                   <div class="pickup-body">
                     <div class="pickup-head">
-                      <span class="pickup-name" data-i18n="checkout.pickup_3_name"></span>
+                      <span class="pickup-name" data-i18n="checkout.pickup_3_name">Port Harcourt branch</span>
                     </div>
-                    <div class="pickup-addr" data-i18n="checkout.pickup_3_addr"></div>
-                    <div class="pickup-hours"><span data-i18n="checkout.pickup_hours"></span>: <span data-i18n="checkout.pickup_3_hours"></span></div>
+                    <div class="pickup-addr" data-i18n="checkout.pickup_3_addr">5 Aba Road, GRA Phase 2</div>
+                    <div class="pickup-hours"><span data-i18n="checkout.pickup_hours">Opening hours</span>: <span data-i18n="checkout.pickup_3_hours">Mon–Fri · 9:00 – 17:00</span></div>
                   </div>
-                  <div class="pickup-check"><span data-i18n="checkout.pickup_select"></span></div>
+                  <div class="pickup-check"><span data-i18n="checkout.pickup_select">Selected</span></div>
                 </label>
               </div>
             </div>
           </div>
 
+          <!-- Contact person -->
           <div class="checkout-card" style="margin-top:24px">
-            <h2 data-i18n="checkout.contact"></h2>
-            <p style="color:var(--ink-500);font-size:14px;margin-bottom:16px">Used to deliver payment reminders, dunning notices, and final collection notices.</p>
+            <h2 data-i18n="checkout.contact">Contact person</h2>
             <div class="row">
               <div class="field">
-                <label data-i18n="checkout.phone"></label>
-                <input class="input" id="contactPhone" value="+234 803 123 4567" />
+                <label data-i18n="checkout.phone">Phone</label>
+                <div class="phone-field" id="contactPhoneField"></div>
               </div>
               <div class="field">
-                <label data-i18n="checkout.email"></label>
-                <input class="input" id="contactEmail" value="adaeze.k@gmail.com" />
+                <label data-i18n="checkout.email">Email</label>
+                <input class="input" id="contactEmail" type="email" />
               </div>
+            </div>
+            <div class="field" style="margin-top:12px">
+              <label>Order notes</label>
+              <textarea class="textarea" id="orderNote" rows="2" placeholder="Anything we should know (optional)"></textarea>
             </div>
             <div class="consent">
               <label class="checkbox">
                 <input type="checkbox" id="agreeContact" />
-                <span data-i18n="checkout.agree_contact"></span>
+                <span data-i18n="checkout.agree_contact">I confirm the phone and email above are correct for delivery and support purposes.</span>
               </label>
             </div>
             <div class="consent">
               <label class="checkbox">
                 <input type="checkbox" id="agreeTerms" />
                 <span>
-                  <span data-i18n="checkout.agree_terms"></span>
-                  <a href="agreement.html" target="_blank" data-i18n="checkout.link_contact"></a>
+                  <span data-i18n="checkout.agree_terms">I have read and agree to the</span>
+                  <a href="terms.html" target="_blank">Terms of Service</a>
                   <span> · </span>
-                  <a href="agreement.html" target="_blank" data-i18n="checkout.link_lease"></a>
+                  <a href="refund.html" target="_blank">Refund Policy</a>
                 </span>
               </label>
             </div>
@@ -179,19 +196,33 @@
 
           <!-- Step 2: Payment method -->
           <div class="checkout-card" style="margin-top:24px">
-            <h2 data-i18n="checkout.pay_method"></h2>
-            <p style="color:var(--ink-500);font-size:14px;margin-bottom:16px">Choose how you want to pay the down payment today.</p>
+            <h2 data-i18n="checkout.pay_method">Payment method</h2>
             <div class="pay-method-grid" id="payMethodGrid">
               <label class="pay-method">
-                <input type="radio" name="payMethod" value="card" checked />
+                <input type="radio" name="payMethod" value="cod" checked />
+                <div class="pay-method-icon" aria-hidden="true">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+                    <path d="M12 2l2.4 4.9 5.4.8-3.9 3.8.9 5.4-4.8-2.5-4.8 2.5.9-5.4L4.2 7.7l5.4-.8z"/>
+                  </svg>
+                </div>
+                <div class="pay-method-body">
+                  <div class="pay-method-name">Cash on delivery</div>
+                  <div class="pay-method-sub">Pay when you receive your order</div>
+                </div>
+                <div class="pay-method-check" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg>
+                </div>
+              </label>
+              <label class="pay-method">
+                <input type="radio" name="payMethod" value="card" />
                 <div class="pay-method-icon" aria-hidden="true">
                   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
                     <rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20M6 15h4"/>
                   </svg>
                 </div>
                 <div class="pay-method-body">
-                  <div class="pay-method-name" data-i18n="checkout.pay_card"></div>
-                  <div class="pay-method-sub" data-i18n="checkout.pay_card_sub"></div>
+                  <div class="pay-method-name" data-i18n="checkout.pay_card">Debit / credit card</div>
+                  <div class="pay-method-sub" data-i18n="checkout.pay_card_sub">Instant · Visa, MC, Verve</div>
                 </div>
                 <div class="pay-method-check" aria-hidden="true">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg>
@@ -205,8 +236,8 @@
                   </svg>
                 </div>
                 <div class="pay-method-body">
-                  <div class="pay-method-name" data-i18n="checkout.pay_ussd"></div>
-                  <div class="pay-method-sub" data-i18n="checkout.pay_ussd_sub"></div>
+                  <div class="pay-method-name" data-i18n="checkout.pay_ussd">USSD</div>
+                  <div class="pay-method-sub" data-i18n="checkout.pay_ussd_sub">All Nigerian banks</div>
                 </div>
                 <div class="pay-method-check" aria-hidden="true">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg>
@@ -220,8 +251,8 @@
                   </svg>
                 </div>
                 <div class="pay-method-body">
-                  <div class="pay-method-name" data-i18n="checkout.pay_bank"></div>
-                  <div class="pay-method-sub" data-i18n="checkout.pay_bank_sub"></div>
+                  <div class="pay-method-name" data-i18n="checkout.pay_bank">Bank transfer</div>
+                  <div class="pay-method-sub" data-i18n="checkout.pay_bank_sub">Manual · 1–2 hrs</div>
                 </div>
                 <div class="pay-method-check" aria-hidden="true">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg>
@@ -230,69 +261,54 @@
             </div>
           </div>
 
-          <!-- Step 3: Card binding (only when card chosen) -->
-          <div class="checkout-card" id="cardPanel" style="margin-top:24px">
-            <h2 data-i18n="checkout.card_title"></h2>
-            <p style="color:var(--ink-500);font-size:14px;margin-bottom:16px" data-i18n="checkout.secure_note"></p>
-            <div class="card-form" id="cardForm" style="display:none">
-              <div class="field">
-                <label data-i18n="checkout.card_number"></label>
-                <div class="card-input-wrap">
-                  <input class="input" id="cardNumber" value="4242 4242 4242 4242" maxlength="19" inputmode="numeric" autocomplete="cc-number" />
-                  <div class="card-brand visa" id="cardBrand" aria-hidden="true"></div>
-                </div>
+          <!-- Step 3 panels -->
+          <div class="checkout-card method-info-card" id="cardPanel" style="margin-top:24px;display:none">
+            <h2 data-i18n="checkout.card_title">Card details</h2>
+            <p style="color:var(--ink-500);font-size:14px;margin-bottom:16px" data-i18n="checkout.secure_note">Secured by Paystack · 256-bit encryption · PCI-DSS Level 1</p>
+            <div class="field">
+              <label data-i18n="checkout.card_number">Card number</label>
+              <div class="card-input-wrap">
+                <input class="input" id="cardNumber" placeholder="4242 4242 4242 4242" maxlength="19" inputmode="numeric" autocomplete="cc-number" />
+                <div class="card-brand" id="cardBrand" aria-hidden="true"></div>
               </div>
-              <div class="field">
-                <label data-i18n="checkout.card_name"></label>
-                <input class="input" id="cardName" value="ADAEZE OKONKWO" autocomplete="cc-name" />
-              </div>
-              <div class="row">
-                <div class="field">
-                  <label data-i18n="checkout.card_expiry"></label>
-                  <input class="input" id="cardExpiry" value="12/27" maxlength="5" inputmode="numeric" autocomplete="cc-exp" />
-                </div>
-                <div class="field">
-                  <label data-i18n="checkout.card_cvv"></label>
-                  <input class="input" id="cardCvv" value="123" maxlength="4" inputmode="numeric" autocomplete="cc-csc" />
-                </div>
-              </div>
-              <label class="checkbox" style="margin-top:8px">
-                <input type="checkbox" id="saveCard" checked />
-                <span data-i18n="checkout.card_save"></span>
-              </label>
-              <button class="btn btn-primary btn-block btn-lg" id="bindCardBtn" style="margin-top:16px">
-                <span data-label data-i18n="checkout.bind_card"></span>
-              </button>
             </div>
-            <div class="card-bound" id="cardBound" style="display:block">
-              <div class="card-bound-row">
-                <div>
-                  <div class="card-bound-label" data-i18n="checkout.card_bound"></div>
-                  <div class="card-bound-meta" id="cardBoundMeta">•••• •••• •••• 4242 · 12/27</div>
-                </div>
-                <button class="btn-link" id="changeCardBtn" data-i18n="checkout.card_change"></button>
+            <div class="field">
+              <label data-i18n="checkout.card_name">Cardholder name</label>
+              <input class="input" id="cardName" autocomplete="cc-name" />
+            </div>
+            <div class="row">
+              <div class="field">
+                <label data-i18n="checkout.card_expiry">Expiry (MM/YY)</label>
+                <input class="input" id="cardExpiry" placeholder="12/27" maxlength="5" inputmode="numeric" autocomplete="cc-exp" />
+              </div>
+              <div class="field">
+                <label data-i18n="checkout.card_cvv">CVV</label>
+                <input class="input" id="cardCvv" placeholder="123" maxlength="4" inputmode="numeric" autocomplete="cc-csc" />
               </div>
             </div>
           </div>
 
-          <!-- Step 3b: USSD info (only when USSD chosen) -->
           <div class="checkout-card method-info-card" id="ussdPanel" style="margin-top:24px;display:none">
-            <h2 data-i18n="checkout.ussd_title"></h2>
+            <h2 data-i18n="checkout.ussd_title">Pay via USSD</h2>
             <p style="color:var(--ink-500);font-size:14px">Dial the code below on the phone number linked to your bank, then enter your PIN to confirm.</p>
-            <div class="ussd-code" id="ussdCode">*737*50*112000#</div>
-            <p style="color:var(--ink-500);font-size:13px;margin-top:12px" data-i18n="checkout.ussd_hint"></p>
+            <div class="ussd-code" id="ussdCode">*737*50*100000#</div>
+            <p style="color:var(--ink-500);font-size:13px;margin-top:12px" data-i18n="checkout.ussd_hint">Dial this code on your registered phone, then enter your bank PIN to confirm.</p>
           </div>
 
-          <!-- Step 3c: Bank transfer (only when bank chosen) -->
           <div class="checkout-card method-info-card" id="bankPanel" style="margin-top:24px;display:none">
-            <h2 data-i18n="checkout.bank_title"></h2>
+            <h2 data-i18n="checkout.bank_title">Bank transfer details</h2>
             <div class="bank-rows">
-              <div class="bank-row"><span data-i18n="checkout.bank_name"></span><b>GTBank Plc</b></div>
-              <div class="bank-row"><span data-i18n="checkout.bank_account"></span><b>012 345 6789</b></div>
-              <div class="bank-row"><span data-i18n="checkout.bank_beneficiary"></span><b>AquaLease Nigeria Ltd</b></div>
-              <div class="bank-row"><span data-i18n="checkout.bank_amount"></span><b id="bankAmount">₦112,000</b></div>
+              <div class="bank-row"><span data-i18n="checkout.bank_name">Bank</span><b>GTBank Plc</b></div>
+              <div class="bank-row"><span data-i18n="checkout.bank_account">Account number</span><b>012 345 6789</b></div>
+              <div class="bank-row"><span data-i18n="checkout.bank_beneficiary">Account name</span><b>AquaLife Nigeria Ltd</b></div>
+              <div class="bank-row"><span data-i18n="checkout.bank_amount">Amount</span><b id="bankAmount">₦0</b></div>
             </div>
-            <p style="color:var(--ink-500);font-size:13px;margin-top:14px" data-i18n="checkout.bank_ref"></p>
+            <p style="color:var(--ink-500);font-size:13px;margin-top:14px">Use your order ID as the reference when transferring.</p>
+          </div>
+
+          <div class="checkout-card method-info-card" id="codPanel" style="margin-top:24px;display:none">
+            <h2>Cash on delivery</h2>
+            <p style="color:var(--ink-500);font-size:14px;line-height:1.6">Pay in cash or by card when your order arrives. Our delivery team will confirm the amount before dispatch. No advance payment required.</p>
           </div>
         </div>
 
@@ -303,122 +319,248 @@
 
   <div id="app-footer"></div>
 
-  <script src="assets/i18n/strings.js"></script>
-  <script src="assets/js/app.js"></script>
+  <script src="assets/i18n/strings.js?v=20260819-2"></script>
+  <script src="assets/js/app.js?v=20260819-2"></script>
+  <script src="assets/js/website.js?v=20260819-2"></script>
   <script>
-    const params = new URLSearchParams(location.search);
-    const productId = params.get('id') || 'm2';
-    const term = parseInt(params.get('t') || '12', 10);
-    const cards = window.T.trArray('products.cards');
-    const product = (cards || []).find(c => c.id === productId) || (cards || [])[1];
-    const calc = window.AL.calcLease(product.price, term);
+    /* ============================================================
+       AquaLife checkout — direct purchase
+       Reads ?id= (product id from catalog) and ?qty= from URL.
+       ============================================================ */
+    function getProductFromUrl() {
+      const params = new URLSearchParams(location.search);
+      const id = params.get('id');
+      const name = params.get('name');
+      const catalog = window.ProductCatalog && window.ProductCatalog.allProducts ? window.ProductCatalog.allProducts : [];
+      let product = id ? catalog.find(p => p.id === id) : null;
+      if (!product && name) {
+        product = catalog.find(p => p.name.toLowerCase() === decodeURIComponent(name).toLowerCase());
+      }
+      return product || null;
+    }
+
+    function getQtyFromUrl() {
+      const q = parseInt(new URLSearchParams(location.search).get('qty') || '1', 10);
+      return Math.max(1, Math.min(99, q || 1));
+    }
+
+    function customerDefaults() {
+      const p = window.AL && window.AL.loadProfile ? window.AL.loadProfile() : null;
+      const addr = window.AL && window.AL.getAddresses ? (window.AL.getAddresses()[0] || null) : null;
+      return {
+        name: (p && (p.name || p.firstName)) || '',
+        phone: (p && p.phone) || '',
+        email: (p && p.email) || '',
+        address: (addr && addr.street) || (p && p.address) || '',
+        city: (addr && addr.city) || (p && p.city) || '',
+        state: (addr && addr.state) || (p && p.state) || '',
+      };
+    }
+
+    let state = {
+      qty: 1,
+      delivMethod: 'delivery',
+      pickupLoc: 'lagos',
+      payMethod: 'cod',
+      cardValid: false,
+      savedAddressId: null,
+    };
+
+    /* ---------- Saved address picker (synced with My Account) ---------- */
+    function renderSavedAddresses() {
+      const select = document.getElementById('savedAddrSelect');
+      if (!select) return;
+      const list = (window.AL && window.AL.getAddresses) ? window.AL.getAddresses() : [];
+      select.innerHTML = '<option value="">+ Use a new address</option>' +
+        list.map(a => {
+          const label = (a.label || 'Address') + ' — ' + [a.street, a.city].filter(Boolean).join(', ');
+          return `<option value="${a.id}">${label.replace(/</g, '&lt;')}</option>`;
+        }).join('');
+      state.savedAddressId = null;
+      select.onchange = () => {
+        const a = list.find(x => x.id === select.value);
+        state.savedAddressId = a ? a.id : null;
+        const phoneHost = document.getElementById('phoneField');
+        if (a) {
+          document.getElementById('fullName').value = a.recipient || '';
+          if (window.ProductCatalog && window.ProductCatalog.fillPhoneFields) {
+            window.ProductCatalog.fillPhoneFields(phoneHost, a.phone || '');
+          }
+          document.getElementById('addr').value = a.street || '';
+          document.getElementById('city').value = a.city || '';
+          const sel = document.getElementById('state');
+          const opt = Array.from(sel.options).find(o => o.text === a.state);
+          if (opt) sel.value = opt.value;
+          document.getElementById('saveAddrNew').checked = false;
+        } else {
+          // new address → keep typed values, default to saving
+          document.getElementById('saveAddrNew').checked = true;
+        }
+        updatePayBtn();
+      };
+    }
+
+    function saveAddressFromOrder(customer) {
+      if (!(window.AL && window.AL.upsertAddress)) return;
+      const saveNew = document.getElementById('saveAddrNew');
+      if (saveNew && saveNew.checked) {
+        window.AL.upsertAddress({
+          id: state.savedAddressId || undefined,
+          label: 'Order address',
+          recipient: customer.name,
+          phone: customer.phone,
+          street: customer.address,
+          city: customer.city,
+          state: customer.state,
+          isDefault: false,
+        });
+      }
+    }
 
     function renderSummary() {
+      const product = state.product;
       const summary = document.getElementById('summary');
+      const total = product.price * state.qty;
+      const bv = Math.round(product.price / 1000) * state.qty;
+      const loggedIn = !!(window.Auth && window.Auth.isLoggedIn());
+      const methodNames = {
+        cod: 'Cash on delivery',
+        card: 'Debit / credit card',
+        ussd: 'USSD',
+        bank: 'Bank transfer',
+      };
       summary.innerHTML = `
-        <h3 data-i18n="checkout.summary">${window.T.tr('checkout.summary')}</h3>
+        <h3 data-i18n="checkout.summary">Order summary</h3>
         <div style="display:flex;gap:14px;align-items:center;padding:14px;background:rgba(255,255,255,.06);border-radius:var(--r-md);margin-bottom:16px">
           <div style="width:60px;height:60px;border-radius:8px;overflow:hidden;background:#fff;flex-shrink:0">
-            <img src="assets/img/products/${encodeURIComponent(product.img)}?v=20260609" style="width:100%;height:100%;object-fit:cover" alt="${product.name}" />
+            <img src="assets/img/products/${product.category}/${product.img}" style="width:100%;height:100%;object-fit:contain;padding:4px" alt="${product.name}" />
           </div>
           <div>
             <div style="font-family:var(--font-display);font-size:18px;font-weight:500">${product.name}</div>
-            <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:.18em;color:var(--ink-300);text-transform:uppercase">${product.spec}</div>
+            <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:.18em;color:var(--ink-300);text-transform:uppercase">${product.tag || product.category.replace(/-/g, ' ')}</div>
           </div>
         </div>
-        <div class="row"><span class="k">${window.T.tr('mall.terms')}</span><span class="v">${term} ${window.T.tr('common.months')}</span></div>
-        <div class="row"><span class="k">${window.T.tr('mall.down')}</span><span class="v">${window.Money.format(calc.down)}</span></div>
-        <div class="row"><span class="k">${window.T.tr('mall.month_pay')} × ${term - 1}</span><span class="v">${window.Money.format(calc.monthly)}</span></div>
-        <div class="row"><span class="k">${window.T.tr('mall.bv')}</span><span class="v" style="color:var(--gold-500)">${calc.bv} BV</span></div>
-        <div class="row method-row" id="summaryMethodRow" style="display:none"><span class="k">${window.T.tr('checkout.summary_method')}</span><span class="v" id="summaryMethod"></span></div>
-        <div class="total"><span class="k" style="font-family:var(--font-mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-300)">${window.T.tr('common.due_today')}</span><span class="v">${window.Money.format(calc.down)}</span></div>
+        <div class="row"><span class="k">Unit price</span><span class="v">₦${product.price.toLocaleString()}</span></div>
+        <div class="row">
+          <span class="k">Quantity</span>
+          <span class="v">
+            <span class="qty-control summary-qty">
+              <button type="button" class="qty-btn" data-qty="-1" aria-label="Decrease quantity">−</button>
+              <input type="number" id="orderQty" value="${state.qty}" min="1" max="99" inputmode="numeric" />
+              <button type="button" class="qty-btn" data-qty="1" aria-label="Increase quantity">+</button>
+            </span>
+          </span>
+        </div>
+        ${loggedIn ? `<div class="row"><span class="k">BV rewards</span><span class="v" id="sumBV" style="color:var(--gold-500)">+${bv} BV</span></div>` : ''}
+        <div class="row method-row" id="summaryMethodRow" style="display:none"><span class="k">Method</span><span class="v" id="summaryMethod"></span></div>
+        <div class="total"><span class="k" style="font-family:var(--font-mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-300)">Total</span><span class="v" id="sumTotal">₦${total.toLocaleString()}</span></div>
         <button class="btn btn-primary btn-block btn-lg" id="payBtn" style="margin-top:20px" disabled>
           <span data-label>${window.T.tr('checkout.place_order')}</span>
         </button>
         <div class="pay-methods">
           <span class="chip">VISA</span>
           <span class="chip">MC</span>
+          <span class="chip">VERVE</span>
           <span class="chip">USSD</span>
-          <span class="chip">PAYSTACK</span>
-          <span class="chip">FLUTTERWAVE</span>
+          <span class="chip">COD</span>
         </div>
-        <p style="font-size:11px;color:var(--ink-400);margin-top:14px;line-height:1.5">By tapping <b>${window.T.tr('checkout.place_order')}</b>, you agree your down payment will be debited now and a payment plan will be auto-created for ${term - 1} monthly instalments.</p>
+        <p style="font-size:11px;color:var(--ink-400);margin-top:14px;line-height:1.5">By placing this order you agree to our Terms of Service and Refund Policy. Our team will contact you to confirm before dispatch.</p>
       `;
+      document.getElementById('bankAmount').textContent = '₦' + total.toLocaleString();
+      bindSummaryQty();
       bindPay();
     }
 
-    /* ----- Delivery method (door delivery / self-pickup) toggle ----- */
-    let delivState = { method: 'delivery', pickupLoc: 'lagos' };
+    // Live quantity editing → dynamic total / BV / bank amount
+    function bindSummaryQty() {
+      const qtyInput = document.getElementById('orderQty');
+      if (!qtyInput) return;
+      const product = state.product;
+      const update = () => {
+        const q = Math.max(1, Math.min(99, parseInt(qtyInput.value) || 1));
+        qtyInput.value = q;
+        state.qty = q;
+        const total = product.price * q;
+        const bv = Math.round(product.price / 1000) * q;
+        const totalEl = document.getElementById('sumTotal');
+        if (totalEl) totalEl.textContent = '₦' + total.toLocaleString();
+        const bvEl = document.getElementById('sumBV');
+        if (bvEl) bvEl.textContent = '+' + bv + ' BV';
+        const bankEl = document.getElementById('bankAmount');
+        if (bankEl) bankEl.textContent = '₦' + total.toLocaleString();
+      };
+      document.querySelectorAll('#summaryQtyWrap .qty-btn, .summary-qty .qty-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const delta = parseInt(btn.dataset.qty);
+          qtyInput.value = Math.max(1, Math.min(99, (parseInt(qtyInput.value) || 1) + delta));
+          update();
+        });
+      });
+      qtyInput.addEventListener('input', update);
+    }
+
     function bindDelivMethod() {
       const radios = document.querySelectorAll('input[name="delivMethod"]');
       const deliveryForm = document.getElementById('deliveryForm');
       const pickupPanel = document.getElementById('pickupPanel');
-      const pickupRadios = document.querySelectorAll('input[name="pickupLoc"]');
       radios.forEach(r => {
         r.addEventListener('change', () => {
-          delivState.method = r.value;
-          if (r.value === 'pickup') {
-            deliveryForm.style.display = 'none';
-            pickupPanel.style.display = 'block';
-          } else {
-            deliveryForm.style.display = 'block';
-            pickupPanel.style.display = 'none';
-          }
+          state.delivMethod = r.value;
+          deliveryForm.style.display = r.value === 'delivery' ? 'block' : 'none';
+          pickupPanel.style.display = r.value === 'pickup' ? 'block' : 'none';
+          updatePayBtn();
         });
       });
-      pickupRadios.forEach(r => r.addEventListener('change', () => { delivState.pickupLoc = r.value; }));
+      document.querySelectorAll('input[name="pickupLoc"]').forEach(r => {
+        r.addEventListener('change', () => { state.pickupLoc = r.value; });
+      });
     }
-
-    /* ----- Payment method + card binding logic ----- */
-    let payState = { method: 'card', cardBound: true };
 
     function bindPayMethod() {
       const radios = document.querySelectorAll('input[name="payMethod"]');
-      const cardPanel = document.getElementById('cardPanel');
-      const ussdPanel = document.getElementById('ussdPanel');
-      const bankPanel = document.getElementById('bankPanel');
-      const summaryMethodRow = document.getElementById('summaryMethodRow');
-      const summaryMethod = document.getElementById('summaryMethod');
+      const panels = { card: 'cardPanel', ussd: 'ussdPanel', bank: 'bankPanel', cod: 'codPanel' };
       radios.forEach(r => {
         r.addEventListener('change', () => {
-          payState.method = r.value;
-          cardPanel.style.display = r.value === 'card' ? 'block' : 'none';
-          ussdPanel.style.display = r.value === 'ussd' ? 'block' : 'none';
-          bankPanel.style.display = r.value === 'bank' ? 'block' : 'none';
-          // update stepper visual
-          document.querySelectorAll('.stepper .step').forEach((el, i) => {
-            el.classList.toggle('active', i === 0 || (i === 1) || (i === 2 && r.value === 'card'));
-            el.classList.toggle('done', i < 1);
+          state.payMethod = r.value;
+          Object.keys(panels).forEach(k => {
+            document.getElementById(panels[k]).style.display = k === r.value ? 'block' : 'none';
           });
-          if (r.value !== 'card') payState.cardBound = true; // USSD/bank don't need binding
-          else payState.cardBound = document.getElementById('cardBound').style.display === 'block';
-          // summary
-          if (r.value === 'card') {
-            const meta = document.getElementById('cardBoundMeta');
-            summaryMethod.textContent = meta ? meta.textContent : '•••• •••• •••• —';
-          } else if (r.value === 'ussd') {
-            summaryMethod.textContent = window.T.tr('checkout.pay_ussd');
-          } else if (r.value === 'bank') {
-            summaryMethod.textContent = window.T.tr('checkout.pay_bank');
+          const summaryMethod = document.getElementById('summaryMethod');
+          if (summaryMethod) {
+            const names = { cod: 'Cash on delivery', card: 'Debit / credit card', ussd: 'USSD', bank: 'Bank transfer' };
+            summaryMethod.textContent = names[r.value];
+            document.getElementById('summaryMethodRow').style.display = 'flex';
           }
-          summaryMethodRow.style.display = 'flex';
+          // stepper visual: 1 Confirm (done) → 2 Payment (active) → 3 Awaiting
+          document.querySelectorAll('.stepper .step').forEach((el, i) => {
+            el.classList.toggle('done', i === 0);
+            el.classList.toggle('active', i === 1);
+          });
+          validateCard();
           updatePayBtn();
         });
       });
     }
 
-    function bindCardForm() {
+    function validateCard() {
       const num = document.getElementById('cardNumber');
       const name = document.getElementById('cardName');
       const exp = document.getElementById('cardExpiry');
       const cvv = document.getElementById('cardCvv');
-      const btn = document.getElementById('bindCardBtn');
-      const form = document.getElementById('cardForm');
-      const bound = document.getElementById('cardBound');
-      const boundMeta = document.getElementById('cardBoundMeta');
-      const brand = document.getElementById('cardBrand');
+      if (state.payMethod !== 'card') { state.cardValid = true; return true; }
+      const ok = (num.value.replace(/\s/g, '').length >= 13)
+        && name.value.trim().length >= 2
+        && /^\d{2}\/\d{2}$/.test(exp.value)
+        && cvv.value.length >= 3;
+      state.cardValid = ok;
+      return ok;
+    }
 
-      // Card number: insert spaces every 4 digits, detect brand
+    function bindCardInputs() {
+      const num = document.getElementById('cardNumber');
+      const exp = document.getElementById('cardExpiry');
+      const cvv = document.getElementById('cardCvv');
+      const brand = document.getElementById('cardBrand');
       num.addEventListener('input', e => {
         let v = e.target.value.replace(/\D/g, '').slice(0, 16);
         e.target.value = v.replace(/(.{4})/g, '$1 ').trim();
@@ -427,112 +569,143 @@
         else if (/^(5[1-5]|2[2-7])/.test(v)) brand.classList.add('mc');
         else if (/^506[01]|^650/.test(v)) brand.classList.add('verve');
         else if (/^3[47]/.test(v)) brand.classList.add('amex');
-        validate();
+        validateCard(); updatePayBtn();
       });
-      name.addEventListener('input', validate);
+      document.getElementById('cardName').addEventListener('input', () => { validateCard(); updatePayBtn(); });
       exp.addEventListener('input', e => {
         let v = e.target.value.replace(/\D/g, '').slice(0, 4);
         if (v.length >= 3) v = v.slice(0, 2) + '/' + v.slice(2);
         e.target.value = v;
-        validate();
+        validateCard(); updatePayBtn();
       });
       cvv.addEventListener('input', e => {
         e.target.value = e.target.value.replace(/\D/g, '').slice(0, 4);
-        validate();
-      });
-
-      function validate() {
-        const ok = num.value.replace(/\s/g, '').length >= 13
-          && name.value.trim().length >= 2
-          && /^\d{2}\/\d{2}$/.test(exp.value)
-          && cvv.value.length >= 3;
-        btn.disabled = !ok;
-      }
-
-      btn.addEventListener('click', () => {
-        if (btn.disabled) return;
-        btn.setAttribute('aria-busy', 'true');
-        btn.querySelector('[data-label]').textContent = window.T.tr('common.loading');
-        setTimeout(() => {
-          const last4 = num.value.replace(/\s/g, '').slice(-4);
-          const expVal = exp.value;
-          boundMeta.textContent = `•••• •••• •••• ${last4} · ${expVal}`;
-          form.style.display = 'none';
-          bound.style.display = 'block';
-          payState.cardBound = true;
-          updatePayBtn();
-        }, 1200);
-      });
-
-      document.getElementById('changeCardBtn').addEventListener('click', () => {
-        form.style.display = 'block';
-        bound.style.display = 'none';
-        payState.cardBound = false;
-        updatePayBtn();
+        validateCard(); updatePayBtn();
       });
     }
 
     function updatePayBtn() {
       const payBtn = document.getElementById('payBtn');
+      if (!payBtn) return;
+      // card payment requires a valid card; other methods always pass
+      const cardOk = state.payMethod === 'card' ? state.cardValid : true;
+      const phoneInput = document.querySelector('#phoneField .phone-number');
       const ok = document.getElementById('agreeContact').checked
         && document.getElementById('agreeTerms').checked
-        && payState.method
-        && payState.cardBound;
+        && state.delivMethod
+        && (state.delivMethod === 'pickup' || (document.getElementById('fullName').value.trim() && phoneInput && phoneInput.value.trim() && document.getElementById('addr').value.trim() && document.getElementById('city').value.trim()))
+        && cardOk;
       payBtn.disabled = !ok;
     }
 
     function bindPay() {
       const payBtn = document.getElementById('payBtn');
-      function update() { updatePayBtn(); }
-      document.getElementById('agreeContact').addEventListener('change', update);
-      document.getElementById('agreeTerms').addEventListener('change', update);
-      bindPayMethod();
-      bindCardForm();
-      bindDelivMethod();
-      update();
+      ['agreeContact', 'agreeTerms'].forEach(id => {
+        document.getElementById(id).addEventListener('change', updatePayBtn);
+      });
+      ['fullName', 'addr', 'city'].forEach(id => {
+        document.getElementById(id).addEventListener('input', updatePayBtn);
+      });
+      // phone is a dial+number pair rendered into #phoneField
+      document.querySelector('#phoneField .phone-number')?.addEventListener('input', updatePayBtn);
 
       payBtn.addEventListener('click', () => {
+        if (payBtn.disabled) return;
         payBtn.setAttribute('aria-busy', 'true');
         payBtn.querySelector('[data-label]').innerHTML = `<span class="spinner"></span> ${window.T.tr('common.loading')}`;
-        // cache critical payment info
-        window.AL.cachePay({
-          nextAmount: calc.down,
-          product: { id: productId, name: product.name, price: product.price, term },
-          draft: { productId, term, method: payState.method },
-        });
-        const draft = { productId, term, method: payState.method, ts: Date.now() };
-        localStorage.setItem('al.checkout.draft', JSON.stringify(draft));
+        const product = state.product;
+        const pc = window.ProductCatalog || {};
+        const phone = pc.readPhone ? pc.readPhone(document.getElementById('phoneField'), 'phone') : (document.querySelector('#phoneField .phone-number') || {}).value || '';
+        const contactPhone = pc.readPhone ? pc.readPhone(document.getElementById('contactPhoneField'), 'contactPhone') : '';
+        const customer = {
+          name: document.getElementById('fullName').value.trim(),
+          phone: phone,
+          contactPhone: contactPhone,
+          email: document.getElementById('contactEmail').value.trim(),
+          city: document.getElementById('city').value.trim(),
+          address: document.getElementById('addr').value.trim(),
+          state: document.getElementById('state').value,
+          note: document.getElementById('orderNote').value.trim(),
+        };
+        // sync: save the address back to My Account if requested
+        saveAddressFromOrder(customer);
+        const order = {
+          id: 'AQ-' + Math.random().toString(36).slice(2, 8).toUpperCase(),
+          date: Date.now(),
+          items: [{ id: product.id, name: product.name, qty: state.qty, price: product.price, img: product.img, category: product.category }],
+          total: product.price * state.qty,
+          bv: Math.round(product.price / 1000) * state.qty,
+          memberId: (window.Auth && window.Auth.user && window.Auth.user.memberId) || null,
+          addressId: state.savedAddressId || null,
+          customer,
+          delivery: { method: state.delivMethod, pickupLoc: state.delivMethod === 'pickup' ? state.pickupLoc : null },
+          payment: state.payMethod,
+          status: 'pending',
+        };
+        // save via shared order store (al.orders)
+        if (window.ProductCatalog && window.ProductCatalog.addOrder) {
+          window.ProductCatalog.addOrder(order);
+        } else {
+          const orders = JSON.parse(localStorage.getItem('al.orders') || '[]');
+          orders.unshift(order);
+          localStorage.setItem('al.orders', JSON.stringify(orders));
+        }
         setTimeout(() => {
-          const order = {
-            id: 'AQL-' + Math.floor(Math.random() * 900000 + 100000),
-            product: product.name,
-            productId,
-            productSpec: product.spec,
-            productPrice: product.price,
-            term,
-            status: 'awaiting_agreement',
-            price: calc.down,
-            monthly: calc.monthly,
-            method: payState.method,
-            ts: Date.now(),
-          };
-          window.AL.pushOrder(order);
-          location.href = 'agreement.html';
-        }, 1400);
+          location.href = 'shipping.html?order=' + encodeURIComponent(order.id);
+        }, 900);
       });
     }
 
     function applyI18nCheckout() {
       document.querySelectorAll('[data-i18n]').forEach(el => el.textContent = window.T.tr(el.dataset.i18n));
-      renderSummary();
-      // Defaults: card pre-selected & pre-bound, so reflect it in summary and stepper
+      const pc = window.ProductCatalog || {};
+      const defaults = customerDefaults();
+      document.getElementById('fullName').value = defaults.name;
+      // phone fields: dial code + number pairs
+      const phoneHost = document.getElementById('phoneField');
+      const contactHost = document.getElementById('contactPhoneField');
+      if (phoneHost && pc.phoneFieldHTML) phoneHost.innerHTML = pc.phoneFieldHTML(pc.DEFAULT_DIAL, 'phone');
+      if (contactHost && pc.phoneFieldHTML) contactHost.innerHTML = pc.phoneFieldHTML(pc.DEFAULT_DIAL, 'contactPhone');
+      if (pc.fillPhoneFields) {
+        pc.fillPhoneFields(phoneHost, defaults.phone);
+        pc.fillPhoneFields(contactHost, defaults.phone);
+      }
+      document.getElementById('contactEmail').value = defaults.email;
+      document.getElementById('addr').value = defaults.address;
+      document.getElementById('city').value = defaults.city;
+      if (defaults.state) {
+        const sel = document.getElementById('state');
+        const opt = Array.from(sel.options).find(o => o.value === defaults.state || o.text === defaults.state);
+        if (opt) sel.value = opt.value;
+      }
       document.getElementById('agreeContact').checked = true;
       document.getElementById('agreeTerms').checked = true;
-      const cardRadio = document.querySelector('input[name="payMethod"][value="card"]');
-      if (cardRadio) cardRadio.dispatchEvent(new Event('change'));
+      renderSavedAddresses();
+      renderSummary();
+      bindDelivMethod();
+      bindPayMethod();
+      bindCardInputs();
+      document.querySelector('#phoneField .phone-number')?.addEventListener('input', updatePayBtn);
+      updatePayBtn();
     }
 
-    document.addEventListener('DOMContentLoaded', applyI18nCheckout);
+    document.addEventListener('DOMContentLoaded', () => {
+      // Login gate: ordering / paying requires a signed-in account
+      if (!(window.Auth && window.Auth.isLoggedIn())) {
+        const next = encodeURIComponent(location.pathname + location.search);
+        location.replace('login.html?next=' + next);
+        return;
+      }
+      const product = getProductFromUrl();
+      if (!product) {
+        location.replace('products.html');
+        return;
+      }
+      state.product = product;
+      state.qty = getQtyFromUrl();
+      document.title = 'Checkout · ' + product.name + ' · AquaLife';
+      applyI18nCheckout();
+    });
   </script>
 </body>
 </html>

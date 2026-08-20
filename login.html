@@ -1,13 +1,17 @@
 <!doctype html>
 <html lang="en">
 <head>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Sign in · AquaLease Nigeria</title>
+  <title>Sign in · AquaLife Nigeria</title>
   <link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='%2300875A' d='M12 3C8 9 6 12 6 15a6 6 0 0 0 12 0c0-3-2-6-6-12z'/></svg>" />
-  <link rel="stylesheet" href="assets/css/design-system.css" />
-  <link rel="stylesheet" href="assets/css/components.css" />
-  <link rel="stylesheet" href="assets/css/pages.css" />
+  <link rel="stylesheet" href="assets/css/design-system.css?v=20260819-2" />
+  <link rel="stylesheet" href="assets/css/components.css?v=20260819-2" />
+  <link rel="stylesheet" href="assets/css/pages.css?v=20260819-2" />
+  <link rel="stylesheet" href="assets/css/website.css?v=20260819-2" />
 </head>
 <body data-page="login">
   <div id="offline-banner" class="offline-banner">Offline mode · showing cached information</div>
@@ -16,26 +20,26 @@
   <main class="auth-shell" data-mode="signin">
     <div class="auth-card card" data-mode="signin">
       <!-- Logo / brand mark (mobile only) -->
-      <a href="index.html" class="auth-mark" aria-label="AquaLease">
+      <a href="index.html" class="auth-mark" aria-label="AquaLife">
         <span class="mark" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
             <path d="M12 3 C 8 9 6 12 6 15 a6 6 0 0 0 12 0 c0-3-2-6-6-12z"></path>
           </svg>
         </span>
-        <span class="word">AquaLease<small>Water · on terms</small></span>
+        <span class="word">AquaLife<small>Water · on terms</small></span>
       </a>
 
       <!-- Headline + sub -->
       <div class="auth-head">
-        <h1 data-i18n="login.title">Sign in to AquaLease</h1>
-        <p data-i18n="login.sub" class="muted">Manage your leases, payments and water quality in one place.</p>
+        <h1 data-i18n="login.title">Sign in to AquaLife</h1>
+        <p data-i18n="login.sub" class="muted">Manage your orders, payments and preferences in one place.</p>
       </div>
 
       <!-- ============ SIGN IN form — minimal: account + password ============ -->
       <form id="signinForm" class="auth-form" novalidate>
         <label class="field">
-          <span data-i18n="login.email_label">Email or phone</span>
-          <input type="text" name="email" autocomplete="username" required data-i18n-ph="login.email_ph" placeholder="you@example.com" value="adaeze@aqualease.ng" />
+          <span data-i18n="login.email_label">Member ID</span>
+          <input type="text" name="email" autocomplete="username" required data-i18n-ph="login.email_ph" placeholder="Enter your member ID" value="" />
         </label>
         <label class="field">
           <span data-i18n="login.password_label">Password</span>
@@ -90,7 +94,7 @@
           <em>Clean water,</em>
           <span>one tap away.</span>
         </h2>
-        <p>Manage your lease, track water quality, and pay your instalments in seconds — wherever you are in Nigeria.</p>
+        <p>Manage your orders, track water quality, and pay with ease — wherever you are in Nigeria.</p>
         <ul class="aside-bullets">
           <li>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
@@ -98,15 +102,15 @@
           </li>
           <li>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            Smart dunning — never lose water
+            Smart reminders — stay on top of payments
           </li>
           <li>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            BV rewards on every payment
+            Exclusive rewards on every purchase
           </li>
         </ul>
         <div class="aside-foot">
-          <div class="aside-stat"><b>12,400+</b><span>active leases</span></div>
+          <div class="aside-stat"><b>12,400+</b><span>happy customers</span></div>
           <div class="aside-stat"><b>36</b><span>cities</span></div>
           <div class="aside-stat"><b>98.6%</b><span>on-time</span></div>
         </div>
@@ -116,8 +120,9 @@
 
   <div id="app-footer"></div>
 
-  <script src="assets/i18n/strings.js"></script>
-  <script src="assets/js/app.js"></script>
+  <script src="assets/i18n/strings.js?v=20260819-2"></script>
+  <script src="assets/js/app.js?v=20260819-2"></script>
+  <script src="assets/js/website.js?v=20260819-2"></script>
   <script>
     /* ---------- i18n apply ---------- */
     function applyI18n() {
@@ -138,7 +143,7 @@
       if (err) err.textContent = msg || '';
       if (msg) input.setAttribute('aria-invalid', 'true'); else input.removeAttribute('aria-invalid');
     }
-    function isEmailOrPhone(v) { return /@|\+?\d{7,}/.test(v.trim()); }
+    function isMemberId(v) { return v.trim().length >= 3; }
 
     /* ---------- Loading button ---------- */
     function startLoading(btn, loadingLabel) {
@@ -166,11 +171,11 @@
 
     /* ---------- SIGN IN: instant ---------- */
     function doSignIn(form, btn) {
-      const email = form.email.value.trim();
+      const memberId = form.email.value.trim();
       const pwd = form.password.value;
       let ok = true;
-      if (!email) { setError(form.email, window.T.tr('login.err_required')); ok = false; }
-      else if (!isEmailOrPhone(email)) { setError(form.email, window.T.tr('login.err_email')); ok = false; }
+      if (!memberId) { setError(form.email, window.T.tr('login.err_required')); ok = false; }
+      else if (!isMemberId(memberId)) { setError(form.email, window.T.tr('login.err_email')); ok = false; }
       else setError(form.email, '');
       if (!pwd) { setError(form.password, window.T.tr('login.err_required')); ok = false; }
       else if (pwd.length < 6) { setError(form.password, window.T.tr('login.err_pwd')); ok = false; }
@@ -179,9 +184,12 @@
 
       startLoading(btn, window.T.tr('login.submit_loading'));
       setTimeout(() => {
-        const firstName = deriveNameFromEmail(email).split(' ')[0];
+        const uid = memberId.toUpperCase();
         window.Auth.login({
-          firstName, name: deriveNameFromEmail(email), email,
+          firstName: 'Member',
+          name: 'Member ' + uid,
+          email: uid.toLowerCase() + '@aqualife.ng',
+          memberId: uid,
           signedInAt: Date.now(),
         });
         window.toast(window.T.tr('login.success_signin'), 'success');
@@ -202,18 +210,27 @@
     }
 
     /* ---------- Social buttons (stub) ---------- */
+    // Social sign-in (WhatsApp / Google) gets a random 12-digit member ID: "NG" + 10 digits
+    function genSocialMemberId() {
+      if (window.ProductCatalog && window.ProductCatalog.genMemberId) return window.ProductCatalog.genMemberId();
+      let digits = '';
+      for (let i = 0; i < 10; i++) digits += Math.floor(Math.random() * 10);
+      return 'NG' + digits;
+    }
     function wireSocial() {
       document.querySelectorAll('[data-social]').forEach(btn => {
         btn.addEventListener('click', () => {
           const provider = btn.dataset.social;
+          const memberId = genSocialMemberId();
           const user = {
             firstName: provider === 'whatsapp' ? 'Adaeze' : 'Friend',
             name: provider === 'whatsapp' ? 'Adaeze Okonkwo' : 'Guest',
-            email: provider + '@aqualease.ng',
+            email: provider + '@aqualife.ng',
+            memberId,
             signedInAt: Date.now(),
           };
           window.Auth.login(user);
-          window.toast(window.T.tr('login.success_signin'), 'success');
+          window.toast(`${window.T.tr('login.success_signin')} · ${memberId}`, 'success');
           redirectAfterAuth();
         });
       });

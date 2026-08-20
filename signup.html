@@ -1,13 +1,17 @@
 <!doctype html>
 <html lang="en">
 <head>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Create account · AquaLease Nigeria</title>
+  <title>Create account · AquaLife Nigeria</title>
   <link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='%2300875A' d='M12 3C8 9 6 12 6 15a6 6 0 0 0 12 0c0-3-2-6-6-12z'/></svg>" />
-  <link rel="stylesheet" href="assets/css/design-system.css" />
-  <link rel="stylesheet" href="assets/css/components.css" />
-  <link rel="stylesheet" href="assets/css/pages.css" />
+  <link rel="stylesheet" href="assets/css/design-system.css?v=20260819-2" />
+  <link rel="stylesheet" href="assets/css/components.css?v=20260819-2" />
+  <link rel="stylesheet" href="assets/css/pages.css?v=20260819-2" />
+  <link rel="stylesheet" href="assets/css/website.css?v=20260819-2" />
 </head>
 <body data-page="signup">
   <div id="offline-banner" class="offline-banner">Offline mode · showing cached information</div>
@@ -16,30 +20,52 @@
   <main class="auth-shell" data-mode="signup">
     <div class="auth-card card" data-mode="signup">
       <!-- Logo / brand mark (mobile only) -->
-      <a href="index.html" class="auth-mark" aria-label="AquaLease">
+      <a href="index.html" class="auth-mark" aria-label="AquaLife">
         <span class="mark" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
             <path d="M12 3 C 8 9 6 12 6 15 a6 6 0 0 0 12 0 c0-3-2-6-6-12z"></path>
           </svg>
         </span>
-        <span class="word">AquaLease<small>Water · on terms</small></span>
+        <span class="word">AquaLife<small>Water · on terms</small></span>
       </a>
 
       <!-- Headline + sub -->
       <div class="auth-head">
-        <h1 data-i18n="login.signup_title">Create your AquaLease account</h1>
+        <h1 data-i18n="login.signup_title">Create your AquaLife account</h1>
         <p data-i18n="login.signup_sub" class="muted">Tell us a bit about you so we can recommend the right system and serve you faster.</p>
       </div>
 
-      <!-- ============ SIGN UP form — minimal: name + account + password ============ -->
+      <!-- ============ SIGN UP form — email/phone + OTP verification ============ -->
       <form id="signupForm" class="auth-form" novalidate>
         <label class="field">
           <span data-i18n="login.name_label">Full name</span>
           <input type="text" name="name" autocomplete="name" required data-i18n-ph="login.name_ph" placeholder="Adaeze Okonkwo" />
         </label>
         <label class="field">
-          <span data-i18n="login.email_label">Email or phone</span>
-          <input type="text" name="email" autocomplete="username" required data-i18n-ph="login.email_ph" placeholder="you@example.com" />
+          <span data-i18n="login.contact_label">Email or phone</span>
+          <div class="phone-input-wrap" id="contactInputWrap">
+            <select class="select phone-dial" name="contact_dial" aria-label="Country code">
+              <option value="+86">China (+86)</option>
+              <option value="+234" selected>Nigeria (+234)</option>
+              <option value="+60">Malaysia (+60)</option>
+              <option value="+65">Singapore (+65)</option>
+              <option value="+62">Indonesia (+62)</option>
+              <option value="+66">Thailand (+66)</option>
+              <option value="+63">Philippines (+63)</option>
+              <option value="+1">USA / Canada (+1)</option>
+              <option value="+44">United Kingdom (+44)</option>
+              <option value="+91">India (+91)</option>
+            </select>
+            <input class="input phone-number" name="contact" type="text" required inputmode="tel" autocomplete="tel" placeholder="Enter email or phone number" />
+          </div>
+        </label>
+        <label class="field" id="otpField" style="display: none;">
+          <span data-i18n="login.otp_label">Verification code</span>
+          <div class="otp-input-wrap">
+            <input type="text" name="otp" autocomplete="one-time-code" required inputmode="numeric" maxlength="6" pattern="\d{6}" data-i18n-ph="login.otp_ph" placeholder="123456" />
+            <button type="button" class="btn btn-ghost btn-sm otp-resend" id="otpResendBtn" disabled data-i18n="login.otp_resend">Resend code</button>
+          </div>
+          <small class="otp-hint" data-i18n="login.otp_hint">Enter the 6-digit code sent to your email/phone</small>
         </label>
         <div class="grid-2">
           <label class="field">
@@ -62,9 +88,9 @@
           <input type="checkbox" name="tos" required />
           <span>
             <span data-i18n="login.agree_tos">I agree to the</span>
-            <a href="#" data-i18n="login.link_tos">Terms of Service</a>
+            <a href="terms.html" data-i18n="login.link_tos">Terms of Service</a>
             ·
-            <a href="#" data-i18n="login.link_privacy">Privacy Policy</a>
+            <a href="privacy.html" data-i18n="login.link_privacy">Privacy Policy</a>
           </span>
         </label>
         <button type="submit" class="btn btn-primary btn-block btn-loading" id="signupSubmit" data-i18n="login.submit_signup">Create account</button>
@@ -112,8 +138,9 @@
 
   <div id="app-footer"></div>
 
-  <script src="assets/i18n/strings.js"></script>
-  <script src="assets/js/app.js"></script>
+  <script src="assets/i18n/strings.js?v=20260819-2"></script>
+  <script src="assets/js/app.js?v=20260819-2"></script>
+  <script src="assets/js/website.js?v=20260819-2"></script>
   <script>
     /* ---------- i18n apply ---------- */
     function applyI18n() {
@@ -135,6 +162,8 @@
       if (msg) input.setAttribute('aria-invalid', 'true'); else input.removeAttribute('aria-invalid');
     }
     function isEmailOrPhone(v) { return /@|\+?\d{7,}/.test(v.trim()); }
+    function isEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()); }
+    function isPhone(v) { return /^\+?\d{7,}$/.test(v.trim().replace(/[\s-]/g, '')); }
 
     /* ---------- Loading button ---------- */
     function startLoading(btn, loadingLabel) {
@@ -154,43 +183,199 @@
       location.href = next;
     }
 
-    /* ---------- SIGN UP: minimal validation (name + email + password) ---------- */
+    /* ---------- OTP handling ---------- */
+    let otpState = {
+      stage: 'init', // 'init', 'sent', 'verified'
+      contact: '',
+      contactDial: '',
+      otpCode: '',
+      otpTimer: null,
+      resendCooldown: 0,
+    };
+
+    function generateOTP() {
+      return Math.floor(100000 + Math.random() * 900000).toString();
+    }
+
+    function startResendCountdown(btn) {
+      let seconds = 60;
+      btn.disabled = true;
+      otpState.resendCooldown = seconds;
+      const updateBtn = () => {
+        if (seconds > 0) {
+          btn.textContent = `${window.T.tr('login.otp_resend_in')} ${seconds}s`;
+          seconds--;
+          otpState.resendCooldown = seconds;
+          otpState.otpTimer = setTimeout(updateBtn, 1000);
+        } else {
+          btn.disabled = false;
+          btn.textContent = window.T.tr('login.otp_resend');
+          otpState.resendCooldown = 0;
+        }
+      };
+      updateBtn();
+    }
+
+    function sendOTP(contact, dial) {
+      // In production, this would call an API to send SMS/Email
+      // For demo, we generate and store OTP locally
+      const code = generateOTP();
+      otpState.otpCode = code;
+      otpState.contact = contact;
+      otpState.contactDial = dial;
+      otpState.stage = 'sent';
+
+      // Simulate sending - show OTP in toast for demo purposes
+      console.log('[DEMO] OTP sent to', dial + contact, ':', code);
+      window.toast(window.T.tr('login.otp_sent', { contact: dial + contact }), 'success');
+
+      // Auto-fill OTP for demo (remove in production)
+      const otpInput = document.querySelector('[name="otp"]');
+      if (otpInput) {
+        otpInput.value = code;
+      }
+    }
+
+    function verifyOTP(inputCode) {
+      return inputCode === otpState.otpCode;
+    }
+
+    function showOTPField() {
+      const otpField = document.getElementById('otpField');
+      const contactWrap = document.getElementById('contactInputWrap');
+      const signupBtn = document.getElementById('signupSubmit');
+
+      contactWrap.style.display = 'none';
+      otpField.style.display = 'block';
+      signupBtn.setAttribute('data-i18n', 'login.verify_otp');
+      signupBtn.textContent = window.T.tr('login.verify_otp');
+      otpState.stage = 'sent';
+
+      // Focus OTP input
+      setTimeout(() => {
+        const otpInput = document.querySelector('[name="otp"]');
+        if (otpInput) otpInput.focus();
+      }, 100);
+    }
+
+    function hideOTPField() {
+      const otpField = document.getElementById('otpField');
+      const contactWrap = document.getElementById('contactInputWrap');
+      const signupBtn = document.getElementById('signupSubmit');
+
+      otpField.style.display = 'none';
+      contactWrap.style.display = 'flex';
+      signupBtn.setAttribute('data-i18n', 'login.send_otp');
+      signupBtn.textContent = window.T.tr('login.send_otp');
+      otpState.stage = 'init';
+      otpState.otpCode = '';
+      if (otpState.otpTimer) {
+        clearTimeout(otpState.otpTimer);
+        otpState.otpTimer = null;
+      }
+    }
+
+    /* ---------- SIGN UP: two-stage (contact -> OTP -> complete) ---------- */
     function doSignUp(form, btn) {
       const name = form.name.value.trim();
-      const email = form.email.value.trim();
+      const contact = form.contact.value.trim();
+      const dial = form.contact_dial?.value || '+234';
+      const fullContact = dial + ' ' + contact;
       const pwd = form.password.value;
       const confirm = form.confirm.value;
       const tos = form.tos.checked;
+      const otp = form.otp?.value?.trim() || '';
+
       let ok = true;
-      if (!name) { setError(form.name, window.T.tr('login.err_required')); ok = false; } else setError(form.name, '');
-      if (!email) { setError(form.email, window.T.tr('login.err_required')); ok = false; }
-      else if (!isEmailOrPhone(email)) { setError(form.email, window.T.tr('login.err_email')); ok = false; }
-      else setError(form.email, '');
-      if (!pwd) { setError(form.password, window.T.tr('login.err_required')); ok = false; }
-      else if (pwd.length < 6) { setError(form.password, window.T.tr('login.err_pwd')); ok = false; }
-      else setError(form.password, '');
-      if (!confirm) { setError(form.confirm, window.T.tr('login.err_required')); ok = false; }
-      else if (confirm !== pwd) { setError(form.confirm, window.T.tr('login.err_match')); ok = false; }
-      else setError(form.confirm, '');
-      if (!tos) { setError(form.tos, window.T.tr('login.err_required')); ok = false; } else setError(form.tos, '');
-      if (!ok) {
-        const first = form.querySelector('[aria-invalid="true"]');
-        if (first) first.focus();
+
+      // Stage 1: Validate basic info and send OTP
+      if (otpState.stage === 'init') {
+        if (!name) { setError(form.name, window.T.tr('login.err_required')); ok = false; } else setError(form.name, '');
+        if (!contact) { setError(form.contact, window.T.tr('login.err_required')); ok = false; }
+        else if (!isEmailOrPhone(contact)) { setError(form.contact, window.T.tr('login.err_contact')); ok = false; }
+        else setError(form.contact, '');
+        if (!pwd) { setError(form.password, window.T.tr('login.err_required')); ok = false; }
+        else if (pwd.length < 6) { setError(form.password, window.T.tr('login.err_pwd')); ok = false; }
+        else setError(form.password, '');
+        if (!confirm) { setError(form.confirm, window.T.tr('login.err_required')); ok = false; }
+        else if (confirm !== pwd) { setError(form.confirm, window.T.tr('login.err_match')); ok = false; }
+        else setError(form.confirm, '');
+        if (!tos) { setError(form.tos, window.T.tr('login.err_required')); ok = false; } else setError(form.tos, '');
+
+        if (!ok) {
+          const first = form.querySelector('[aria-invalid="true"]');
+          if (first) first.focus();
+          return;
+        }
+
+        // Send OTP
+        startLoading(btn, window.T.tr('login.otp_sending'));
+        setTimeout(() => {
+          sendOTP(contact, dial);
+          stopLoading(btn);
+          showOTPField();
+          startResendCountdown(document.getElementById('otpResendBtn'));
+        }, 800);
         return;
       }
 
-      startLoading(btn, window.T.tr('login.submit_signup_loading'));
+      // Stage 2: Verify OTP and complete registration
+      if (otpState.stage === 'sent') {
+        if (!otp) { setError(form.otp, window.T.tr('login.err_required')); ok = false; }
+        else if (otp.length !== 6 || !/^\d{6}$/.test(otp)) { setError(form.otp, window.T.tr('login.err_otp')); ok = false; }
+        else if (!verifyOTP(otp)) { setError(form.otp, window.T.tr('login.err_otp_invalid')); ok = false; }
+        else setError(form.otp, '');
+
+        if (!ok) {
+          const first = form.querySelector('[aria-invalid="true"]');
+          if (first) first.focus();
+          return;
+        }
+
+        // OTP verified - complete registration
+        startLoading(btn, window.T.tr('login.submit_signup_loading'));
+        setTimeout(() => {
+          const firstName = name.split(/\s+/)[0] || 'there';
+          const memberId = window.ProductCatalog?.genMemberId?.() || 'NG' + Date.now().toString().slice(-12).padStart(12, '0');
+          const user = {
+            firstName,
+            name,
+            email: isEmail(contact) ? fullContact : '',
+            phone: isPhone(contact) ? fullContact : '',
+            contact: fullContact,
+            memberId,
+            type: 'member',
+            signedInAt: Date.now(),
+          };
+          window.Auth.login(user);
+          window.toast(window.T.tr('login.success_signup', { memberId }), 'success');
+          // Show success, then auto-redirect to account page after 3 seconds
+          btn.disabled = true;
+          let remaining = 3;
+          btn.textContent = window.T.tr('login.redirecting_in', { s: remaining });
+          const redirectTimer = setInterval(() => {
+            remaining -= 1;
+            if (remaining > 0) {
+              btn.textContent = window.T.tr('login.redirecting_in', { s: remaining });
+            } else {
+              clearInterval(redirectTimer);
+              location.href = 'account.html';
+            }
+          }, 1000);
+        }, 400);
+        return;
+      }
+    }
+
+    function resendOTP() {
+      const btn = document.getElementById('otpResendBtn');
+      if (otpState.resendCooldown > 0) return;
+      startLoading(btn, window.T.tr('login.otp_sending'));
       setTimeout(() => {
-        const firstName = name.split(/\s+/)[0] || 'there';
-        const user = {
-          firstName, name, email,
-          type: 'member',
-          signedInAt: Date.now(),
-        };
-        window.Auth.login(user);
-        window.toast(window.T.tr('login.success_signup'), 'success');
-        redirectAfterAuth();
-      }, 400);
+        sendOTP(otpState.contact, otpState.contactDial);
+        stopLoading(btn);
+        startResendCountdown(btn);
+      }, 500);
     }
 
     /* ---------- Password show/hide ---------- */
@@ -211,7 +396,14 @@
       const signupForm = document.getElementById('signupForm');
       const signupBtn = document.getElementById('signupSubmit');
 
+      // Initialize button text for stage 1
+      signupBtn.setAttribute('data-i18n', 'login.send_otp');
+      signupBtn.textContent = window.T.tr('login.send_otp');
+
       signupForm.addEventListener('submit', e => { e.preventDefault(); doSignUp(signupForm, signupBtn); });
+
+      // Resend OTP
+      document.getElementById('otpResendBtn')?.addEventListener('click', resendOTP);
 
       // clear error on input
       document.querySelectorAll('.auth-form input, .auth-form select').forEach(input => {
