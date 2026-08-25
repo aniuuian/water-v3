@@ -40,27 +40,46 @@
   const Money = {
     format(n) {
       if (n == null) return '—';
-      return '₦' + Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      return 'N' + Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     },
     formatShort(n) {
-      if (n >= 1_000_000) return '₦' + (n / 1_000_000).toFixed(n >= 10_000_000 ? 0 : 1) + 'M';
-      if (n >= 1_000) return '₦' + Math.round(n / 1000) + 'K';
-      return '₦' + n;
+      if (n >= 1_000_000) return 'N' + (n / 1_000_000).toFixed(n >= 10_000_000 ? 0 : 1) + 'M';
+      if (n >= 1_000) return 'N' + Math.round(n / 1000) + 'K';
+      return 'N' + n;
     },
   };
 
   const T = {
-    // English-only site: language switching is disabled.
-    get current() { return 'en'; },
-    set current(v) {},
-    get dict() { return (window.I18N && window.I18N.en) || window.I18N.en; },
+    /** 当前语言代码，读取自 localStorage，缺省 English */
+    get current() {
+      const code = localStorage.getItem(STORAGE.LANG);
+      return (code && window.I18N && window.I18N[code]) ? code : 'en';
+    },
+    set current(code) {
+      const ok = code && window.I18N && window.I18N[code];
+      if (!ok) return;
+      if (this.current === code) return;
+      localStorage.setItem(STORAGE.LANG, code);
+      document.documentElement.lang = code === 'zh' ? 'zh-CN' : code;
+      window.dispatchEvent(new CustomEvent('al:langchange', { detail: { lang: code } }));
+    },
+    get dict() {
+      const cur = this.current;
+      return (window.I18N && (window.I18N[cur] || window.I18N.en)) || (window.I18N && window.I18N.en) || {};
+    },
     /** tr('hero.title_a') */
     tr(path, params) {
       const dict = this.dict;
       const parts = path.split('.');
       let v = dict;
       for (const p of parts) { if (v == null) return path; v = v[p]; }
-      if (v == null) return path;
+      if (v == null) {
+        // fallback to English
+        const en = (window.I18N && window.I18N.en) || {};
+        let f = en; for (const p of parts) { if (f == null) return path; f = f[p]; }
+        if (f == null) return path;
+        v = f;
+      }
       if (typeof v === 'string' && params) for (const [k, val] of Object.entries(params)) v = v.replaceAll(`{${k}}`, val);
       return v;
     },
@@ -81,7 +100,7 @@
       let f = window.I18N.en; for (const p of parts) { if (f == null) return en; f = f[p]; }
       return typeof f === 'string' ? f : en;
     },
-    /** 把 root 下所有带 data-i18n / data-i18n-ph / data-i18n-title 的节点，按当前 T.dict 替换文案。 */
+    /** 把 root 下所有带 data-i18n / data-i18n-ph / data-i18n-title / data-i18n-aria-label 的节点，按当前 T.dict 替换文案。 */
     applyI18n(root) {
       const host = root || document.body;
       if (!host) return;
@@ -89,10 +108,9 @@
         const key = el.getAttribute('data-i18n');
         const val = this.tr(key);
         if (val && val !== key) {
-          // 若元素内只有纯文本（无嵌套子标签），直接替换 textContent；
-          // 若有嵌套（常见于 footer 的链接、tab 结构），保留子标签仅替换第一文本子节点会很危险，所以统一替换 textContent。
-          // 对 <input>/<textarea> 使用 placeholder 通过 data-i18n-ph 处理，避免此处误覆盖。
           if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') return;
+          // select option / select text keep: 若为 <select> 本身不直接覆盖 textContent，改它的 options 单独走下方 attr 方式
+          if (el.tagName === 'SELECT') return;
           el.textContent = val;
         }
       });
@@ -111,13 +129,23 @@
         const val = this.tr(key);
         if (val && val !== key) el.setAttribute('aria-label', val);
       });
-      // 同步 <html lang>，避免浏览器对文档语言的判断过时
+      // select option 支持 data-i18n 用于 language 下拉
+      host.querySelectorAll('select[data-i18n-options]').forEach(sel => {
+        Array.from(sel.options).forEach(opt => {
+          const key = opt.getAttribute('data-i18n');
+          if (!key) return;
+          const v = this.tr(key);
+          if (v && v !== key) opt.textContent = v;
+        });
+      });
+      // 同步 <html lang>
       document.documentElement.lang = this.current === 'zh' ? 'zh-CN' : this.current;
     },
-    /** 切换语言：English-only 站点，no-op（保留以兼容旧调用） */
+    /** 切换语言：保存到 localStorage + 触发 al:langchange；若语言表没有对应 key 则忽略 */
     switchLang(lang) {
-      if (!lang || lang === 'en') return;
-      return;
+      if (!lang) return;
+      if (!window.I18N || !window.I18N[lang]) return;
+      this.current = lang;
     },
   };
   window.T = T;
@@ -130,8 +158,27 @@
     if (!(d instanceof Date) || isNaN(d.getTime())) return '—';
     return d.toLocaleDateString(T.current === 'zh' ? 'zh-CN' : 'en-GB', { year: 'numeric', month: 'short', day: '2-digit' });
   }
+  function fmtDateUp(d) {
+    // "25 AUG 2026" — uppercase short month for order cards
+    if (typeof d === 'string' || typeof d === 'number') d = new Date(d);
+    if (!(d instanceof Date) || isNaN(d.getTime())) return '—';
+    const day = String(d.getDate()).padStart(2, '0');
+    const mon = d.toLocaleDateString('en-GB', { month: 'short' }).toUpperCase();
+    return `${day} ${mon} ${d.getFullYear()}`;
+  }
+  function fmtDT(d) {
+    if (typeof d === 'string' || typeof d === 'number') d = new Date(d);
+    if (!(d instanceof Date) || isNaN(d.getTime())) return '—';
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    const hh = String(d.getHours()).padStart(2, '0');
+    const mm = String(d.getMinutes()).padStart(2, '0');
+    const ss = String(d.getSeconds()).padStart(2, '0');
+    return `${y}-${m}-${day} ${hh}:${mm}:${ss}`;
+  }
   function fmtNum(n) { return new Intl.NumberFormat(T.current === 'zh' ? 'zh-CN' : 'en-GB').format(n); }
-  window.fmtDate = fmtDate; window.fmtNum = fmtNum;
+  window.fmtDate = fmtDate; window.fmtDateUp = fmtDateUp; window.fmtDT = fmtDT; window.fmtNum = fmtNum;
 
   /* ---------- Header render ---------- */
   function renderHeader(active) {
@@ -486,8 +533,154 @@
     setTimeout(() => openBanner(false), 600);
   }
 
+  /* ---------- Deterministic demo seed — guarantees identical first-load content on http:// and file:// ---------- */
+  const DEMO_MEMBER = {
+    memberId: 'NG09246375',
+    firstName: 'Adaeze',
+    name: 'Adaeze Okonkwo',
+    email: 'adaeze@aqualife.ng',
+    phone: '+234 803 123 4567',
+    signedInAt: Date.UTC(2026, 5, 3, 8, 52, 21), // 2026-06-03T08:52:21Z = join date
+  };
+
+  function seedDemoIfEmpty() {
+    try {
+      const hasAuth = !!localStorage.getItem(STORAGE.AUTH);
+      const hasOrdersRaw = localStorage.getItem('al.orders');
+      const hasOrders = hasOrdersRaw && JSON.parse(hasOrdersRaw || '[]').length > 0;
+      // Only seed on a truly empty / brand-new profile (not touched by real user yet)
+      if (hasAuth || hasOrders) return;
+
+      // 1) Demo account: fixed NG09246375 Adaeze Okonkwo — same on every protocol
+      localStorage.setItem(STORAGE.AUTH, JSON.stringify({
+        memberId: DEMO_MEMBER.memberId,
+        firstName: DEMO_MEMBER.firstName,
+        name: DEMO_MEMBER.name,
+        email: DEMO_MEMBER.email,
+        phone: DEMO_MEMBER.phone,
+        signedInAt: DEMO_MEMBER.signedInAt,
+        type: 'home',
+        state: 'Lagos',
+        city: 'Lekki',
+        address: '14 Admiralty Way, Lekki Phase 1, Lagos, Nigeria',
+      }));
+
+      // 2) Profile mirror (used by prefs / address defaults / subviews)
+      localStorage.setItem(STORAGE.PROFILE, JSON.stringify({
+        firstName: DEMO_MEMBER.firstName,
+        name: DEMO_MEMBER.name,
+        email: DEMO_MEMBER.email,
+        phone: DEMO_MEMBER.phone,
+        type: 'home',
+        state: 'Lagos',
+        city: 'Lekki',
+        address: '14 Admiralty Way, Lekki Phase 1, Lagos, Nigeria',
+        verified: true,
+        signedInAt: DEMO_MEMBER.signedInAt,
+        memberSince: DEMO_MEMBER.signedInAt,
+      }));
+
+      // 3) Default shipping address (matches demo profile)
+      localStorage.setItem(STORAGE.ADDRESSES, JSON.stringify([{
+        id: 'a_default',
+        label: 'Home',
+        recipient: DEMO_MEMBER.name,
+        phone: DEMO_MEMBER.phone,
+        street: '14 Admiralty Way, Lekki Phase 1',
+        city: 'Lekki',
+        state: 'Lagos',
+        isDefault: true,
+      }]));
+
+      // 4) AE XLSX style member data (account overview / basic info bar)
+      localStorage.setItem('al.memberData', JSON.stringify({
+        memberId: DEMO_MEMBER.memberId,
+        memberName: DEMO_MEMBER.name,
+        loginStatus: 'Allowed',
+        status: 'Active',
+        country: 'Nigeria',
+        joinDate: '2026-06-03T08:52:21',
+        joinPeriod: 172,
+        currentLevel: 'Silver',
+        levelAdjustDate: null,
+        settlementLevel: 'Silver',
+        highestMgmtStar: 'None',
+        latestMgmtStar: 'None',
+        highestElite: 'N/A',
+        latestElite: 'N/A',
+        referrerId: 'NG27187710',
+        referrerName: 'S2',
+        actualReferrerId: 'NG27187710',
+        actualReferrerName: 'S2',
+        reportingCenterId: 'NG66051653',
+        isReportingCenter: 'No',
+        showChart: 'Yes',
+        showRecharge: 'Yes',
+        reportingCenterLevel: 'Level 5',
+        bankBranch: 'Access Bank - Victoria Island',
+        bankName: 'Access Bank Nigeria Plc',
+        bankAccount: '36545355225',
+        commonAddress: '14, Admiralty Way, Victoria Island, Lagos, Nigeria',
+        transferEnabled: 'Enabled',
+        email: DEMO_MEMBER.email,
+        phone: DEMO_MEMBER.phone,
+        _schemaVersion: 2,
+      }));
+
+      // 5) One sample order: same AQ-UW13CL on every protocol / first load
+      //     Images use relative paths (assets/...) so both http:// and file:// resolve them.
+      const placedAt = Date.UTC(2026, 7, 24, 10, 30, 0); // 24 AUG 2026 10:30 UTC
+      const items = [{
+        id: 'hw3',
+        name: 'Elken Spirulina',
+        category: 'health-wellness',
+        img: 'elken-spirulina.webp',
+        image: 'assets/img/products/health-wellness/elken-spirulina.webp',
+        price: 52000,
+        qty: 3,
+        bv: 52,
+      }];
+      const order = {
+        id: 'AQ-UW13CL',
+        memberId: DEMO_MEMBER.memberId,
+        status: 'paid',
+        createdAt: placedAt,
+        placedAt,
+        paidAt: placedAt,
+        currency: 'NGN',
+        items,
+        subtotal: 156000,
+        shipping: 0,
+        tax: 0,
+        total: 156000,
+        bv: 312,
+        paymentMethod: 'cod',
+        deliveryMethod: 'home',
+        shippingAddress: {
+          recipient: DEMO_MEMBER.name,
+          phone: DEMO_MEMBER.phone,
+          street: '14 Admiralty Way, Lekki Phase 1',
+          city: 'Lekki',
+          state: 'Lagos',
+          country: 'Nigeria',
+        },
+        notes: '',
+      };
+      localStorage.setItem('al.orders', JSON.stringify([order]));
+
+      // 6) Notify: sync header (now shows logged-in demo user) + order listeners
+      window.dispatchEvent(new CustomEvent('al:authchange', { detail: { user: JSON.parse(localStorage.getItem(STORAGE.AUTH)) } }));
+      window.dispatchEvent(new CustomEvent('al:orderschange'));
+    } catch (e) {
+      // localStorage disabled / privacy mode: silently skip (non-critical)
+    }
+  }
+
   /* ---------- Init ---------- */
   document.addEventListener('DOMContentLoaded', () => {
+    // Seed demo account + sample order BEFORE rendering the header so it shows the signed-in state.
+    // This guarantees identical first-load content on both http://127.0.0.1:XXXX and file:// protocol.
+    seedDemoIfEmpty();
     renderHeader(document.body.dataset.page);
     renderFooter();
     renderCookieBanner();
@@ -506,6 +699,7 @@
   /* ---------- Public helpers ---------- */
   window.AL = {
     Money, T, STORAGE, fmtDate, fmtNum, toast,
+    seedDemoIfEmpty,
     loadProfile() {
       try { return JSON.parse(localStorage.getItem(STORAGE.PROFILE) || 'null') || this._profileFromAuth(); }
       catch { return this._profileFromAuth(); }

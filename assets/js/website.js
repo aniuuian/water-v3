@@ -50,8 +50,8 @@
 
   /* ---------- Country dial codes ---------- */
   const COUNTRY_CODES = [
-    { code: '+60', label: 'Malaysia (+60)' },
     { code: '+234', label: 'Nigeria (+234)' },
+    { code: '+60', label: 'Malaysia (+60)' },
     { code: '+65', label: 'Singapore (+65)' },
     { code: '+62', label: 'Indonesia (+62)' },
     { code: '+66', label: 'Thailand (+66)' },
@@ -61,7 +61,7 @@
     { code: '+1', label: 'USA / Canada (+1)' },
     { code: '+44', label: 'United Kingdom (+44)' },
   ];
-  const DEFAULT_DIAL = '+60';
+  const DEFAULT_DIAL = '+234';
   // Reusable "dial code + number" phone field
   function phoneFieldHTML(selected, name) {
     const opts = COUNTRY_CODES.map(c =>
@@ -96,7 +96,7 @@
   }
 
   /* ---------- BV rewards ---------- */
-  // 1 BV per ₦1,000 of product value (round down to whole BV)
+  // 1 BV per N1,000 of product value (round down to whole BV)
   function getBV(product) {
     if (!product) return 0;
     if (typeof product.bv === 'number') return Math.max(0, Math.round(product.bv));
@@ -107,10 +107,10 @@
   }
 
   /* ---------- Member ID & account-bound orders ---------- */
-  // 12-digit member ID: "NG" + 10 random digits, e.g. NG1234567890
+  // 10-digit member ID: "NG" + 8 random digits, e.g. NG12345678
   function genMemberId() {
     let digits = '';
-    for (let i = 0; i < 12; i++) digits += Math.floor(Math.random() * 10);
+    for (let i = 0; i < 8; i++) digits += Math.floor(Math.random() * 10);
     return 'NG' + digits;
   }
   function getCurrentMemberId() {
@@ -210,7 +210,7 @@
           <h3>${p.name}</h3>
           <p class="desc">${p.desc}</p>
           <div class="price-row">
-            <span class="price">₦${p.price.toLocaleString()}</span>
+            <span class="price">N${p.price.toLocaleString()}</span>
             ${loggedIn ? `<span class="bv-chip" title="Rewards you earn with this purchase">${getBV(p)} BV</span>` : ''}
           </div>
           <div class="card-actions">
@@ -246,7 +246,7 @@
     if (!container) return;
     container.innerHTML = (products || []).map(p => {
       const detailUrl = `product-detail.html?name=${encodeURIComponent(p.name)}&category=${p.category}`;
-      const price = `₦${Number(p.price || 0).toLocaleString()}`;
+      const price = `N${Number(p.price || 0).toLocaleString()}`;
       return `
       <a class="category-tile popular-tile" href="${detailUrl}">
         <img src="assets/img/products/${p.category}/${p.img}" alt="${p.name}" loading="lazy" />

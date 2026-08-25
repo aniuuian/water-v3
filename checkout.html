@@ -301,7 +301,7 @@
               <div class="bank-row"><span data-i18n="checkout.bank_name">Bank</span><b>GTBank Plc</b></div>
               <div class="bank-row"><span data-i18n="checkout.bank_account">Account number</span><b>012 345 6789</b></div>
               <div class="bank-row"><span data-i18n="checkout.bank_beneficiary">Account name</span><b>AquaLife Nigeria Ltd</b></div>
-              <div class="bank-row"><span data-i18n="checkout.bank_amount">Amount</span><b id="bankAmount">₦0</b></div>
+              <div class="bank-row"><span data-i18n="checkout.bank_amount">Amount</span><b id="bankAmount">N0</b></div>
             </div>
             <p style="color:var(--ink-500);font-size:13px;margin-top:14px">Use your order ID as the reference when transferring.</p>
           </div>
@@ -440,7 +440,7 @@
             <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:.18em;color:var(--ink-300);text-transform:uppercase">${product.tag || product.category.replace(/-/g, ' ')}</div>
           </div>
         </div>
-        <div class="row"><span class="k">Unit price</span><span class="v">₦${product.price.toLocaleString()}</span></div>
+        <div class="row"><span class="k">Unit price</span><span class="v">N${product.price.toLocaleString()}</span></div>
         <div class="row">
           <span class="k">Quantity</span>
           <span class="v">
@@ -453,7 +453,7 @@
         </div>
         ${loggedIn ? `<div class="row"><span class="k">BV rewards</span><span class="v" id="sumBV" style="color:var(--gold-500)">+${bv} BV</span></div>` : ''}
         <div class="row method-row" id="summaryMethodRow" style="display:none"><span class="k">Method</span><span class="v" id="summaryMethod"></span></div>
-        <div class="total"><span class="k" style="font-family:var(--font-mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-300)">Total</span><span class="v" id="sumTotal">₦${total.toLocaleString()}</span></div>
+        <div class="total"><span class="k" style="font-family:var(--font-mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-300)">Total</span><span class="v" id="sumTotal">N${total.toLocaleString()}</span></div>
         <button class="btn btn-primary btn-block btn-lg" id="payBtn" style="margin-top:20px" disabled>
           <span data-label>${window.T.tr('checkout.place_order')}</span>
         </button>
@@ -466,7 +466,7 @@
         </div>
         <p style="font-size:11px;color:var(--ink-400);margin-top:14px;line-height:1.5">By placing this order you agree to our Terms of Service and Refund Policy. Our team will contact you to confirm before dispatch.</p>
       `;
-      document.getElementById('bankAmount').textContent = '₦' + total.toLocaleString();
+      document.getElementById('bankAmount').textContent = 'N' + total.toLocaleString();
       bindSummaryQty();
       bindPay();
     }
@@ -483,11 +483,11 @@
         const total = product.price * q;
         const bv = Math.round(product.price / 1000) * q;
         const totalEl = document.getElementById('sumTotal');
-        if (totalEl) totalEl.textContent = '₦' + total.toLocaleString();
+        if (totalEl) totalEl.textContent = 'N' + total.toLocaleString();
         const bvEl = document.getElementById('sumBV');
         if (bvEl) bvEl.textContent = '+' + bv + ' BV';
         const bankEl = document.getElementById('bankAmount');
-        if (bankEl) bankEl.textContent = '₦' + total.toLocaleString();
+        if (bankEl) bankEl.textContent = 'N' + total.toLocaleString();
       };
       document.querySelectorAll('#summaryQtyWrap .qty-btn, .summary-qty .qty-btn').forEach(btn => {
         btn.addEventListener('click', () => {
@@ -632,7 +632,18 @@
         const order = {
           id: 'AQ-' + Math.random().toString(36).slice(2, 8).toUpperCase(),
           date: Date.now(),
-          items: [{ id: product.id, name: product.name, qty: state.qty, price: product.price, img: product.img, category: product.category }],
+          items: [{
+            id: product.id,
+            name: product.name,
+            qty: state.qty,
+            price: product.price,
+            img: product.img,
+            category: product.category,
+            bv: Math.round((product.price || 0) / 1000),
+            image: product.image || (product.img && product.category
+              ? `assets/img/products/${product.category}/${product.img}`
+              : product.img || ''),
+          }],
           total: product.price * state.qty,
           bv: Math.round(product.price / 1000) * state.qty,
           memberId: (window.Auth && window.Auth.user && window.Auth.user.memberId) || null,

@@ -135,7 +135,7 @@
         <div class="row"><span>Delivery</span><b>${methodLabel}</b></div>
         <div class="row"><span>Payment</span><b>${payLabel}</b></div>
         ${order.bv ? `<div class="row"><span>BV earned</span><b style="color:var(--gold-700, #8A6B2E)">+${order.bv} BV</b></div>` : ''}
-        <div class="row"><span>Total</span><b>₦${(order.total || 0).toLocaleString()}</b></div>
+        <div class="row"><span>Total</span><b>N${(order.total || 0).toLocaleString()}</b></div>
         ${order.customer ? `<div class="row"><span>Recipient</span><b>${order.customer.name || ''} · ${order.customer.phone || ''}</b></div>` : ''}
       `;
       if (metaHost) metaHost.innerHTML = rows;

@@ -282,9 +282,6 @@
     };
 
 
-
-
-
 function localizedDetail(detail) { return detail; }
 
 
@@ -344,7 +341,7 @@ function localizedDetail(detail) { return detail; }
       if (orderBtn && window.ProductCatalog) {
         // meta = [name, categoryLabel, intro, tags, image, price]
         const price = meta ? meta[5] : 0;
-        orderBtn.innerHTML = `Order Now · ₦${(price || 0).toLocaleString()}<span class="phase-badge">二期</span>`;
+        orderBtn.innerHTML = `Order Now · N${(price || 0).toLocaleString()}<span class="phase-badge">二期</span>`;
         orderBtn.onclick = () => {
           const catalog = window.ProductCatalog.allProducts || [];
           const found = catalog.find(p => p.name === baseDetail.name);

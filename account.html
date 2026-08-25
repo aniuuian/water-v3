@@ -12,6 +12,233 @@
   <link rel="stylesheet" href="assets/css/components.css?v=20260819-2" />
   <link rel="stylesheet" href="assets/css/pages.css?v=20260819-2" />
   <link rel="stylesheet" href="assets/css/website.css?v=20260819-2" />
+  <style>
+    /* Member Info tab styles */
+    .member-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: var(--gutter);
+    }
+    .member-card {
+      background: var(--paper-3);
+      border: 1px solid var(--ink-200);
+      border-radius: var(--r-lg);
+    }
+    .member-card-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--s-5) var(--s-6);
+      border-bottom: 1px solid var(--ink-200);
+    }
+    .member-card-head h2 {
+      font-size: var(--t-h3);
+      font-weight: 600;
+      color: var(--ink-900);
+      margin: 0;
+    }
+    .member-fields {
+      padding: var(--s-5) var(--s-6);
+    }
+    .member-field {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--s-3) 0;
+      border-bottom: 1px solid var(--ink-100);
+      gap: var(--s-4);
+    }
+    .member-field:last-child {
+      border-bottom: none;
+    }
+    .member-label {
+      font-size: var(--t-small);
+      color: var(--ink-600);
+      font-weight: 500;
+      flex: 1;
+      min-width: 160px;
+    }
+    .member-value {
+      font-size: var(--t-body);
+      color: var(--ink-900);
+      font-weight: 500;
+      text-align: right;
+      flex: 1;
+      word-break: break-word;
+    }
+    .member-value .badge {
+      margin-left: var(--s-2);
+      font-size: 10px;
+    }
+    /* ===== Basic Info Bar (Profile tab top) — 5 rows: 系统时间 / 结算周期 / 会员等级 / 最高荣耀等级 / Elite 级别 ===== */
+    .basic-info-bar {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 12px 18px;
+    }
+    @media (max-width: 960px) { .basic-info-bar { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 560px) { .basic-info-bar { grid-template-columns: repeat(2, 1fr); } }
+    .bib-row {
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      align-items: start;
+      gap: 10px;
+      padding: 12px 14px;
+      background: var(--paper-4);
+      border: 1px solid var(--ink-150, #eaefea);
+      border-radius: var(--r-md, 12px);
+    }
+    .bib-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(0,135,90,.12), rgba(0,135,90,.04));
+      color: var(--brand, #00875A);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+    .bib-main { min-width: 0; }
+    .bib-label {
+      font-size: 12px;
+      color: var(--ink-600, #526064);
+      line-height: 1.4;
+      margin-bottom: 4px;
+      font-weight: 500;
+    }
+    .bib-value {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--ink-900, #0e1c16);
+      line-height: 1.35;
+      word-break: break-word;
+    }
+    .bib-value.bib-level { color: var(--brand, #00875A); }
+    .bib-value.bib-na { color: var(--ink-500, #8a9498); font-weight: 500; }
+
+    /* Editable member fields — persistent accent bar (unified with .badge token system) */
+    .member-field-editable,
+    .member-field-select {
+      position: relative;
+      cursor: pointer;
+      transition: background .15s, box-shadow .15s;
+      border-radius: var(--r-sm);
+      padding-left: 6px;
+      padding-right: 4px;
+      margin-left: -6px;
+      margin-right: -4px;
+      /* always-on brand accent so editable rows read as an editable zone */
+      box-shadow: inset 3px 0 0 var(--brand-500);
+    }
+    .member-field-editable:hover,
+    .member-field-select:hover,
+    .member-field-editable.editing,
+    .member-field-select.open {
+      background: var(--brand-050);
+    }
+    .member-field-editable .member-value-editable,
+    .member-field-select .member-value-select {
+      cursor: pointer;
+      position: relative;
+    }
+    /* legacy hover-only pencil retired — replaced by persistent .member-edit-badge */
+    .member-field-editable .member-value-editable::after,
+    .member-field-select .member-value-select::after {
+      display: none;
+    }
+
+    /* Persistent "Editable" pill — mirrors the project's .badge / .badge-ok token system */
+    .member-edit-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      margin-left: 8px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: var(--brand-100);
+      color: var(--brand-900);
+      border: 1px solid var(--brand-100);
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-weight: 600;
+      white-space: nowrap;
+      vertical-align: middle;
+      line-height: 1.4;
+    }
+    .member-edit-badge .ico { font-size: 11px; line-height: 1; }
+
+    /* Section hint banner explaining the editable markers (unified eyebrow style) */
+    .member-hint {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 20px;
+      padding: 12px 16px;
+      background: var(--brand-050);
+      border: 1px solid var(--brand-100);
+      border-radius: var(--r-md);
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--brand-900);
+    }
+    .member-hint .member-edit-badge { margin-left: 0; flex: 0 0 auto; }
+    .member-hint b { color: var(--brand-700); }
+
+    .member-edit-input {
+      width: 100%;
+      max-width: 320px;
+      font: inherit;
+      color: inherit;
+      background: #fff;
+      border: 1px solid var(--brand-500);
+      border-radius: var(--r-sm);
+      padding: 4px 8px;
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(0,135,90,.15);
+    }
+    .member-field-editable.editing {
+      background: rgba(0,135,90,.08);
+    }
+    .member-field-select .member-select {
+      position: absolute;
+      right: 0;
+      top: 100%;
+      margin-top: 4px;
+      background: #fff;
+      border: 1px solid var(--ink-300);
+      border-radius: var(--r-sm);
+      padding: 4px 8px;
+      font: inherit;
+      color: inherit;
+      min-width: 240px;
+      z-index: 20;
+      box-shadow: var(--sh-3);
+      cursor: pointer;
+    }
+    .member-field-select.open .member-value-select {
+      background: rgba(0,135,90,.08);
+      border-radius: var(--r-sm);
+      padding: 2px 4px;
+    }
+    /* Tab nav with 4 tabs */
+    @media (max-width: 768px) {
+      .member-grid {
+        grid-template-columns: 1fr;
+      }
+      #dashTabs {
+        overflow-x: auto;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+      }
+      #dashTabs a {
+        flex: 0 0 auto;
+      }
+    }
+  </style>
 </head>
 <body data-page="account">
   <div id="offline-banner" class="offline-banner">Offline mode · showing cached information</div>
@@ -46,7 +273,8 @@
           </div>
         </div>
 
-        <div class="overview-grid">          <section>
+        <div class="overview-grid">
+          <section>
             <h2 class="panel-title">Quick actions</h2>
             <div class="card action-stack">
               <a class="btn btn-light" href="products.html" style="justify-content:space-between">
@@ -68,6 +296,7 @@
           </section>
         </div>
       </section>
+
       <!-- ============ ORDERS ============ -->
       <section class="dash-view" data-view="orders" hidden>
         <div class="orders-head">
@@ -75,15 +304,26 @@
             <h2 class="panel-title" data-i18n="account.orders">Orders</h2>
             <p class="muted" id="ordersSubtitle"></p>
           </div>
-          <a class="btn btn-primary btn-sm" href="products.html">Browse products</a>
+          <a class="btn btn-primary btn-sm" href="products.html" data-i18n="account.orders_browse">Browse products</a>
         </div>
         <div id="ordersList" class="orders-list"></div>
       </section>
+
       <!-- ============ PROFILE ============ -->
       <section class="dash-view" data-view="profile" hidden>
         <div class="profile-grid">
+          <!-- Basic Info Bar (top, full width) — matches: 系统时间 / 结算周期 / 会员等级 / 最高荣耀等级 / Elite 级别 -->
+          <div class="card profile-card profile-card-wide">
+            <div class="profile-card-head">
+              <h2 data-i18n="account.profile_basic_bar">Basic Information</h2>
+            </div>
+            <div class="basic-info-bar" id="profileBasicInfoBar">
+              <!-- Rendered by JS: 5 rows with icon + label + value -->
+            </div>
+          </div>
+
           <!-- Personal info -->
-          <div class="card profile-card">
+          <div class="card profile-card profile-card-wide">
             <div class="profile-card-head">
               <h2 data-i18n="account.profile_info">Personal information</h2>
               <button class="btn-link" id="profileEditBtn" data-i18n="account.profile_edit">Edit</button>
@@ -91,8 +331,21 @@
             <form id="profileForm" class="profile-form" data-mode="view">
               <div class="row">
                 <div class="field">
-                  <label data-i18n="login.name_label">Full name</label>
-                  <input class="input" name="name" id="pfName" disabled />
+                  <label data-i18n="account.profile_member_id">Member ID</label>
+                  <input class="input" name="memberId" id="pfMemberId" maxlength="10" autocomplete="off"
+                         data-i18n-ph="account.profile_member_id_ph" placeholder="NG12345678" disabled />
+                </div>
+                <div class="field">
+                  <label data-i18n="account.profile_member_name">Member name</label>
+                  <input class="input" name="memberName" id="pfMemberName" autocomplete="off" disabled />
+                </div>
+              </div>
+              <div class="row">
+                <div class="field">
+                  <label data-i18n="account.profile_country">Country</label>
+                  <select class="select" name="country" id="pfCountry" disabled>
+                    <!-- Rendered by JS with i18n -->
+                  </select>
                 </div>
                 <div class="field">
                   <label>Email</label>
@@ -110,30 +363,60 @@
             </form>
           </div>
 
-          <!-- Security -->
+          <!-- Login password (独立卡片) — 与支付密码卡片同一行 (both single-col profile-card) -->
           <div class="card profile-card">
             <div class="profile-card-head">
-              <h2 data-i18n="account.profile_security">Account security</h2>
+              <h2 data-i18n="account.profile_sec_login">Login password</h2>
             </div>
-            <form id="pwdForm" class="profile-form">
-              <div class="field">
-                <label data-i18n="account.profile_current_pwd">Current password</label>
-                <input class="input" type="password" name="current" required minlength="6" autocomplete="current-password" />
-              </div>
-              <div class="row">
-                <div class="field">
-                  <label data-i18n="account.profile_new_pwd">New password</label>
-                  <input class="input" type="password" name="new" required minlength="6" autocomplete="new-password" />
+            <div class="sec-block">
+              <form id="pwdForm" class="profile-form">
+                <div class="row cols-3">
+                  <div class="field">
+                    <label data-i18n="account.profile_current_pwd">Current password</label>
+                    <input class="input" type="password" name="current" required minlength="6" autocomplete="current-password" />
+                  </div>
+                  <div class="field">
+                    <label data-i18n="account.profile_new_pwd">New password</label>
+                    <input class="input" type="password" name="new" required minlength="6" autocomplete="new-password" />
+                  </div>
+                  <div class="field">
+                    <label data-i18n="account.profile_confirm_pwd">Confirm new password</label>
+                    <input class="input" type="password" name="confirm" required minlength="6" autocomplete="new-password" />
+                  </div>
                 </div>
-                <div class="field">
-                  <label data-i18n="account.profile_confirm_pwd">Confirm new password</label>
-                  <input class="input" type="password" name="confirm" required minlength="6" autocomplete="new-password" />
+                <div class="profile-actions">
+                  <button type="submit" class="btn btn-primary" data-i18n="account.profile_pay_save">Save</button>
                 </div>
-              </div>
-              <div class="profile-actions">
-                <button type="submit" class="btn btn-primary" data-i18n="account.profile_change_pwd">Change password</button>
-              </div>
-            </form>
+              </form>
+            </div>
+          </div>
+
+          <!-- Payment password (独立卡片) — 按截图：原密码 / 新密码 / 重复新密码 / 保存 -->
+          <div class="card profile-card">
+            <div class="profile-card-head">
+              <h2 data-i18n="account.profile_sec_payment">Payment password</h2>
+            </div>
+            <div class="sec-block">
+              <form id="payPwdForm" class="profile-form" autocomplete="off">
+                <div class="row cols-3">
+                  <div class="field">
+                    <label data-i18n="account.profile_pay_old_pwd">Old password</label>
+                    <input class="input" type="password" name="oldPay" id="payOld" minlength="6" maxlength="32" autocomplete="new-password" />
+                  </div>
+                  <div class="field">
+                    <label data-i18n="account.profile_pay_new_pwd">New password</label>
+                    <input class="input" type="password" name="newPay" id="payNew" minlength="6" maxlength="32" autocomplete="new-password" />
+                  </div>
+                  <div class="field">
+                    <label data-i18n="account.profile_pay_confirm_pwd">Confirm new password</label>
+                    <input class="input" type="password" name="confirmPay" id="payConfirm" minlength="6" maxlength="32" autocomplete="new-password" />
+                  </div>
+                </div>
+                <div class="profile-actions">
+                  <button type="submit" class="btn btn-primary" data-i18n="account.profile_pay_save">Save</button>
+                </div>
+              </form>
+            </div>
           </div>
 
           <!-- Addresses -->
@@ -150,25 +433,19 @@
               </div>
               <form id="addrForm" class="auth-form">
                 <input type="hidden" name="id" />
-                <div class="row">
-                  <div class="field">
-                    <label data-i18n="account.addr_label">Label</label>
-                    <input class="input" name="label" required placeholder="Home" />
-                  </div>
-                  <div class="field">
-                    <label data-i18n="account.addr_recipient">Recipient</label>
-                    <input class="input" name="recipient" required />
-                  </div>
+                <div class="field">
+                  <label data-i18n="account.addr_recipient">Recipient</label>
+                  <input class="input" name="recipient" required />
                 </div>
-                <div class="row">
-                  <div class="field">
-                    <label data-i18n="account.addr_phone">Phone</label>
-                    <div class="phone-field" id="addrPhoneField"></div>
-                  </div>
-                  <div class="field">
-                    <label data-i18n="account.addr_state">State</label>
-                    <input class="input" name="state" required />
-                  </div>
+                <div class="field">
+                  <label data-i18n="account.addr_phone">Phone</label>
+                  <div class="phone-field" id="addrPhoneField"></div>
+                </div>
+                <div class="field">
+                  <label data-i18n="account.addr_region">Region</label>
+                  <select class="select" name="region" id="addrRegion" required>
+                    <option value="" data-i18n="account.addr_region_ph">Please select</option>
+                  </select>
                 </div>
                 <div class="field">
                   <label data-i18n="account.addr_street">Street address</label>
@@ -178,10 +455,20 @@
                   <label data-i18n="account.addr_city">City</label>
                   <input class="input" name="city" required />
                 </div>
-                <label class="check"><input type="checkbox" name="isDefault" /><span data-i18n="account.profile_set_default">Set as default</span></label>
+                <div class="field">
+                  <label data-i18n="account.addr_district">District</label>
+                  <input class="input" name="district" required />
+                </div>
+                <div class="field toggle-row">
+                  <span class="toggle-label" data-i18n="account.profile_set_default">Set as default</span>
+                  <label class="toggle-switch">
+                    <input type="checkbox" name="isDefault" />
+                    <span class="toggle-slider"></span>
+                  </label>
+                </div>
                 <div class="inline-addr-foot">
                   <button type="button" class="btn btn-light" id="addrEditorCancel" data-i18n="account.profile_cancel">Cancel</button>
-                  <button type="submit" class="btn btn-primary" data-i18n="account.profile_save">Save</button>
+                  <button type="submit" class="btn btn-primary" data-i18n="account.profile_confirm">Confirm</button>
                 </div>
               </form>
             </div>
@@ -198,6 +485,16 @@
               <label class="check"><input type="checkbox" name="email" /><span data-i18n="account.profile_pref_email">Email notifications</span></label>
               <label class="check"><input type="checkbox" name="sms" /><span data-i18n="account.profile_pref_sms">SMS notifications</span></label>
               <label class="check"><input type="checkbox" name="wa" /><span data-i18n="account.profile_pref_wa">WhatsApp notifications</span></label>
+              <div class="field" style="margin-top:14px">
+                <label data-i18n="account.profile_pref_language">Display language</label>
+                <select class="input" name="lang" id="pfLang" data-i18n-options>
+                  <option value="en" data-i18n="lang.en">English</option>
+                  <option value="zh" data-i18n="lang.zh">中文</option>
+                  <option value="ha" data-i18n="lang.ha">Hausa</option>
+                  <option value="yo" data-i18n="lang.yo">Yoruba</option>
+                  <option value="ig" data-i18n="lang.ig">Igbo</option>
+                </select>
+              </div>
             </form>
           </div>
         </div>
@@ -207,8 +504,8 @@
 
   <div id="app-footer"></div>
 
-  <script src="assets/i18n/strings.js?v=20260819-2"></script>
-  <script src="assets/js/app.js?v=20260819-2"></script>
+  <script src="assets/i18n/strings.js?v=20260825a"></script>
+  <script src="assets/js/app.js?v=20260825a"></script>
   <script src="assets/js/website.js?v=20260819-2"></script>
   <script>
     /* ---------- i18n apply ---------- */
@@ -223,24 +520,326 @@
     }
 
     /* ---------- Profile ---------- */
+
+    /** Map raw level/elite/honor strings → i18n key for profile_bb_val_*, returns translated value */
+    function translateBBValue(raw, kind) {
+      const tr = (k, fallback) => {
+        const v = window.T.tr(k);
+        return (v && v !== k) ? v : (fallback == null ? k : fallback);
+      };
+      const r = (raw || '').toString().trim();
+      const lo = r.toLowerCase();
+      if (kind === 'level') {
+        if (/silver|银卡/i.test(r)) return tr('account.profile_bb_val_silver', 'Silver');
+        if (/gold|金卡/i.test(r)) return tr('account.profile_bb_val_gold', 'Gold');
+        if (/platinum|铂金|plat/i.test(r)) return tr('account.profile_bb_val_platinum', 'Platinum');
+        if (/diamond|钻石/i.test(r)) return tr('account.profile_bb_val_diamond', 'Diamond');
+        if (!r || r === '—' || r === 'N/A' || r === 'NA') return tr('account.profile_bb_val_na', 'NA');
+        return r;
+      }
+      if (kind === 'honor') {
+        if (!r || lo === 'none' || lo === '无' || r === '—' || lo === 'babu' || lo === 'kò sí' || lo === 'ọ fụtịrị') {
+          return tr('account.profile_bb_val_none', 'None');
+        }
+        return r;
+      }
+      if (kind === 'elite') {
+        if (!r || /^(n\/a|n\.a\.|na|—|none)$/i.test(r)) return tr('account.profile_bb_val_na', 'NA');
+        return r;
+      }
+      if (kind === 'cycle') {
+        // e.g. joinPeriod=173, current month → "173, 1st PC of Aug"
+        return r || tr('account.profile_bb_val_na', 'NA');
+      }
+      return r || tr('account.profile_bb_val_na', 'NA');
+    }
+
+    /** 结算周期：根据 joinPeriod + 当前月生成 "173, 1st PC of Aug" */
+    function formatSettlementCycle(memberData) {
+      const period = Number(memberData?.joinPeriod || 0);
+      const periodText = period ? String(period) : '—';
+      const d = new Date();
+      const monthEn = d.toLocaleString('en-GB', { month: 'short' });
+      const pc = (memberData?.settlementPeriodRank == null) ? 1 : Math.max(1, Math.min(4, Number(memberData.settlementPeriodRank)));
+      const ordEn = pc === 1 ? '1st' : pc === 2 ? '2nd' : pc === 3 ? '3rd' : '4th';
+      const lang = (window.T && window.T.current) || 'en';
+      // zh: 8月第1期; en/other: {Nth} PC of {Month}
+      if (lang === 'zh') {
+        const monthsZh = ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
+        return `${periodText}, ${monthsZh[d.getMonth()]}第${pc}期`;
+      }
+      if (lang === 'ha') {
+        const haMonths = ['Jan','Feb','Mar','Afw','Mei','Yun','Yul','Agu','Sat','Okt','Nuw','Dis'];
+        return `${periodText}, PC na ${pc} na ${haMonths[d.getMonth()]}`;
+      }
+      if (lang === 'yo') {
+        const yoMonths = ['Sẹ́rẹ́','Èrèlè́','Ẹrẹ̀nà','Ìgbé','Ẹ̀bibi','Òkùdu','Agẹmọ','Ọgún','Ọwẹ́rẹ́','Ọ̀wàrà','Bélú','Ọ̀pẹ̀'];
+        const ordY = pc === 1 ? 'Àkọ́kọ́' : pc === 2 ? 'Kẹ́jì' : pc === 3 ? 'Kẹ́tà' : 'Ẹ̀kẹ́rin';
+        return `${periodText}, ${ordY} PC ni Oṣù ${yoMonths[d.getMonth()]}`;
+      }
+      if (lang === 'ig') {
+        const igMonths = ['Jen','Feb','Maa','Epr','Mee','Jun','Jul','Ọgọ','Sep','Ọkt','Nov','Dis'];
+        const pcText = (pc === 1 ? 'mbụ' : pc === 2 ? ' nke abụọ' : pc === 3 ? ' nke atọ' : ' nke anọ');
+        return `${periodText}, PC${pcText} na ọnwa ${igMonths[d.getMonth()]}`;
+      }
+      return `${periodText}, ${ordEn} PC of ${monthEn}`;
+    }
+
+    /** Format 系统时间：当前日期+时间+(WAT/zh-CN/locale)，WAT=UTC+1。 */
+    function formatSystemTime() {
+      const d = new Date();
+      const lang = (window.T && window.T.current) || 'en';
+      try {
+        if (lang === 'zh') {
+          const dtf = new Intl.DateTimeFormat('zh-CN', { timeZone: 'Africa/Lagos', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
+          return dtf.format(d) + ' (WAT)';
+        }
+        const dtf = new Intl.DateTimeFormat(lang === 'ha' ? 'ha-Latn-NG' : lang === 'yo' ? 'yo-NG' : lang === 'ig' ? 'ig-NG' : 'en-GB', {
+          timeZone: 'Africa/Lagos', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false,
+        });
+        return dtf.format(d) + ' (WAT)';
+      } catch {
+        const p = n => String(n).padStart(2, '0');
+        // WAT offset = UTC+1
+        const wat = new Date(d.getTime() + d.getTimezoneOffset() * 60_000 + 60 * 60_000);
+        return `${wat.getUTCFullYear()}-${p(wat.getUTCMonth()+1)}-${p(wat.getUTCDate())} ${p(wat.getUTCHours())}:${p(wat.getUTCMinutes())}:${p(wat.getUTCSeconds())} (WAT)`;
+      }
+    }
+
+    /** Render 基础信息栏 top card on Profile tab */
+    function renderProfileBasicBar() {
+      const host = document.getElementById('profileBasicInfoBar');
+      if (!host) return;
+      const memberData = JSON.parse(localStorage.getItem('al.memberData') || '{}');
+      const tr = k => { const v = window.T.tr(k); return (v && v !== k) ? v : k; };
+      // 会员等级：优先 currentLevel / settlementLevel
+      const levelRaw = memberData.currentLevel || memberData.settlementLevel || '';
+      // 最高荣耀等级：取 highestMgmtStar 或 latestMgmtStar
+      const honorRaw = memberData.highestMgmtStar || memberData.latestMgmtStar || '';
+      // Elite 级别：取 highestElite 或 latestElite
+      const eliteRaw = memberData.highestElite || memberData.latestElite || '';
+
+      const rows = [
+        { icon: '🕒', labelKey: 'account.profile_bb_system_time', value: formatSystemTime(), cls: 'bib-time' },
+        { icon: '🗓', labelKey: 'account.profile_bb_settlement_cycle', value: formatSettlementCycle(memberData), cls: 'bib-cycle' },
+        { icon: '★', labelKey: 'account.profile_bb_member_level', value: translateBBValue(levelRaw, 'level'), cls: 'bib-level' },
+        { icon: '🚫', labelKey: 'account.profile_bb_highest_honor', value: translateBBValue(honorRaw, 'honor'), cls: '' },
+        { icon: '♛', labelKey: 'account.profile_bb_elite_level', value: translateBBValue(eliteRaw, 'elite'), cls: '' },
+      ];
+      host.innerHTML = rows.map(r => {
+        const valueCls = ['bib-level'].includes(r.cls) ? ' bib-value ' + r.cls :
+          (/na|n\/a|—|none|babu|kò sí|ọ fụtịrị/i.test(r.value)) ? ' bib-value bib-na' :
+          ' bib-value';
+        return `
+          <div class="bib-row">
+            <span class="bib-icon" aria-hidden="true">${r.icon}</span>
+            <div class="bib-main">
+              <div class="bib-label" data-i18n="${r.labelKey}">${tr(r.labelKey)}</div>
+              <div class="${valueCls}">${r.value}</div>
+            </div>
+          </div>`;
+      }).join('');
+    }
+
+    /* ---------- Profile image card (member identity / avatar) ---------- */
+    const PIC_COUNTRY_FLAGS = {
+      NG:'🇳🇬', GH:'🇬🇭', KE:'🇰🇪', ZA:'🇿🇦', UG:'🇺🇬', TZ:'🇹🇿',
+      CN:'🇨🇳', MY:'🇲🇾', GB:'🇬🇧', US:'🇺🇸', OTHER:'🌍'
+    };
+    function tr(key, fb) {
+      const v = window.T?.tr ? window.T.tr(key) : fb;
+      return (v && v !== key) ? v : fb;
+    }
+    function renderProfileImageCard() {
+      const card = document.getElementById('profileImageCard');
+      if (!card) return;
+      const u = window.Auth.user || {};
+      const md = JSON.parse(localStorage.getItem('al.memberData') || '{}');
+      // Name & Member ID (same authority as the new PF form)
+      const memberId = u.memberId || md.memberId || '—';
+      const memberName = md.memberName || u.name || u.firstName || '—';
+      // Country code
+      let country = md.country || 'NG';
+      if (!PROFILE_COUNTRIES.some(c => c.code === country)) {
+        if (country && typeof country === 'string') {
+          const aliasMap = { 'nigeria':'NG', 'najeriya':'NG', '奈及利亚':'NG', '尼日利亚':'NG',
+            'ghana':'GH', 'gana':'GH', '加纳':'GH', 'kenya':'KE', 'south africa':'ZA', 'uganda':'UG',
+            'tanzania':'TZ', 'china':'CN', 'malaysia':'MY', 'united kingdom':'GB', 'united states':'US' };
+          country = aliasMap[country.toLowerCase()] || 'OTHER';
+        } else country = 'OTHER';
+      }
+      const countryEntry = PROFILE_COUNTRIES.find(c => c.code === country) || PROFILE_COUNTRIES[0];
+      const countryName = tr(countryEntry.key, countryEntry.code);
+      const flag = PIC_COUNTRY_FLAGS[countryEntry.code] || '🌍';
+      // Level badge
+      const level = md.currentLevel || md.settlementLevel || '';
+      const levelText = level
+        ? (level.toLowerCase().includes('silver') ? tr('account.profile_bb_val_silver', 'Silver')
+          : level.toLowerCase().includes('gold') ? tr('account.profile_bb_val_gold', 'Gold')
+          : level.toLowerCase().includes('platinum') ? tr('account.profile_bb_val_platinum', 'Platinum')
+          : level.toLowerCase().includes('diamond') ? tr('account.profile_bb_val_diamond', 'Diamond')
+          : level)
+        : '—';
+      const levelIcon = level ? '★' : '—';
+      // Inject texts
+      const nEl = document.getElementById('picName'); if (nEl) nEl.textContent = memberName;
+      const idEl = document.getElementById('picMemberId'); if (idEl) idEl.textContent = memberId;
+      const copyBtn = document.getElementById('picCopyId');
+      if (copyBtn) {
+        const cpT = tr('account.profile_copy_id', 'Copy member ID');
+        copyBtn.setAttribute('title', cpT);
+        copyBtn.setAttribute('aria-label', cpT);
+      }
+      const lvTxt = document.getElementById('picLevelText'); if (lvTxt) lvTxt.textContent = levelText;
+      const lvIco = document.getElementById('picLevelIcon'); if (lvIco) lvIco.textContent = levelIcon;
+      const cflag = document.getElementById('picCountryFlag'); if (cflag) cflag.textContent = flag;
+      const cname = document.getElementById('picCountryText'); if (cname) cname.textContent = countryName;
+      // Wire copy (once)
+      if (!card.dataset.wired) {
+        card.dataset.wired = '1';
+        document.getElementById('picCopyId')?.addEventListener('click', () => {
+          const mid = (document.getElementById('picMemberId')?.textContent || '').trim();
+          if (!mid) return;
+          try {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(mid).catch(() => {});
+            } else {
+              const ta = document.createElement('textarea');
+              ta.value = mid; ta.setAttribute('readonly',''); ta.style.position='fixed'; ta.style.left='-9999px';
+              document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); } catch(e){}
+              document.body.removeChild(ta);
+            }
+            window.toast(tr('account.profile_copied_id', 'Member ID copied.'), 'success');
+          } catch(e) {}
+        });
+        document.getElementById('picShareBtn')?.addEventListener('click', () => {
+          const mid = (document.getElementById('picMemberId')?.textContent || '').trim();
+          const name = (document.getElementById('picName')?.textContent || '').trim();
+          const shareText = tr('account.profile_share_title', 'Share member ID') + ' · ' +
+            (name ? name + ' · ' : '') + mid;
+          try {
+            if (navigator.share) {
+              navigator.share({ text: shareText }).catch(()=>{});
+            } else if (navigator.clipboard) {
+              navigator.clipboard.writeText(shareText).then(()=>{
+                window.toast(tr('account.profile_copied_id', 'Member ID copied.'), 'success');
+              }).catch(()=>{});
+            } else {
+              window.toast(shareText, 'info');
+            }
+          } catch(e) {}
+        });
+      }
+    }
+
+    /* ---------- Country list for Personal info select (i18n + stable codes) ---------- */
+    const PROFILE_COUNTRIES = [
+      { code: 'NG', key: 'account.profile_country_ng' },
+      { code: 'GH', key: 'account.profile_country_gh' },
+      { code: 'KE', key: 'account.profile_country_ke' },
+      { code: 'ZA', key: 'account.profile_country_za' },
+      { code: 'UG', key: 'account.profile_country_ug' },
+      { code: 'TZ', key: 'account.profile_country_tz' },
+      { code: 'CN', key: 'account.profile_country_cn' },
+      { code: 'MY', key: 'account.profile_country_my' },
+      { code: 'GB', key: 'account.profile_country_gb' },
+      { code: 'US', key: 'account.profile_country_us' },
+      { code: 'OTHER', key: 'account.profile_country_other' },
+    ];
+    function renderProfileCountries(selected) {
+      const sel = document.getElementById('pfCountry');
+      if (!sel) return;
+      const tr = (k, fb) => { const v = window.T.tr(k); return (v && v !== k) ? v : fb; };
+      const ph = tr('account.profile_country_ph', 'Select country');
+      const opts = [`<option value="" disabled${selected ? '' : ' selected'}>${ph}</option>`];
+      PROFILE_COUNTRIES.forEach(c => {
+        const label = tr(c.key, c.code);
+        opts.push(`<option value="${c.code}"${c.code === selected ? ' selected' : ''}>${label}</option>`);
+      });
+      sel.innerHTML = opts.join('');
+    }
+
     function loadProfileForm() {
       const p = window.AL.loadProfile() || {};
-      document.getElementById('pfName').value = p.name || '';
-      document.getElementById('pfEmail').value = p.email || '';
+      const md = JSON.parse(localStorage.getItem('al.memberData') || '{}');
+      const u = window.Auth.user || {};
+      // Member ID: Auth.user.memberId > memberData.memberId > stable gen (stored into Auth.user & md)
+      let memberId = u.memberId || md.memberId || '';
+      if (!memberId) {
+        memberId = (window.ProductCatalog && window.ProductCatalog.genMemberId)
+          ? window.ProductCatalog.genMemberId()
+          : (() => { let s = 'NG'; for (let i = 0; i < 8; i++) s += Math.floor(Math.random() * 10); return s; })();
+        const u2 = window.Auth.user || {};
+        u2.memberId = memberId;
+        window.Auth.user = u2;
+        md.memberId = memberId;
+        localStorage.setItem('al.memberData', JSON.stringify(md));
+      }
+      // Member name: prefer md.memberName (the authoritative field used by overview/syncHeader); then Auth.name; then profile.name.
+      const memberName = md.memberName || u.name || u.firstName || p.name || '';
+      // Country: memberData.country code. If stored as name instead of code, best-match to a code.
+      // Seed default for md.country = Nigeria (matches memberData seed) when missing.
+      let country = md.country || md._defaultCountry || '';
+      if (!country) {
+        country = 'NG';
+        md.country = country;
+        localStorage.setItem('al.memberData', JSON.stringify(md));
+      }
+      if (country && !PROFILE_COUNTRIES.some(c => c.code === country)) {
+        const nameLo = String(country).toLowerCase();
+        // 1) 常用英文/本地名称别名映射
+        const aliasMap = {
+          'nigeria': 'NG', 'najeriya': 'NG', 'nàìjíríà': 'NG', 'naịjirịa': 'NG', '奈及利亚': 'NG', '尼日利亚': 'NG',
+          'ghana': 'GH', 'gana': 'GH', '加纳': 'GH',
+          'kenya': 'KE', 'kẹ́ńyà': 'KE', '肯尼亚': 'KE',
+          'south africa': 'ZA', 'afirka ta kudu': 'ZA', 'gúúsù áfíríkà': 'ZA', 'south africa': 'ZA', '南非': 'ZA',
+          'uganda': 'UG', 'yuganda': 'UG', 'ùgándà': 'UG', '乌干达': 'UG',
+          'tanzania': 'TZ', 'tanzaniya': 'TZ', 'tànzáníà': 'TZ', '坦桑尼亚': 'TZ',
+          'china': 'CN', 'caina': 'CN', 'cháínà': 'CN', '中国': 'CN',
+          'malaysia': 'MY', 'málẹ̀shíà': 'MY', '马来西亚': 'MY',
+          'united kingdom': 'GB', 'biritaniya': 'GB', 'ilẹ̀ gẹ̀ẹ́sì': 'GB', '英国': 'GB',
+          'united states': 'US', 'amurka': 'US', 'amẹ́ríkà': 'US', '美国': 'US',
+        };
+        const m = aliasMap[nameLo];
+        if (m) {
+          country = m;
+        } else {
+          const matched = PROFILE_COUNTRIES.find(c => {
+            const label = (window.T.tr(c.key) || c.code).toLowerCase();
+            return label.includes(nameLo) || nameLo.includes(c.code.toLowerCase());
+          });
+          country = matched ? matched.code : 'OTHER';
+        }
+      }
+      // Render country select first (so we can set the value)
+      renderProfileCountries(country);
+
+      document.getElementById('pfMemberId').value = memberId;
+      document.getElementById('pfMemberName').value = memberName;
+      document.getElementById('pfEmail').value = p.email || u.email || md.email || '';
+      // Placeholders i18n (member id)
+      const mid = document.getElementById('pfMemberId');
+      const ph = window.T.tr('account.profile_member_id_ph');
+      if (ph && ph !== 'account.profile_member_id_ph') mid.placeholder = ph;
       const pc = window.ProductCatalog || {};
       const host = document.getElementById('pfPhoneField');
       if (host && pc.phoneFieldHTML) {
         host.innerHTML = pc.phoneFieldHTML(pc.DEFAULT_DIAL, 'phone');
-        if (pc.fillPhoneFields) pc.fillPhoneFields(host, p.phone || '');
+        if (pc.fillPhoneFields) pc.fillPhoneFields(host, p.phone || u.phone || md.phone || '');
       }
     }
     function setProfileMode(mode) {
       const form = document.getElementById('profileForm');
       form.dataset.mode = mode;
-      const disabled = mode === 'view';
-      form.querySelectorAll('input, select').forEach(el => el.disabled = disabled);
-      document.querySelector('#profileForm .profile-actions').hidden = (mode === 'view');
-      document.getElementById('profileEditBtn').hidden = (mode === 'edit');
+      const editing = mode === 'edit';
+      // Country / member name / email / phone — toggled by edit. Member ID stays read-only to protect NG+8 format.
+      form.querySelectorAll('input, select').forEach(el => {
+        const name = (el.name || el.id || '').toLowerCase();
+        if (name === 'memberid' || el.id === 'pfMemberId') el.disabled = true;
+        else el.disabled = !editing;
+      });
+      document.querySelector('#profileForm .profile-actions').hidden = !editing;
+      document.getElementById('profileEditBtn').hidden = editing;
     }
 
     /* ---------- Addresses ---------- */
@@ -255,12 +854,12 @@
         <div class="address-card ${a.isDefault ? 'is-default' : ''}">
           <div class="address-card-body">
             <div class="address-card-head">
-              <span class="address-label">${a.label || 'Home'}</span>
+              <span class="address-label">${a.recipient || ''} · ${a.phone || ''}</span>
               ${a.isDefault ? `<span class="address-default-badge" data-i18n="account.profile_default">${window.T.tr('account.profile_default')}</span>` : ''}
             </div>
-            <div class="address-recipient">${a.recipient || ''} · ${a.phone || ''}</div>
             <div class="address-line">${a.street || ''}</div>
-            <div class="address-line">${a.city || ''}, ${a.state || ''}</div>
+            <div class="address-line">${a.city || ''}${a.district ? ', ' + a.district : ''}</div>
+            <div class="address-line">${a.region || ''}</div>
           </div>
           <div class="address-actions">
             <button class="btn-link" data-addr-edit="${a.id}" data-i18n="account.profile_edit">${window.T.tr('account.profile_edit')}</button>
@@ -277,34 +876,42 @@
       const title = document.getElementById('addrEditorTitle');
       const pc = window.ProductCatalog || {};
       form.reset();
+      // Populate region dropdown with Nigerian states
+      const regionSel = document.getElementById('addrRegion');
+      if (regionSel) {
+        const regions = ['Abia','Adamawa','Akwa Ibom','Anambra','Bauchi','Bayelsa','Benue','Borno','Cross River','Delta','Ebonyi','Edo','Ekiti','Enugu','Gombe','Imo','Jigawa','Kaduna','Kano','Katsina','Kebbi','Kogi','Kwara','Lagos','Nasarawa','Niger','Ogun','Ondo','Osun','Oyo','Plateau','Rivers','Sokoto','Taraba','Yobe','Zamfara','FCT Abuja'];
+        regionSel.innerHTML = '<option value="" data-i18n="account.addr_region_ph">Please select</option>' + regions.map(r => `<option value="${r}">${r}</option>`).join('');
+      }
       // phone field is a dial+number pair inside #addrPhoneField
       const phoneHost = document.getElementById('addrPhoneField');
       if (phoneHost && pc.phoneFieldHTML) phoneHost.innerHTML = pc.phoneFieldHTML(pc.DEFAULT_DIAL, 'phone');
       if (addr) {
         title.textContent = window.T.tr('account.profile_edit');
         form.id.value = addr.id;
-        form.label.value = addr.label || '';
         form.recipient.value = addr.recipient || '';
         if (pc.fillPhoneFields) pc.fillPhoneFields(phoneHost, addr.phone || '');
         form.street.value = addr.street || '';
         form.city.value = addr.city || '';
-        form.state.value = addr.state || '';
+        form.district.value = addr.district || '';
+        form.region.value = addr.region || '';
         form.isDefault.checked = !!addr.isDefault;
       } else {
         title.textContent = window.T.tr('account.profile_add_address');
         form.id.value = '';
         const p = window.AL.loadProfile() || {};
         const existingDefault = (window.AL.getAddresses() || []).find(a => a.isDefault) || {};
-        form.label.value = 'Home';
         form.recipient.value = p.name || existingDefault.recipient || '';
         if (pc.fillPhoneFields) pc.fillPhoneFields(phoneHost, p.phone || existingDefault.phone || '');
         form.street.value = existingDefault.street || '';
-        form.city.value = p.city || existingDefault.city || 'Lagos';
-        form.state.value = p.state || existingDefault.state || 'Lagos State';
+        form.city.value = p.city || existingDefault.city || '';
+        form.district.value = existingDefault.district || '';
+        form.region.value = p.region || existingDefault.region || '';
         const hasDefault = (window.AL.getAddresses() || []).some(a => a.isDefault);
         form.isDefault.checked = !hasDefault;
       }
       editor.hidden = false;
+      // Re-apply i18n to the editor (since region dropdown was dynamically populated)
+      if (window.T && window.T.applyI18n) window.T.applyI18n(editor);
       // Scroll the editor into view for clarity
       editor.scrollIntoView({ behavior: 'smooth', block: 'start' });
       const firstInput = editor.querySelector('input:not([type=hidden]):not([name="phone"])');
@@ -320,12 +927,91 @@
       const p = window.AL.loadPrefs();
       const form = document.getElementById('prefsForm');
       Object.keys(p).forEach(k => { if (form[k]) form[k].checked = !!p[k]; });
+      const langSel = form.querySelector('[name="lang"]');
+      if (langSel) {
+        const cur = (p && p.lang) || (window.T && window.T.current) || 'en';
+        langSel.value = (langSel.querySelector('option[value="' + cur + '"]') ? cur : 'en');
+      }
     }
 
     /* ---------- Orders ---------- */
+    function _getBV(item) {
+      if (typeof item.bv === 'number') return item.bv;
+      if (item.bvString !== undefined) return item.bvString;
+      if (typeof item.price === 'number') return Math.round(item.price / 1000) * (item.qty || 1);
+      return 0;
+    }
+    function _taxRate(order) {
+      if (typeof order.taxRate === 'number') return order.taxRate;
+      if (typeof order.items?.[0]?.taxRate === 'number') return order.items[0].taxRate;
+      return 0.075;
+    }
+    /* ---------- Orders (optimized card layout) ---------- */
+    function _getBV(item) {
+      if (typeof item.bv === 'number') return item.bv;
+      if (item.bvString !== undefined) return item.bvString;
+      if (typeof item.price === 'number') return Math.round(item.price / 1000) * (item.qty || 1);
+      return 0;
+    }
+    function _taxRate(order) {
+      if (typeof order.taxRate === 'number') return order.taxRate;
+      if (typeof order.items?.[0]?.taxRate === 'number') return order.items[0].taxRate;
+      return 0.075;
+    }
+    function _currencySymbol(c) {
+      // Use plain-letter 'N' for Naira display (Nigerian e-commerce standard: N52,000).
+      // Avoids '₦' U+20A6 rendering as "#" on display fonts missing the Naira glyph.
+      const m = { NGN: 'N', USD: '$', EUR: '€', GBP: '£', CNY: '¥', KES: 'KSh', GHS: 'GH₵' };
+      return m[c] || 'N';
+    }
+
+    // SVG placeholder icon used when a purchased product's image is missing / path is wrong.
+    // Shared between render-time (no image src) fallback and runtime onerror (image 404) replacement.
+    // Always referenced via window.__ORDER_PIC_SVG so onerror inline handlers can access it globally.
+    window.__ORDER_PIC_SVG = '<svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#2C9A6A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 7H4a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1z"/><path d="M5 7V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v2"/><circle cx="9" cy="13" r="1.2"/><circle cx="15" cy="13" r="1.2"/></svg>';
+
+    // Robust image path resolver for historical order items.
+    // Layered fallback so that even old orders with missing / malformed fields still resolve correctly:
+    //   1. it.image (full relative, newest format)
+    //   2. assets/img/products/<category>/<img> (checkout format before fix / OS order catalog fields)
+    //   3. ProductCatalog lookup by it.id or it.name (dirty legacy orders, any field combination)
+    //   4. it.pic / it.img (last-ditch; onerror will catch if still invalid → SVG icon shows)
+    function _resolveOrderItemImage(it) {
+      if (!it) return null;
+      if (it.image) return it.image;
+      if (it.category && it.img) return 'assets/img/products/' + it.category + '/' + it.img;
+      const pc = window.ProductCatalog;
+      if (pc && typeof pc.allProducts === 'function') {
+        const list = pc.allProducts();
+        const iid = String(it.id || '');
+        const iname = String(it.name || '').trim();
+        const match = list.find(p => p && ((iid && String(p.id) === iid) || (iname && String(p.name).trim() === iname)));
+        if (match) {
+          if (match.image) return match.image;
+          if (match.category && match.img) return 'assets/img/products/' + match.category + '/' + match.img;
+        }
+      } else if (pc && pc.PRODUCTS) {
+        const list = [];
+        Object.keys(pc.PRODUCTS).forEach(k => {
+          const arr = pc.PRODUCTS[k];
+          if (Array.isArray(arr)) { for (let j = 0; j < arr.length; j++) list.push(arr[j]); }
+        });
+        const iid = String(it.id || '');
+        const iname = String(it.name || '').trim();
+        const match = list.find(p => p && ((iid && String(p.id) === iid) || (iname && String(p.name).trim() === iname)));
+        if (match) {
+          if (match.image) return match.image;
+          if (match.category && match.img) return 'assets/img/products/' + match.category + '/' + match.img;
+        }
+      }
+      if (it.pic) return it.pic;
+      if (it.img) return it.img;
+      return null;
+    }
+
     function renderOrders() {
-      const host = document.getElementById('ordersList');
-      if (!host) return;
+      const list = document.getElementById('ordersList');
+      if (!list) return;
       const orders = (window.ProductCatalog && window.ProductCatalog.getMyOrders) ? window.ProductCatalog.getMyOrders() : [];
       const sub = document.getElementById('ordersSubtitle');
       if (sub) {
@@ -335,50 +1021,169 @@
           : window.T.tr('account.orders_empty');
       }
       if (!orders.length) {
-        host.innerHTML = `
-          <div class="card" style="padding:48px 24px;text-align:center">
-            <div style="font-size:38px;margin-bottom:10px">📦</div>
-            <div style="font-size:15px;color:var(--ink-600);line-height:1.6">${window.T.tr('account.orders_empty')}</div>
-            <a class="btn btn-primary btn-sm" href="products.html" style="margin-top:18px">Browse products</a>
+        list.innerHTML = `
+          <div class="orders-empty">
+            <div class="icon">📦</div>
+            <div class="txt">${window.T.tr('account.orders_empty')}</div>
+            <a class="btn btn-primary btn-sm" href="products.html">${window.T.tr('account.orders_browse')}</a>
           </div>`;
         return;
       }
-      host.innerHTML = orders.map(o => {
+
+      const pc = window.ProductCatalog || {};
+      const profile = window.AL.loadProfile() || {};
+      const memberNameRaw = (window.Auth && window.Auth.user && window.Auth.user.name) || profile.name || (pc.getLoggedInMember && pc.getLoggedInMember()?.name) || '';
+      // Use first name / upper-case short form like screenshot "ADAEZE"
+      const memberShort = (memberNameRaw || '').toString().split(/\s+/).filter(Boolean)[0] || memberNameRaw || 'Member';
+
+      const payMethodLabel = (pm) => {
+        if (!pm) return '—';
+        const labels = {
+          'card': 'Card', 'ussd': 'USSD', 'bank': 'Bank transfer', 'transfer': 'Bank transfer',
+          'cod': 'Pay on delivery', 'cash-on-delivery': 'Pay on delivery',
+          'cash': 'Cash', 'account': 'Account Balance', 'bonus': 'Performance Bonus',
+          'wallet': 'Wallet',
+        };
+        const lbl = labels[pm] || pm;
+        return lbl.toUpperCase();
+      };
+      const payStatusClass = (o) => {
+        const s = (o.payStatus || (o.status === 'paid' ? 'Paid' : 'Unpaid') || 'Unpaid').toString();
+        if (/paid/i.test(s)) return 'o-status--paid';
+        if (/pending/i.test(s)) return 'o-status--pending';
+        if (/fail|refund|cancel/i.test(s)) return 'o-status--fail';
+        return 'o-status--unpaid';
+      };
+      const payStatusText = (o) => {
+        const s = (o.payStatus || (o.status === 'paid' ? 'Paid' : 'Unpaid') || 'Unpaid').toString();
+        if (/paid/i.test(s)) return window.T.tr('account.orders_status_paid');
+        if (/pending/i.test(s)) return window.T.tr('account.orders_status_pending');
+        if (/fail|refund|cancel/i.test(s)) return window.T.tr('account.orders_status_fail');
+        return window.T.tr('account.orders_status_unpaid');
+      };
+
+      const t = (k, fb) => { const v = window.T.tr(k); return (v && v !== k) ? v : fb; };
+
+      list.innerHTML = orders.map((o, idx) => {
+        const cust = o.customer || {};
+        const deliv = o.delivery || {};
+        const address = deliv.method === 'pickup'
+          ? (deliv.pickupLoc ? `Self Pick-up · ${deliv.pickupLoc}` : 'Self Pick-up')
+          : ((cust.address || '') + (cust.city ? ', ' + cust.city : '') + (cust.state ? ' ' + cust.state : '')).trim() || '—';
         const items = o.items || [];
-        const first = items[0] || {};
-        const itemImg = first.img
-          ? `assets/img/products/${first.category || 'health-wellness'}/${first.img}`
-          : 'assets/img/categories/health-wellness.webp';
-        const qtyTotal = items.reduce((s, i) => s + (i.qty || 1), 0);
-        const statusBadge = o.status === 'pending'
-          ? '<span class="badge">Pending</span>'
-          : `<span class="badge badge-ok">${o.status || 'Confirmed'}</span>`;
-        const payLabel = ({ cod: 'Pay on delivery', card: 'Card', ussd: 'USSD', bank: 'Bank transfer' })[o.payment] || (o.payment === 'cash-on-delivery' ? 'Pay on delivery' : 'Prepaid');
+        const placeTs = o.date || o.createdAt || o.placeTime || o.updatedAt || Date.now();
+        const sym = _currencySymbol(o.currency);
+        const total = (typeof o.total === 'number')
+          ? o.total
+          : items.reduce((s, it) => s + (it.price || 0) * (it.qty || 1), 0);
+        const totalBV = items.reduce((s, it) => {
+          const v = (typeof it.bv === 'number' ? it.bv : (it.bv || _getBV(it) || 0));
+          return s + (Number(v) || 0);
+        }, 0) + (Number(o.bv) || 0);
+
+        /* ---- Product row(s) ---- */
+        const productsHtml = `
+          <div class="o-products">
+            ${items.map((it, i) => {
+              const qty = it.qty || 1;
+              const price = it.price || 0;
+              // Multi-layer resolve: new format → category/img → catalog lookup → legacy fields.
+              // Fixes the root cause where purchased items from old checkout only had it.img (bare filename
+              // without category folder prefix) resulting in 404 on both file:// and http:// protocols.
+              const img = _resolveOrderItemImage(it);
+              return `
+                <div class="o-product">
+                  <div class="o-product__pic">
+                    ${img
+                      ? `<img src="${img}" alt="" onerror="try{this.outerHTML=window.__ORDER_PIC_SVG}catch(_){this.remove()}">`
+                      : window.__ORDER_PIC_SVG}
+                  </div>
+                  <div class="o-product__info">
+                    <div class="o-product__name">${it.name || '—'}</div>
+                    <div class="o-product__price">
+                      <span class="qty">${qty} ×</span>
+                      <span class="sep"></span>
+                      <span>${sym}${fmtNum(price)}</span>
+                    </div>
+                    ${i === items.length - 1 ? `<div class="o-product__addr">${address}</div>` : ''}
+                  </div>
+                </div>`;
+            }).join('')}
+          </div>
+        `;
+
+        /* ---- Whole card ---- */
         return `
-          <div class="order-card">
-            <div class="top">
+          <article class="o-card" data-order-id="${String(o.id || '').replace(/"/g, '')}">
+            <div class="o-card__top">
               <div>
-                <h3>${o.id}</h3>
-                <div class="meta">${window.T.tr('account.orders_placed', { date: window.fmtDate(o.date) })} · ${o.customer ? o.customer.name : ''} · ${o.customer ? o.customer.phone : ''}</div>
+                <div class="o-card__id">${o.id || '—'}</div>
+                <div class="o-card__meta">
+                  <span class="o-card__meta-label" data-i18n="account.orders_label_placed">PLACED</span>
+                  <span>${window.fmtDateUp ? fmtDateUp(placeTs) : fmtDate(placeTs)}</span>
+                  <span class="dot" aria-hidden="true"></span>
+                  <span>${memberShort.toUpperCase()}</span>
+                </div>
               </div>
-              ${statusBadge}
+              <span class="o-status ${payStatusClass(o)}">${payStatusText(o)}</span>
             </div>
-            <div class="body">
-              <div class="pic"><img src="${itemImg}" alt="${first.name || ''}" loading="lazy" /></div>
-              <div>
-                <div style="font-weight:600;color:var(--ink-900)">${first.name || 'Product'}</div>
-                <div class="meta">${qtyTotal} × ₦${(first.price || 0).toLocaleString()}${items.length > 1 ? ` (+${items.length - 1} more)` : ''}</div>
-                ${o.customer && o.customer.address ? `<div class="ship-addr">${o.customer.address}, ${o.customer.city || ''} ${o.customer.state || ''}</div>` : ''}
-              </div>
-              <div style="text-align:right">
-                <div class="meta">Total</div>
-                <div style="font-family:var(--font-display);font-size:20px;font-weight:650;color:var(--ink-950)">₦${(o.total || 0).toLocaleString()}</div>
-                ${o.bv ? `<div class="meta" style="margin-top:2px;color:var(--gold-700, #8A6B2E);font-weight:600">+${o.bv} BV</div>` : ''}
-                <div class="meta" style="margin-top:2px">${payLabel}</div>
-              </div>
+
+            <div class="o-card__body">
+              <!-- Left: products stack (uses own 96px+1fr grid per product) -->
+              ${productsHtml}
+              <!-- Right: totals column -->
+              <aside class="o-totals">
+                <div class="o-totals__label" data-i18n="account.orders_label_total">TOTAL</div>
+                <div class="o-totals__amount">${sym}${fmtNum(total)}</div>
+                <div class="o-totals__bv">${totalBV}<span class="label">BV</span></div>
+                <div class="o-totals__pay">${payMethodLabel(o.payment)}</div>
+                <div class="o-totals__actions">
+                  <button type="button" class="o-download" data-order-download="${String(o.id || '').replace(/"/g, '')}" title="${t('account.orders_action_download', 'Download')}">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    <span data-i18n="account.orders_action_download">Download</span>
+                  </button>
+                </div>
+              </aside>
             </div>
-          </div>`;
+          </article>
+        `;
       }).join('');
+
+      // Apply translations to the newly inserted dynamic content
+      if (window.T && typeof window.T.applyI18n === 'function') {
+        try { window.T.applyI18n(list); } catch(_) {}
+      }
+
+      // Download button (CSV export demo)
+      list.querySelectorAll('[data-order-download]').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          const id = btn.dataset.orderDownload;
+          const order = orders.find(o => String(o.id) === String(id));
+          if (!order) return;
+          try {
+            const rows = [['Order', 'Product', 'Qty', 'Unit price', 'Total', 'BV', 'Tax rate', 'Tax']];
+            const taxRate = _taxRate(order);
+            (order.items || []).forEach(it => {
+              const qty = it.qty || 1;
+              const p = it.price || 0;
+              const total = p * qty;
+              const bv = typeof it.bv === 'number' ? it.bv : (it.bv || _getBV(it));
+              const tax = (total * taxRate).toFixed(2);
+              rows.push([order.id, it.name || '', qty, p, total, bv, taxRate, tax]);
+            });
+            const csv = rows.map(r => r.map(c => `"${String(c).replace(/"/g, '""')}"`).join(',')).join('\n');
+            const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url; a.download = `order-${String(order.id).replace(/[^A-Za-z0-9_-]/g, '_')}.csv`;
+            document.body.appendChild(a); a.click(); a.remove();
+            setTimeout(() => URL.revokeObjectURL(url), 2000);
+          } catch (err) {
+            window.toast && window.toast(String(err.message || err), 'danger');
+          }
+        });
+      });
     }
 
     /* ---------- BV rewards (Overview KPI) ---------- */
@@ -395,6 +1200,319 @@
       }
     }
 
+    /* ---------- Country & Bank constants ---------- */
+    const COUNTRIES = [
+      'Nigeria', 'Malaysia', 'Singapore', 'Indonesia', 'Thailand',
+      'Philippines', 'China', 'India', 'United States', 'United Kingdom',
+    ];
+    const NIGERIA_BANKS = [
+      'Access Bank Nigeria Plc', 'First Bank of Nigeria', 'Zenith Bank Plc',
+      'GTBank (Guarantee Trust Bank)', 'UBA (United Bank for Africa)',
+      'Fidelity Bank Plc', 'Stanbic IBTC Bank', 'Ecobank Nigeria',
+      'Union Bank of Nigeria', 'Sterling Bank', 'Wema Bank',
+      'FCMB (First City Monument Bank)', 'Polaris Bank', 'Keystone Bank',
+      'Jaiz Bank', 'SunTrust Bank', 'Parallex Bank', 'Coronation Merchant Bank',
+      'Rand Merchant Bank', 'ARM Merchant Bank',
+    ];
+    const NIGERIA_BANK_BRANCHES = [
+      'Access Bank - Victoria Island', 'Access Bank - Ikeja', 'Access Bank - Marina',
+      'First Bank - Marina', 'First Bank - Victoria Island', 'First Bank - Ikeja',
+      'Zenith Bank - Ajose Adeogun', 'Zenith Bank - Wuse II', 'Zenith Bank - Ikeja',
+      'GTBank - Adeola Odeku', 'GTBank - Awolowo Road', 'GTBank - Wuse II',
+      'UBA - Marina', 'UBA - Adeola Odeku', 'UBA - Wuse II',
+      'Fidelity Bank - Adeola Odeku', 'Fidelity Bank - Ikeja',
+      'Stanbic IBTC - Walter Carrington', 'Stanbic IBTC - Wuse II',
+      'Ecobank - Adeola Odeku', 'Ecobank - Marina',
+      'Union Bank - Marina', 'Union Bank - Victoria Island',
+      'Sterling Bank - Adeola Odeku', 'Wema Bank - Marina',
+      'FCMB - Adeola Odeku', 'Polaris Bank - Adeola Odeku',
+    ];
+
+    /* ---------- Member Info (from AE XLSX) ---------- */
+    function loadMemberInfo() {
+      const u = window.Auth.user;
+      if (!u) return;
+
+      const memberData = JSON.parse(localStorage.getItem('al.memberData') || '{}');
+
+      // Format date as YYYY-MM-DD HH:mm
+      function fmtDateTime(d) {
+        if (!d) return '—';
+        try {
+          const dt = (d instanceof Date) ? d : new Date(d);
+          if (isNaN(dt.getTime())) return '—';
+          const pad = n => String(n).padStart(2, '0');
+          return `${dt.getFullYear()}-${pad(dt.getMonth() + 1)}-${pad(dt.getDate())} ${pad(dt.getHours())}:${pad(dt.getMinutes())}`;
+        } catch { return '—'; }
+      }
+
+      // Helper: create a standard read-only field row
+      function field(label, value, badge, i18nKey) {
+        const val = (value === '' || value == null) ? '—' : value;
+        const badgeHtml = badge ? `<span class="badge badge-${badge}">${badge}</span>` : '';
+        const labelAttr = i18nKey ? ` data-i18n="${i18nKey}"` : '';
+        return `<div class="member-field"><span class="member-label"${labelAttr}>${label}</span><span class="member-value">${val} ${badgeHtml}</span></div>`;
+      }
+
+      // Helper: create an editable text field row
+      function fieldEditable(label, value, dataKey, opts, i18nKey) {
+        const val = (value === '' || value == null) ? '—' : value;
+        opts = opts || {};
+        const multiline = opts.multiline ? ' data-multiline="true"' : '';
+        const labelAttr = i18nKey ? ` data-i18n="${i18nKey}"` : '';
+        return `<div class="member-field member-field-editable" data-edit-key="${dataKey}"${multiline}>` +
+          `<span class="member-label"${labelAttr}>${label}</span>` +
+          `<span class="member-value member-value-editable" title="Click to edit">` +
+            `<span class="member-value-text">${val}</span>` +
+            `<span class="member-edit-badge"><span class="ico">✎</span>Editable</span>` +
+          `</span></div>`;
+      }
+
+      // Helper: create a select dropdown field row
+      function fieldSelect(label, value, dataKey, options, i18nKey) {
+        const val = (value === '' || value == null) ? '—' : value;
+        const optsHtml = options.map(o =>
+          `<option value="${o}"${o === val ? ' selected' : ''}>${o}</option>`
+        ).join('');
+        const labelAttr = i18nKey ? ` data-i18n="${i18nKey}"` : '';
+        return `<div class="member-field member-field-select" data-edit-key="${dataKey}">` +
+          `<span class="member-label"${labelAttr}>${label}</span>` +
+          `<span class="member-value member-value-select" title="Click to change">` +
+            `<span class="member-value-text">${val}</span>` +
+            `<span class="member-edit-badge"><span class="ico">✎</span>Editable</span>` +
+          `</span>` +
+          `<select class="member-select" hidden>${optsHtml}</select></div>`;
+      }
+
+      // Basic Identity
+      const basicHtml = [
+        field('Member ID', u.memberId || '—'),
+        fieldEditable('Member Name', memberData.memberName || u.name || '—', 'memberName'),
+        field('Login Status', memberData.loginStatus || 'Allowed', memberData.loginStatus === 'Allowed' ? 'ok' : 'info'),
+        field('Status', memberData.status || 'Active', memberData.status === 'Active' ? 'ok' : 'info'),
+        fieldSelect('Country', memberData.country || 'Nigeria', 'country', COUNTRIES),
+        field('Join Date', fmtDateTime(memberData.joinDate)),
+        field('Join Period', memberData.joinPeriod ? `#${memberData.joinPeriod}` : '—'),
+      ].join('');
+      document.getElementById('memberBasicFields').innerHTML = basicHtml;
+
+      // Membership Level & Stars
+      const levelHtml = [
+        field('Current Level', memberData.currentLevel || 'Silver'),
+        field('Level Adjustment Date', fmtDateTime(memberData.levelAdjustDate)),
+        field('Settlement Level', memberData.settlementLevel || 'Silver'),
+        field('Highest Management Star', memberData.highestMgmtStar || 'None'),
+        field('Latest Management Star', memberData.latestMgmtStar || 'None'),
+        field('Highest Elite Level', memberData.highestElite || 'N/A'),
+        field('Latest Elite Level', memberData.latestElite || 'N/A'),
+      ].join('');
+      document.getElementById('memberLevelFields').innerHTML = levelHtml;
+
+      // Referral Network
+      const referralHtml = [
+        field('Referrer ID', memberData.referrerId || '—'),
+        field('Referrer Name', memberData.referrerName || '—'),
+        field('Actual Referrer ID', memberData.actualReferrerId || '—'),
+        field('Actual Referrer Name', memberData.actualReferrerName || '—'),
+      ].join('');
+      document.getElementById('memberReferralFields').innerHTML = referralHtml;
+
+      // Reporting Center
+      const reportingHtml = [
+        field('Reporting Center ID', memberData.reportingCenterId || '—'),
+        field('Is Reporting Center', memberData.isReportingCenter === 'Yes' ? 'Yes' : 'No', memberData.isReportingCenter === 'Yes' ? 'ok' : 'neutral'),
+        field('Show Chart', memberData.showChart === 'Yes' ? 'Yes' : 'No'),
+        field('Show Recharge', memberData.showRecharge === 'Yes' ? 'Yes' : 'No'),
+        field('Reporting Center Level', memberData.reportingCenterLevel || '—'),
+      ].join('');
+      document.getElementById('memberReportingFields').innerHTML = reportingHtml;
+
+      // Bank Information — all three fields editable
+      const bankHtml = [
+        fieldSelect('Bank Branch', memberData.bankBranch || '—', 'bankBranch', NIGERIA_BANK_BRANCHES, 'mbank_bank_branch'),
+        fieldEditable('Bank Name', memberData.bankName || '—', 'bankName', null, 'mbank_bank_name'),
+        fieldEditable('Bank Account', memberData.bankAccount ? String(memberData.bankAccount) : '—', 'bankAccount', null, 'mbank_bank_account'),
+      ].join('');
+      document.getElementById('memberBankFields').innerHTML = bankHtml;
+
+      // Transfer & Settings — Address is editable textarea
+      const transferHtml = [
+        fieldEditable('Common Address', memberData.commonAddress || '—', 'commonAddress', { multiline: true }),
+        field('Transfer Function', memberData.transferEnabled === '开启' || memberData.transferEnabled === 'Enabled' ? 'Enabled' : 'Disabled', memberData.transferEnabled === '开启' ? 'ok' : 'warn'),
+      ].join('');
+      document.getElementById('memberTransferFields').innerHTML = transferHtml;
+
+      // Wire up inline editing for editable fields and select fields
+      wireMemberFieldEditing();
+    }
+
+    /* ---------- Wire inline editing for member fields ---------- */
+    function wireMemberFieldEditing() {
+      // Handle select fields (click to open dropdown)
+      document.querySelectorAll('.member-field-select').forEach(row => {
+        const valueEl = row.querySelector('.member-value-select');
+        const textEl = valueEl.querySelector('.member-value-text');
+        const select = row.querySelector('.member-select');
+        if (!valueEl || !select || row.dataset.wired) return;
+        row.dataset.wired = '1';
+
+        valueEl.addEventListener('click', (e) => {
+          if (e.target.closest('.member-edit-badge')) return; // ignore clicks on the marker
+          document.querySelectorAll('.member-field-select.open').forEach(r => {
+            if (r !== row) { r.classList.remove('open'); const s = r.querySelector('.member-select'); if (s) s.hidden = true; }
+          });
+          const isOpen = row.classList.toggle('open');
+          select.hidden = !isOpen;
+          if (isOpen) {
+            const currentVal = (textEl.textContent || '').trim();
+            for (const opt of select.options) {
+              if (opt.value === currentVal) { select.value = currentVal; break; }
+            }
+            select.focus();
+          }
+        });
+
+        select.addEventListener('change', () => {
+          const newVal = select.value;
+          if (textEl) textEl.textContent = newVal; // preserve the Editable badge
+          row.classList.remove('open');
+          select.hidden = true;
+          saveMemberField(row.dataset.editKey, newVal);
+          document.querySelectorAll('.member-field-select.open').forEach(r => { if (r !== row) { r.classList.remove('open'); const s = r.querySelector('.member-select'); if (s) s.hidden = true; } });
+        });
+
+        select.addEventListener('blur', () => {
+          setTimeout(() => {
+            row.classList.remove('open');
+            select.hidden = true;
+          }, 150);
+        });
+      });
+
+      // Handle editable text fields (click to edit)
+      document.querySelectorAll('.member-field-editable').forEach(row => {
+        const valueEl = row.querySelector('.member-value-editable');
+        const textEl = valueEl.querySelector('.member-value-text');
+        if (!valueEl || !textEl || row.dataset.wired) return;
+        row.dataset.wired = '1';
+
+        valueEl.addEventListener('click', (e) => {
+          if (e.target.closest('.member-edit-badge')) return; // ignore clicks on the marker
+          if (row.classList.contains('editing')) return;
+          row.classList.add('editing');
+          const isMultiline = row.dataset.multiline === 'true';
+          const currentVal = (textEl.textContent.trim() === '—' || textEl.textContent.trim() === '') ? '' : textEl.textContent.trim();
+          let input;
+          if (isMultiline) {
+            input = document.createElement('textarea');
+            input.rows = 3;
+            input.style.width = '100%';
+          } else {
+            input = document.createElement('input');
+            input.type = 'text';
+            input.style.width = '100%';
+          }
+          input.className = 'member-edit-input';
+          input.value = currentVal;
+          textEl.textContent = '';
+          textEl.appendChild(input);
+          input.focus();
+          input.select();
+
+          const finishEdit = (save) => {
+            if (!row.classList.contains('editing')) return;
+            const newVal = (input.value || '').trim();
+            row.classList.remove('editing');
+            if (save) {
+              textEl.textContent = newVal || '—';
+              saveMemberField(row.dataset.editKey, newVal);
+            } else {
+              textEl.textContent = currentVal || '—';
+            }
+          };
+
+          input.addEventListener('blur', () => finishEdit(true));
+          input.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && !isMultiline) { e.preventDefault(); finishEdit(true); }
+            else if (e.key === 'Escape') { e.preventDefault(); finishEdit(false); }
+          });
+        });
+      });
+    }
+
+    /* ---------- Save a single member field & sync ---------- */
+    function saveMemberField(key, value) {
+      const memberData = JSON.parse(localStorage.getItem('al.memberData') || '{}');
+      memberData[key] = value;
+      localStorage.setItem('al.memberData', JSON.stringify(memberData));
+
+      if (key === 'memberName') {
+        const u = window.Auth.user;
+        if (u) {
+          u.name = value || u.name;
+          u.firstName = (value || '').split(/\s+/)[0] || u.firstName;
+          window.Auth.user = u;
+        }
+        syncHeader();
+      }
+
+      window.dispatchEvent(new CustomEvent('al:memberchange', { detail: { key, value } }));
+      window.toast('Saved', 'success');
+    }
+
+    /* ---------- Init member data from XLSX (demo) ---------- */
+    function initMemberDataFromXLSX() {
+      // This simulates loading the AE XLSX data for the current member
+      // In production, this would come from an API call
+      const u = window.Auth.user;
+      if (!u) return;
+
+      const existing = JSON.parse(localStorage.getItem('al.memberData') || '{}');
+      // Seed if empty, or migrate from old version (S4/123 defaults)
+      const needsMigration = existing._schemaVersion !== 2;
+      if (Object.keys(existing).length === 0 || needsMigration) {
+        const seed = {
+          memberName: 'Adaeze Okonkwo',
+          loginStatus: 'Allowed',
+          status: 'Active',
+          country: 'Nigeria',
+          joinDate: '2026-06-03T08:52:21',
+          joinPeriod: 172,
+          currentLevel: 'Silver',
+          levelAdjustDate: null,
+          settlementLevel: 'Silver',
+          highestMgmtStar: 'None',
+          latestMgmtStar: 'None',
+          highestElite: 'N/A',
+          latestElite: 'N/A',
+          referrerId: 'NG27187710',
+          referrerName: 'S2',
+          actualReferrerId: 'NG27187710',
+          actualReferrerName: 'S2',
+          reportingCenterId: 'NG66051653',
+          isReportingCenter: 'No',
+          showChart: 'Yes',
+          showRecharge: 'Yes',
+          reportingCenterLevel: 'Level 5',
+          bankBranch: 'Access Bank - Victoria Island',
+          bankName: 'Access Bank Nigeria Plc',
+          bankAccount: '36545355225',
+          commonAddress: '14, Admiralty Way, Victoria Island, Lagos, Nigeria',
+          transferEnabled: 'Enabled',
+          _schemaVersion: 2,
+        };
+        // Preserve any user-edited fields from existing data
+        if (needsMigration && Object.keys(existing).length > 0) {
+          ['memberName', 'country', 'bankBranch', 'bankName', 'bankAccount', 'commonAddress'].forEach(k => {
+            if (existing[k] && existing[k] !== 'S4' && existing[k] !== '123') {
+              seed[k] = existing[k];
+            }
+          });
+        }
+        localStorage.setItem('al.memberData', JSON.stringify(seed));
+      }
+    }
+
     /* ---------- Tab switching ---------- */
     function showView(name) {
       document.querySelectorAll('.dash-view').forEach(v => v.hidden = (v.dataset.view !== name));
@@ -404,27 +1522,31 @@
       if (name === 'orders') {
         renderOrders();
       }
-            if (name === 'profile') {
+      if (name === 'profile') {
+        renderProfileBasicBar();
         loadProfileForm();
         setProfileMode('view');
         renderAddresses();
         loadPrefs();
       }
-          }
+    }
 
     function currentView() {
-      const hash = (location.hash || '#overview').replace('#', '');return ['overview', 'orders', 'profile'].includes(hash) ? hash : 'overview';
+      const hash = (location.hash || '#overview').replace(/^#/, '').replace(/[?#].*$/, '');
+      return ['overview', 'orders', 'profile'].includes(hash) ? hash : 'overview';
     }
 
     /* ---------- Header sync ---------- */
     function syncHeader() {
       const u = window.Auth.user;
       if (!u) return;
-      const initials = (u.name || u.firstName || '?').split(/\s+/).map(s => s[0]).slice(0, 2).join('').toUpperCase();
+      const md = JSON.parse(localStorage.getItem('al.memberData') || '{}');
+      const displayName = md.memberName || u.name || u.firstName || '—';
+      const initials = (displayName || '?').split(/\s+/).map(s => s[0]).slice(0, 2).join('').toUpperCase();
       const av = document.getElementById('dashAvatar');
       if (av) av.textContent = initials || 'A';
       const nameEl = document.getElementById('dashName');
-      if (nameEl) nameEl.textContent = u.name || '—';
+      if (nameEl) nameEl.textContent = displayName;
       const sub = document.getElementById('dashSubtitle');
       if (sub) {
         const memberId = u.memberId || (window.ProductCatalog && window.ProductCatalog.getCurrentMemberId ? window.ProductCatalog.getCurrentMemberId() : null) || '—';
@@ -446,6 +1568,8 @@
       if (window.ProductCatalog && window.ProductCatalog.pruneOrphanOrders) {
         window.ProductCatalog.pruneOrphanOrders();
       }
+      // Initialize member data from XLSX
+      initMemberDataFromXLSX();
       updateBVRewards();
       showView(currentView());
 
@@ -492,24 +1616,60 @@
         e.preventDefault();
         const form = e.currentTarget;
         const pc = window.ProductCatalog || {};
+        // Member ID: 会员编号格式 NG+8 位数字
+        const memberId = (form.memberId ? form.memberId.value.trim() : (document.getElementById('pfMemberId').value || '')).trim().toUpperCase();
+        if (!/^NG\d{8}$/.test(memberId)) {
+          const msg = window.T.tr('account.profile_member_id_invalid');
+          window.toast((msg && msg !== 'account.profile_member_id_invalid') ? msg : 'Member ID must be NG + 8 digits (e.g. NG12345678).', 'danger');
+          return;
+        }
+        const countryCode = (form.country ? form.country.value : document.getElementById('pfCountry').value || '').trim();
+        if (!countryCode) {
+          window.toast(window.T.tr('account.profile_country_ph') || 'Please select a country.', 'danger');
+          return;
+        }
+        const memberName = (form.memberName ? form.memberName.value.trim() : (document.getElementById('pfMemberName').value || '')).trim();
+        const email = (form.email ? form.email.value : '').trim();
+        const phone = (pc.readPhone ? pc.readPhone(form, 'phone') : (form.querySelector('[name="phone"]') || {}).value || '').trim();
+
+        // 1) Update al.profile (still used for prefs/address defaults; drop legacy nin)
+        const existingP = window.AL.loadProfile() || {};
         const p = {
-          ...(window.AL.loadProfile() || {}),
-          name: form.name.value.trim(),
-          email: form.email.value.trim(),
-          phone: (pc.readPhone ? pc.readPhone(form, 'phone') : (form.querySelector('[name="phone"]') || {}).value || '').trim(),
+          ...existingP,
+          name: memberName,
+          email,
+          phone,
         };
+        delete p.nin;
         window.AL.saveProfile(p);
-        // mirror to Auth.user so the header updates too
+
+        // 2) Update al.memberData — authoritative fields used across overview / basic info bar / syncHeader
+        const md = JSON.parse(localStorage.getItem('al.memberData') || '{}');
+        md.memberId = memberId;
+        md.memberName = memberName;
+        md.email = email;
+        md.phone = phone;
+        md.country = countryCode;
+        localStorage.setItem('al.memberData', JSON.stringify(md));
+
+        // 3) Mirror to Auth.user so the header / subaccount checks update too
         const u = window.Auth.user; if (u) {
-          u.name = p.name; u.email = p.email; u.phone = p.phone; u.firstName = p.name.split(/\s+/)[0] || u.firstName;
+          u.memberId = memberId;
+          u.name = memberName;
+          u.firstName = memberName.split(/\s+/)[0] || u.firstName;
+          u.email = email;
+          u.phone = phone;
+          delete u.nin;
           window.Auth.user = u;
         }
         syncHeader();
+        // Refresh basic info bar if member id/name/level-related fields change
+        renderProfileBasicBar();
         setProfileMode('view');
         window.toast(window.T.tr('account.profile_save_ok'), 'success');
       });
 
-      // Password change
+      // Password change (Login password sub-block)
       document.getElementById('pwdForm').addEventListener('submit', e => {
         e.preventDefault();
         const form = e.currentTarget;
@@ -518,6 +1678,74 @@
         window.toast(window.T.tr('account.profile_pwd_changed'), 'success');
         form.reset();
       });
+
+      // Payment password sub-block (支付密码): 原密码 / 新密码 / 重复新密码 / 保存
+      document.getElementById('payPwdForm').addEventListener('submit', e => {
+        e.preventDefault();
+        const form = e.currentTarget;
+        const oldP = form.oldPay.value || '';
+        const newP = form.newPay.value || '';
+        const cfmP = form.confirmPay.value || '';
+        const t = (k, fb) => { const v = window.T.tr(k); return (v && v !== k) ? v : fb; };
+        // First-time: if no password has been set (no Auth.user.payPasswordSalted), allow empty old password.
+        const u = window.Auth.user || {};
+        const hasPayPwd = !!u.payPassword || !!u.payPasswordSalted;
+        if (!hasPayPwd && oldP !== '') {
+          // No-op: user might not know; let them proceed if blank old, otherwise check.
+        }
+        if (!hasPayPwd && oldP !== '') {
+          window.toast(t('account.profile_pay_first_time', 'Payment password has not been set yet. Leave "Old password" blank to set it now.'), 'info');
+        }
+        if (newP.length < 6) {
+          window.toast(t('account.profile_pay_too_short', 'Payment password must be at least 6 characters.'), 'danger');
+          return;
+        }
+        if (newP !== cfmP) {
+          window.toast(t('account.profile_pay_mismatch', 'New passwords do not match.'), 'danger');
+          return;
+        }
+        // Verify old password (simple hash-based match, for local demo only)
+        if (hasPayPwd) {
+          const oldHash = u.payPasswordSalted || String(u.payPassword || '');
+          // Extremely simple hash (demo / non-crypto, page has no backend).
+          const inputHash = simpleHash(oldP || '');
+          if (oldHash !== inputHash) {
+            window.toast(t('account.profile_pay_wrong_old', 'Old payment password is incorrect.'), 'danger');
+            return;
+          }
+        } else if (oldP) {
+          // No password set but user still typed old — warn but still let them set (do not block).
+          window.toast(t('account.profile_pay_first_time', 'Payment password has not been set. Leave "Old password" blank to set it now.'), 'info');
+        }
+        // Save — simple salted hash stored in Auth.user (mirrored to storage).
+        const stored = simpleHash(newP);
+        const user2 = window.Auth.user || {};
+        user2.payPasswordSalted = stored;
+        delete user2.payPassword; // never store raw
+        window.Auth.user = user2;
+        // Save to profile storage as well (demo / offline consistency)
+        try {
+          const raw = JSON.parse(localStorage.getItem('al.auth.user') || '{}');
+          raw.payPasswordSalted = stored;
+          delete raw.payPassword;
+          localStorage.setItem('al.auth.user', JSON.stringify(raw));
+        } catch(e) {}
+        window.toast(t('account.profile_pay_saved', 'Payment password saved.'), 'success');
+        form.reset();
+      });
+
+      /** Simple demo-only hash (NOT secure, local-only fallback). */
+      function simpleHash(s) {
+        if (s == null) return 'h:';
+        s = String(s);
+        let h1 = 2166136261, h2 = 1469598103934665603 % 0xffffffff;
+        for (let i = 0; i < s.length; i++) {
+          h1 ^= s.charCodeAt(i);
+          h1 = Math.imul(h1, 16777619);
+          h2 = Math.imul(h2 ^ s.charCodeAt(i), 1099511628211 % 0xffffffff);
+        }
+        return 'h:' + ((h1 >>> 0).toString(36)) + '.' + ((h2 >>> 0).toString(36));
+      }
 
       // Addresses
       document.getElementById('addrAddBtn').addEventListener('click', () => openAddressEditor(null));
@@ -548,12 +1776,12 @@
         const pc = window.ProductCatalog || {};
         const data = {
           id: f.id.value || undefined,
-          label: f.label.value.trim() || 'Home',
           recipient: f.recipient.value.trim(),
           phone: (pc.readPhone ? pc.readPhone(f, 'phone') : (f.querySelector('[name="phone"]') || {}).value || '').trim(),
+          region: f.region.value,
           street: f.street.value.trim(),
           city: f.city.value.trim(),
-          state: f.state.value.trim(),
+          district: f.district.value.trim(),
           isDefault: f.isDefault.checked,
         };
         window.AL.upsertAddress(data);
@@ -567,8 +1795,26 @@
         const form = document.getElementById('prefsForm');
         const p = {};
         ['email','sms','wa'].forEach(k => p[k] = !!form[k].checked);
+        const newLang = (form.lang && form.lang.value) || 'en';
+        p.lang = newLang;
         window.AL.savePrefs(p);
+        const prevLang = (window.T && window.T.current) || 'en';
+        if (window.T && newLang !== prevLang) window.T.switchLang(newLang);
         window.toast(window.T.tr('account.profile_save_ok'), 'success');
+      });
+
+      // React to language changes (T.switchLang dispatches al:langchange) — re-render this page's own dynamic blocks + i18n
+      window.addEventListener('al:langchange', () => {
+        applyI18n();
+        // Refresh form labels/placeholder after lang change
+        renderProfileBasicBar();
+        // Profile info: re-render country select (i18n labels) + member id placeholder
+        loadProfileForm();
+        loadPrefs();
+        renderAddresses();
+        renderOrders();
+        renderMemberOverview && renderMemberOverview();
+        syncHeader();
       });
     });
   </script>

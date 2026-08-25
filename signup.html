@@ -130,7 +130,7 @@
         <div class="aside-foot">
           <div class="aside-stat"><b>5 min</b><span>sign-up time</span></div>
           <div class="aside-stat"><b>30 s</b><span>first drop</span></div>
-          <div class="aside-stat"><b>0 ₦</b><span>setup fee</span></div>
+          <div class="aside-stat"><b>0 N</b><span>setup fee</span></div>
         </div>
       </div>
     </aside>
@@ -336,7 +336,7 @@
         startLoading(btn, window.T.tr('login.submit_signup_loading'));
         setTimeout(() => {
           const firstName = name.split(/\s+/)[0] || 'there';
-          const memberId = window.ProductCatalog?.genMemberId?.() || 'NG' + Date.now().toString().slice(-12).padStart(12, '0');
+          const memberId = window.ProductCatalog?.genMemberId?.() || 'NG' + Date.now().toString().slice(-8).padStart(8, '0');
           const user = {
             firstName,
             name,

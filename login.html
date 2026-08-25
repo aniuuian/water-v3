@@ -1,21 +1,75 @@
 <!doctype html>
-<html lang="en">
-<head>
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-  <meta http-equiv="Pragma" content="no-cache" />
-  <meta http-equiv="Expires" content="0" />
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<html lang="en"><head>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Sign in · AquaLife Nigeria</title>
-  <link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='%2300875A' d='M12 3C8 9 6 12 6 15a6 6 0 0 0 12 0c0-3-2-6-6-12z'/></svg>" />
-  <link rel="stylesheet" href="assets/css/design-system.css?v=20260819-2" />
-  <link rel="stylesheet" href="assets/css/components.css?v=20260819-2" />
-  <link rel="stylesheet" href="assets/css/pages.css?v=20260819-2" />
-  <link rel="stylesheet" href="assets/css/website.css?v=20260819-2" />
-</head>
+  <link rel="icon" href="data:image/svg+xml;utf8,&lt;svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'&gt;&lt;path fill='%2300875A' d='M12 3C8 9 6 12 6 15a6 6 0 0 0 12 0c0-3-2-6-6-12z'/&gt;&lt;/svg&gt;">
+  <link rel="stylesheet" href="assets/css/design-system.css?v=20260819-2">
+  <link rel="stylesheet" href="assets/css/components.css?v=20260819-2">
+  <link rel="stylesheet" href="assets/css/pages.css?v=20260819-2">
+  <link rel="stylesheet" href="assets/css/website.css?v=20260819-2">
+<style id="trae-panel-enter-style">
+        @keyframes trae-panel-enter {
+          from { opacity: 0; transform: scale(0.95); }
+          to { opacity: 1; transform: scale(1); }
+        }
+      </style></head>
 <body data-page="login">
   <div id="offline-banner" class="offline-banner">Offline mode · showing cached information</div>
-  <div id="app-header"></div>
+  <div id="app-header">
+      <header class="site-header ">
+        <div class="container bar">
+          <a href="index.html" class="brand" aria-label="AquaLife">
+            <span class="mark" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 3 C 8 9 6 12 6 15 a6 6 0 0 0 12 0 c0-3-2-6-6-12z"></path>
+              </svg>
+            </span>
+            <span class="word">
+              AquaLife
+              <small>Better living</small>
+            </span>
+          </a>
+          <nav class="nav" aria-label="Primary">
+            <a href="index.html" class="">Home</a>
+            <a href="products.html" class="">Products</a>
+            <a href="contact.html" class="">Contact Us</a><a href="about.html" class="">About Us</a>
+          </nav>
+          <div class="header-actions">
+            
+              <a href="account.html" class="btn btn-dark btn-sm btn-account" title="My Account">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                <span>My Account<span class="phase-badge">二期</span></span>
+              </a>
+              <button class="btn btn-ghost btn-sm" id="headerLogout">Sign out<span class="phase-badge">二期</span></button>
+            
+            <button class="hamburger" id="openDrawer" aria-label="Menu"><span></span></button>
+          </div>
+        </div>
+      </header>
+      <div class="drawer" id="drawer" aria-hidden="true">
+        <div class="drawer-panel">
+          <div class="drawer-head">
+            <a href="index.html" class="brand">
+              <span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 C 8 9 6 12 6 15 a6 6 0 0 0 12 0 c0-3-2-6-6-12z"></path></svg></span>
+              <span class="word">AquaLife<small>Better living</small></span>
+            </a>
+            <button class="icon-btn" id="closeDrawer" aria-label="Close"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+          </div>
+          <nav class="drawer-nav">
+            <a href="index.html" class="">Home</a>
+            <a href="products.html" class="">Products</a>
+            <a href="contact.html" class="">Contact Us</a><a href="about.html" class="">About Us</a>
+          </nav>
+        </div>
+      </div>
+      <a class="wa-fab" href="https://wa.me/2348000000000" target="_blank" rel="noopener" aria-label="WhatsApp">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.8.9-1 1.1-.2.2-.4.2-.7.1-.3-.1-1.2-.4-2.3-1.4-.8-.7-1.4-1.6-1.6-1.9-.2-.3 0-.4.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5 0-.1-.6-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5 4.4.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.7-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.2-.3-.3-.6-.4zM12 2.5C6.8 2.5 2.6 6.7 2.6 12c0 1.7.5 3.4 1.5 4.8L2.5 21.5l4.8-1.6c1.4.8 3 1.2 4.7 1.2 5.2 0 9.4-4.2 9.4-9.4 0-2.5-1-4.9-2.8-6.6-1.7-1.8-4.1-2.8-6.6-2.8z"></path></svg>
+      </a>
+    </div>
 
   <main class="auth-shell" data-mode="signin">
     <div class="auth-card card" data-mode="signin">
@@ -31,57 +85,57 @@
 
       <!-- Headline + sub -->
       <div class="auth-head">
-        <h1 data-i18n="login.title">Sign in to AquaLife</h1>
-        <p data-i18n="login.sub" class="muted">Manage your orders, payments and preferences in one place.</p>
+        <h1 data-i18n="login.title">login.title</h1>
+        <p data-i18n="login.sub" class="muted">login.sub</p>
       </div>
 
       <!-- ============ SIGN IN form — minimal: account + password ============ -->
-      <form id="signinForm" class="auth-form" novalidate>
+      <form id="signinForm" class="auth-form" novalidate="">
         <label class="field">
-          <span data-i18n="login.email_label">Member ID</span>
-          <input type="text" name="email" autocomplete="username" required data-i18n-ph="login.email_ph" placeholder="Enter your member ID" value="" />
+          <span data-i18n="login.email_label">login.email_label</span>
+          <input type="text" name="email" autocomplete="username" required="" data-i18n-ph="login.email_ph" placeholder="Enter your member ID" value="" style="position: relative;">
         </label>
         <label class="field">
-          <span data-i18n="login.password_label">Password</span>
+          <span data-i18n="login.password_label">login.password_label</span>
           <div class="pwd">
-            <input type="password" name="password" autocomplete="current-password" required data-i18n-ph="login.password_ph" placeholder="••••••••" minlength="6" value="aqua2026" />
-            <button type="button" class="pwd-toggle" data-toggle-pwd aria-label="Show password">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+            <input type="password" name="password" autocomplete="current-password" required="" data-i18n-ph="login.password_ph" placeholder="••••••••" minlength="6" value="aqua2026">
+            <button type="button" class="pwd-toggle" data-toggle-pwd="" aria-label="Show password">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"></path><circle cx="12" cy="12" r="3"></circle></svg>
             </button>
           </div>
         </label>
         <div class="auth-row">
           <label class="check">
-            <input type="checkbox" name="remember" />
-            <span data-i18n="login.remember">Keep me signed in</span>
+            <input type="checkbox" name="remember">
+            <span data-i18n="login.remember">login.remember</span>
           </label>
-          <a href="#" class="link" data-i18n="login.forgot">Forgot password?</a>
+          <a href="#" class="link" data-i18n="login.forgot">login.forgot</a>
         </div>
-        <button type="submit" class="btn btn-primary btn-block btn-loading" id="signinSubmit" data-i18n="login.submit">Sign in</button>
+        <button type="submit" class="btn btn-primary btn-block btn-loading" id="signinSubmit" data-i18n="login.submit">login.submit</button>
       </form>
 
       <!-- Divider + social auth -->
-      <div class="auth-divider"><span data-i18n="login.or">or continue with</span></div>
+      <div class="auth-divider"><span data-i18n="login.or">login.or</span></div>
       <div class="auth-social">
         <button type="button" class="btn btn-light btn-block social" data-social="whatsapp">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.8.9-1 1.1-.2.2-.4.2-.7.1-.3-.1-1.2-.4-2.3-1.4-.8-.7-1.4-1.6-1.6-1.9-.2-.3 0-.4.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5 0-.1-.6-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5 4.4.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.7-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.2-.3-.3-.6-.4zM12 2.5C6.8 2.5 2.6 6.7 2.6 12c0 1.7.5 3.4 1.5 4.8L2.5 21.5l4.8-1.6c1.4.8 3 1.2 4.7 1.2 5.2 0 9.4-4.2 9.4-9.4 0-2.5-1-4.9-2.8-6.6-1.7-1.8-4.1-2.8-6.6-2.8z"/></svg>
-          <span data-i18n="login.wa_btn">Continue with WhatsApp</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.8.9-1 1.1-.2.2-.4.2-.7.1-.3-.1-1.2-.4-2.3-1.4-.8-.7-1.4-1.6-1.6-1.9-.2-.3 0-.4.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5 0-.1-.6-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5 4.4.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.7-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.2-.3-.3-.6-.4zM12 2.5C6.8 2.5 2.6 6.7 2.6 12c0 1.7.5 3.4 1.5 4.8L2.5 21.5l4.8-1.6c1.4.8 3 1.2 4.7 1.2 5.2 0 9.4-4.2 9.4-9.4 0-2.5-1-4.9-2.8-6.6-1.7-1.8-4.1-2.8-6.6-2.8z"></path></svg>
+          <span data-i18n="login.wa_btn">login.wa_btn</span>
         </button>
         <button type="button" class="btn btn-light btn-block social" data-social="google">
           <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
-            <path fill="#4285F4" d="M22 12.2c0-.7-.1-1.4-.2-2H12v3.8h5.6c-.2 1.3-.9 2.4-2 3.1v2.6h3.3c2-1.8 3.1-4.5 3.1-7.5z"/>
-            <path fill="#34A853" d="M12 22c2.7 0 5-.9 6.7-2.4l-3.3-2.6c-.9.6-2 1-3.4 1-2.6 0-4.8-1.7-5.6-4.1H3v2.7C4.7 19.7 8.1 22 12 22z"/>
-            <path fill="#FBBC05" d="M6.4 13.9c-.2-.6-.3-1.2-.3-1.9s.1-1.3.3-1.9V7.4H3C2.4 8.6 2 10 2 12s.4 3.4 1 4.6l3.4-2.7z"/>
-            <path fill="#EA4335" d="M12 5.9c1.5 0 2.8.5 3.8 1.5l2.9-2.9C17 2.9 14.7 2 12 2 8.1 2 4.7 4.3 3 7.4l3.4 2.7c.8-2.4 3-4.2 5.6-4.2z"/>
+            <path fill="#4285F4" d="M22 12.2c0-.7-.1-1.4-.2-2H12v3.8h5.6c-.2 1.3-.9 2.4-2 3.1v2.6h3.3c2-1.8 3.1-4.5 3.1-7.5z"></path>
+            <path fill="#34A853" d="M12 22c2.7 0 5-.9 6.7-2.4l-3.3-2.6c-.9.6-2 1-3.4 1-2.6 0-4.8-1.7-5.6-4.1H3v2.7C4.7 19.7 8.1 22 12 22z"></path>
+            <path fill="#FBBC05" d="M6.4 13.9c-.2-.6-.3-1.2-.3-1.9s.1-1.3.3-1.9V7.4H3C2.4 8.6 2 10 2 12s.4 3.4 1 4.6l3.4-2.7z"></path>
+            <path fill="#EA4335" d="M12 5.9c1.5 0 2.8.5 3.8 1.5l2.9-2.9C17 2.9 14.7 2 12 2 8.1 2 4.7 4.3 3 7.4l3.4 2.7c.8-2.4 3-4.2 5.6-4.2z"></path>
           </svg>
-          <span data-i18n="login.google_btn">Continue with Google</span>
+          <span data-i18n="login.google_btn">login.google_btn</span>
         </button>
       </div>
 
       <!-- Switch link to signup page -->
       <p class="auth-switch">
-        <span data-i18n="login.no_account">Don't have an account?</span>
-        <a href="signup.html" data-i18n="login.create">Create one</a>
+        <span data-i18n="login.no_account">login.no_account</span>
+        <a href="signup.html" data-i18n="login.create">login.create</a>
       </p>
     </div>
 
@@ -89,7 +143,7 @@
     <aside class="auth-aside auth-aside-signin">
       <div class="aside-grain"></div>
       <div class="aside-inner">
-        <div class="eyebrow" data-i18n="common.welcome">Welcome back</div>
+        <div class="eyebrow" data-i18n="common.welcome">common.welcome</div>
         <h2>
           <em>Clean water,</em>
           <span>one tap away.</span>
@@ -97,15 +151,15 @@
         <p>Manage your orders, track water quality, and pay with ease — wherever you are in Nigeria.</p>
         <ul class="aside-bullets">
           <li>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            Free installation & filter changes
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            Free installation &amp; filter changes
           </li>
           <li>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
             Smart reminders — stay on top of payments
           </li>
           <li>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
             Exclusive rewards on every purchase
           </li>
         </ul>
@@ -118,7 +172,83 @@
     </aside>
   </main>
 
-  <div id="app-footer"></div>
+  <div id="app-footer">
+      <footer class="site-footer v2">
+        <div class="grain"></div>
+        <div class="container">
+          <div class="footer-top">
+            <div class="footer-brand">
+              <a href="index.html" class="brand" aria-label="AquaLife">
+                <span class="mark" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 3 C 8 9 6 12 6 15 a6 6 0 0 0 12 0 c0-3-2-6-6-12z"></path>
+                  </svg>
+                </span>
+                <span class="word">AquaLife<small>Better living</small></span>
+              </a>
+              <p class="footer-slogan">
+                <span>Better Products.</span><br>
+                <span>Better Living.</span>
+              </p>
+              <div class="footer-social">
+                <a href="https://wa.me/2348000000000" target="_blank" rel="noopener" aria-label="WhatsApp">
+                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.8.9-1 1.1-.2.2-.4.2-.7.1-.3-.1-1.2-.4-2.3-1.4-.8-.7-1.4-1.6-1.6-1.9-.2-.3 0-.4.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5 0-.1-.6-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5 4.4.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.7-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.2-.3-.3-.6-.4zM12 2.5C6.8 2.5 2.6 6.7 2.6 12c0 1.7.5 3.4 1.5 4.8L2.5 21.5l4.8-1.6c1.4.8 3 1.2 4.7 1.2 5.2 0 9.4-4.2 9.4-9.4 0-2.5-1-4.9-2.8-6.6-1.7-1.8-4.1-2.8-6.6-2.8z"></path></svg>
+                </a>
+                <a href="#" aria-label="Instagram">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="1" fill="currentColor"></circle></svg>
+                </a>
+                <a href="#" aria-label="Facebook">
+                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.5 22v-8h2.7l.4-3.3h-3.1V8.6c0-1 .3-1.6 1.6-1.6H17V4.2c-.3 0-1.4-.1-2.7-.1-2.7 0-4.5 1.6-4.5 4.6v2.5H7v3.3h2.8V22h3.7z"></path></svg>
+                </a>
+                <a href="#" aria-label="X (Twitter)">
+                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2H21.5l-7.5 8.57L23 22h-6.844l-5.36-7.012L4.7 22H1.44l8.027-9.176L1 2h6.99l4.84 6.39L18.244 2zm-1.2 18h1.82L7.06 4H5.1l11.944 16z"></path></svg>
+                </a>
+              </div>
+            </div>
+
+            <div>
+              <h5>Contact</h5>
+              <ul class="footer-contact">
+                <li>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.72 2.79a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.29-1.29a2 2 0 0 1 2.11-.45c.89.35 1.83.59 2.79.72A2 2 0 0 1 22 16.92z"></path></svg>
+                  <span>+234 800 000 0000</span>
+                </li>
+                <li>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><path d="M22 6l-10 7L2 6"></path></svg>
+                  <span>hello@aqualife.ng</span>
+                </li>
+                <li>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                  <span>Lagos · Abuja · Port Harcourt · Ibadan</span>
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h5>Company</h5>
+              <ul>
+                <li><a href="about.html">About Us</a></li>
+              </ul>
+            </div>
+
+            <div>
+              <h5>Legal</h5>
+              <ul>
+                <li><a href="privacy.html">Privacy Policy</a></li>
+                <li><a href="terms.html">Terms of Service</a></li>
+                <li><a href="refund.html">Refund Policy</a></li>
+                <li><a href="shipping.html">Shipping Policy</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="footer-bottom">
+            <span>© 2026 AquaLife Nigeria</span>
+            <span class="footer-bottom-right">Crafted with care · Better living every day</span>
+          </div>
+        </div>
+      </footer>
+    </div>
 
   <script src="assets/i18n/strings.js?v=20260819-2"></script>
   <script src="assets/js/app.js?v=20260819-2"></script>
@@ -210,27 +340,33 @@
     }
 
     /* ---------- Social buttons (stub) ---------- */
-    // Social sign-in (WhatsApp / Google) gets a random 12-digit member ID: "NG" + 10 digits
+    // For demo determinism: WhatsApp always logs into the fixed demo account (NG09246375)
+    // so both http:// and file:// show the same member + orders on first-click login.
+    const DEMO_ACCOUNT = {
+      memberId: 'NG09246375',
+      firstName: 'Adaeze',
+      name: 'Adaeze Okonkwo',
+      email: 'adaeze@aqualife.ng',
+      phone: '+234 803 123 4567',
+      signedInAt: Date.UTC(2026, 5, 3, 8, 52, 21),
+    };
     function genSocialMemberId() {
-      if (window.ProductCatalog && window.ProductCatalog.genMemberId) return window.ProductCatalog.genMemberId();
-      let digits = '';
-      for (let i = 0; i < 10; i++) digits += Math.floor(Math.random() * 10);
-      return 'NG' + digits;
+      return DEMO_ACCOUNT.memberId;
     }
     function wireSocial() {
       document.querySelectorAll('[data-social]').forEach(btn => {
         btn.addEventListener('click', () => {
           const provider = btn.dataset.social;
-          const memberId = genSocialMemberId();
           const user = {
-            firstName: provider === 'whatsapp' ? 'Adaeze' : 'Friend',
-            name: provider === 'whatsapp' ? 'Adaeze Okonkwo' : 'Guest',
-            email: provider + '@aqualife.ng',
-            memberId,
-            signedInAt: Date.now(),
+            memberId: DEMO_ACCOUNT.memberId,
+            firstName: DEMO_ACCOUNT.firstName,
+            name: DEMO_ACCOUNT.name,
+            email: provider === 'whatsapp' ? DEMO_ACCOUNT.email : 'guest@aqualife.ng',
+            phone: DEMO_ACCOUNT.phone,
+            signedInAt: DEMO_ACCOUNT.signedInAt,
           };
           window.Auth.login(user);
-          window.toast(`${window.T.tr('login.success_signin')} · ${memberId}`, 'success');
+          window.toast(`${window.T.tr('login.success_signin')} · ${user.memberId}`, 'success');
           redirectAfterAuth();
         });
       });
@@ -238,6 +374,17 @@
 
     document.addEventListener('DOMContentLoaded', () => {
       applyI18n();
+
+      // Fixed demo member ID + password (aqua2026 is already prefilled in HTML).
+      // Using a fixed value guarantees identical form content on both http:// and file:// protocols.
+      const emailInput = document.querySelector('#signinForm input[name="email"]');
+      if (emailInput && !emailInput.value) {
+        emailInput.value = DEMO_ACCOUNT.memberId;
+      }
+      const pwdInput = document.querySelector('#signinForm input[name="password"]');
+      if (pwdInput && !pwdInput.value) {
+        pwdInput.value = 'aqua2026';
+      }
 
       const signinForm = document.getElementById('signinForm');
       const signinBtn = document.getElementById('signinSubmit');
@@ -255,5 +402,45 @@
       wireSocial();
     });
   </script>
-</body>
-</html>
+
+
+<div id="cookieBanner" class="cookie-banner" role="dialog" aria-live="polite" aria-label="Cookie consent">
+      <span class="cookie-icon" aria-hidden="true">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10c0-.46-.04-.92-.1-1.36a5.5 5.5 0 0 1-7.78-7.78A9.97 9.97 0 0 0 12 2Z"></path><circle cx="9" cy="13" r="1" fill="currentColor"></circle><circle cx="14" cy="9" r="1" fill="currentColor"></circle><circle cx="16" cy="14" r="1" fill="currentColor"></circle></svg>
+      </span>
+      <div class="cookie-body">
+        <strong data-i18n="cookie.title">cookie.title</strong>
+        <span>We use essential cookies to run the site and optional analytics cookies to improve it. You can accept all, reject all, or customise your choice. Nigeria Data Protection Regulation (NDPR) requires your explicit consent before non-essential cookies are set. <a href="privacy.html" data-i18n="cookie.learn_more">cookie.learn_more</a></span>
+      </div>
+      <div class="cookie-actions">
+        <button type="button" class="cb-btn" data-cookie="customise" data-i18n="cookie.custom">cookie.custom</button>
+        <button type="button" class="cb-btn" data-cookie="reject" data-i18n="cookie.reject">cookie.reject</button>
+        <button type="button" class="cb-btn cb-primary" data-cookie="accept" data-i18n="cookie.accept">cookie.accept</button>
+      </div>
+      <div class="cookie-prefs" aria-hidden="true">
+        <div class="row">
+          <div class="text">
+            <strong>Essential</strong>
+            <small>Required for sign-in, shopping cart and security. Cannot be turned off.</small>
+          </div>
+          <div class="toggle on locked" data-cookie-pref="essential" aria-label="Essential cookies (always on)"></div>
+        </div>
+        <div class="row">
+          <div class="text">
+            <strong>Analytics</strong>
+            <small>Helps us understand which pages are useful so we can improve the product.</small>
+          </div>
+          <div class="toggle" data-cookie-pref="analytics" role="switch" aria-checked="false" tabindex="0"></div>
+        </div>
+        <div class="row">
+          <div class="text">
+            <strong>Marketing</strong>
+            <small>Used to measure the effectiveness of campaigns. Off by default.</small>
+          </div>
+          <div class="toggle" data-cookie-pref="marketing" role="switch" aria-checked="false" tabindex="0"></div>
+        </div>
+        <div class="cookie-actions" style="width:100%;justify-content:flex-end;padding-top:8px">
+          <button type="button" class="cb-btn cb-primary" data-cookie="save" data-i18n="cookie.save">cookie.save</button>
+        </div>
+      </div>
+    </div></body></html>
