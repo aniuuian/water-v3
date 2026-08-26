@@ -482,18 +482,90 @@
               <button class="btn-link" id="prefsSaveBtn" data-i18n="account.profile_save">Save</button>
             </div>
             <form id="prefsForm" class="prefs-form">
-              <label class="check"><input type="checkbox" name="email" /><span data-i18n="account.profile_pref_email">Email notifications</span></label>
-              <label class="check"><input type="checkbox" name="sms" /><span data-i18n="account.profile_pref_sms">SMS notifications</span></label>
-              <label class="check"><input type="checkbox" name="wa" /><span data-i18n="account.profile_pref_wa">WhatsApp notifications</span></label>
-              <div class="field" style="margin-top:14px">
-                <label data-i18n="account.profile_pref_language">Display language</label>
-                <select class="input" name="lang" id="pfLang" data-i18n-options>
-                  <option value="en" data-i18n="lang.en">English</option>
-                  <option value="zh" data-i18n="lang.zh">中文</option>
-                  <option value="ha" data-i18n="lang.ha">Hausa</option>
-                  <option value="yo" data-i18n="lang.yo">Yoruba</option>
-                  <option value="ig" data-i18n="lang.ig">Igbo</option>
-                </select>
+              <div class="prefs-grid">
+                <!-- Section 1: Notification Channels -->
+                <div class="prefs-section">
+                  <div class="prefs-section-head">
+                    <div>
+                      <h3 data-i18n="account.profile_prefs_channels_title">Notification channels</h3>
+                      <p data-i18n="account.profile_prefs_channels_desc">Choose where to receive updates</p>
+                    </div>
+                  </div>
+                  <div class="prefs-channels-list">
+                    <label class="pref-toggle-card">
+                      <input type="checkbox" name="email" />
+                      <div class="pref-toggle-info">
+                        <div>
+                          <div class="ch-title" data-i18n="account.profile_pref_email">Email notifications</div>
+                          <div class="ch-desc" data-i18n="account.profile_pref_email_desc">Receipts & order confirmations</div>
+                        </div>
+                      </div>
+                      <span class="custom-switch"></span>
+                    </label>
+
+                    <label class="pref-toggle-card">
+                      <input type="checkbox" name="sms" />
+                      <div class="pref-toggle-info">
+                        <div>
+                          <div class="ch-title" data-i18n="account.profile_pref_sms">SMS notifications</div>
+                          <div class="ch-desc" data-i18n="account.profile_pref_sms_desc">Instant delivery & status alerts</div>
+                        </div>
+                      </div>
+                      <span class="custom-switch"></span>
+                    </label>
+
+                    <label class="pref-toggle-card">
+                      <input type="checkbox" name="wa" />
+                      <div class="pref-toggle-info">
+                        <div>
+                          <div class="ch-title" data-i18n="account.profile_pref_wa">WhatsApp notifications</div>
+                          <div class="ch-desc" data-i18n="account.profile_pref_wa_desc">WhatsApp order & delivery alerts</div>
+                        </div>
+                      </div>
+                      <span class="custom-switch"></span>
+                    </label>
+                  </div>
+                </div>
+
+                <!-- Section 2: Display Language -->
+                <div class="prefs-section">
+                  <div class="prefs-section-head">
+                    <div>
+                      <h3 data-i18n="account.profile_pref_language">Display language</h3>
+                      <p data-i18n="account.profile_pref_language_desc">Select preferred display language</p>
+                    </div>
+                  </div>
+
+                  <div class="lang-selector-block">
+                    <div class="lang-select-wrapper">
+                      <select class="select lang-select" name="lang" id="pfLang" data-i18n-options>
+                        <option value="en" data-i18n="lang.en">English</option>
+                        <option value="zh" data-i18n="lang.zh">中文</option>
+                        <option value="ha" data-i18n="lang.ha">Hausa</option>
+                        <option value="yo" data-i18n="lang.yo">Yoruba</option>
+                        <option value="ig" data-i18n="lang.ig">Igbo</option>
+                      </select>
+                    </div>
+
+                    <div class="lang-cards-grid" id="langCardsGrid">
+                      <button type="button" class="lang-card" data-lang-val="en">
+                        <span>English</span>
+                      </button>
+                      <button type="button" class="lang-card" data-lang-val="zh">
+                        <span>中文</span>
+                      </button>
+                      <button type="button" class="lang-card" data-lang-val="ha">
+                        <span>Hausa</span>
+                      </button>
+                      <button type="button" class="lang-card" data-lang-val="yo">
+                        <span>Yoruba</span>
+                      </button>
+                      <button type="button" class="lang-card" data-lang-val="ig">
+                        <span>Igbo</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
               </div>
             </form>
           </div>
@@ -926,12 +998,16 @@
     function loadPrefs() {
       const p = window.AL.loadPrefs();
       const form = document.getElementById('prefsForm');
-      Object.keys(p).forEach(k => { if (form[k]) form[k].checked = !!p[k]; });
+      if (!form) return;
+      ['email','sms','wa'].forEach(k => { if (form[k]) form[k].checked = !!p[k]; });
       const langSel = form.querySelector('[name="lang"]');
+      const cur = (p && p.lang) || (window.T && window.T.current) || 'en';
       if (langSel) {
-        const cur = (p && p.lang) || (window.T && window.T.current) || 'en';
         langSel.value = (langSel.querySelector('option[value="' + cur + '"]') ? cur : 'en');
       }
+      form.querySelectorAll('.lang-card').forEach(btn => {
+        btn.classList.toggle('is-active', btn.dataset.langVal === cur);
+      });
     }
 
     /* ---------- Orders ---------- */
@@ -1977,7 +2053,20 @@
         window.toast(window.T.tr('account.profile_addr_saved'), 'success');
       });
 
-      // Preferences
+      // Preferences & Language Chips
+      document.querySelectorAll('#prefsForm .lang-card').forEach(card => {
+        card.addEventListener('click', () => {
+          const val = card.dataset.langVal;
+          const select = document.getElementById('pfLang');
+          if (select) select.value = val;
+          document.querySelectorAll('#prefsForm .lang-card').forEach(c => c.classList.toggle('is-active', c === card));
+        });
+      });
+      document.getElementById('pfLang')?.addEventListener('change', (e) => {
+        const val = e.target.value;
+        document.querySelectorAll('#prefsForm .lang-card').forEach(c => c.classList.toggle('is-active', c.dataset.langVal === val));
+      });
+
       document.getElementById('prefsSaveBtn').addEventListener('click', () => {
         const form = document.getElementById('prefsForm');
         const p = {};
